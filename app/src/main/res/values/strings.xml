@@ -3,4 +3,5 @@
     <string name="menu_recipes_text">Recipes</string>
     <string name="menu_foods_text">Individual Foods</string>
     <string name="menu_create_text">Add Items</string>
+    <string name="splash_description_text">The Number 1 Food Rating App</string>
 </resources>
