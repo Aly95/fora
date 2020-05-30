@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_host"
+    app:startDestination="@id/menu_recipes">
+
+    <fragment
+        android:id="@+id/menu_recipes"
+        android:name="alyhuggan.fora.ui.TopRecipesFragment"
+        android:label="fragment_top_recipes"
+        tools:layout="@layout/fragment_top_recipes" >
+        <action
+            android:id="@+id/action_topRecipesFragment_to_topFoodsFragment"
+            app:destination="@id/menu_foods"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_topRecipesFragment_to_createYourOwnFragment"
+            app:destination="@id/menu_create_items"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_foods"
+        android:name="alyhuggan.fora.ui.TopFoodsFragment"
+        android:label="fragment_top_foods"
+        tools:layout="@layout/fragment_top_foods" >
+        <action
+            android:id="@+id/action_topFoodsFragment_to_createYourOwnFragment"
+            app:destination="@id/menu_create_items"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/destination_foods"
+            app:destination="@id/menu_recipes"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_create_items"
+        android:name="alyhuggan.fora.ui.CreateYourOwnFragment"
+        android:label="fragment_create_your_own"
+        tools:layout="@layout/fragment_create_your_own" >
+        <action
+            android:id="@+id/action_createYourOwnFragment_to_topFoodsFragment"
+            app:destination="@id/menu_foods" />
+        <action
+            android:id="@+id/destination_create"
+            app:destination="@id/menu_recipes" />
+    </fragment>
+</navigation>
