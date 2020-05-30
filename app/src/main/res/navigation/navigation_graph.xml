@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/menu_recipes"
-        android:name="alyhuggan.fora.ui.TopRecipesFragment"
+        android:name="alyhuggan.fora.ui.recipe.TopRecipesFragment"
         android:label="fragment_top_recipes"
         tools:layout="@layout/fragment_top_recipes" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/menu_foods"
-        android:name="alyhuggan.fora.ui.TopFoodsFragment"
+        android:name="alyhuggan.fora.ui.foods.TopFoodsFragment"
         android:label="fragment_top_foods"
         tools:layout="@layout/fragment_top_foods" >
         <action

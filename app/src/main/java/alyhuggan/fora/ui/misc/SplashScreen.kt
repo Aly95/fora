@@ -1,4 +1,4 @@
-package alyhuggan.fora.ui
+package alyhuggan.fora.ui.misc
 
 import alyhuggan.fora.R
 import android.content.Intent
