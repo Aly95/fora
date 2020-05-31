@@ -39,11 +39,13 @@ class TopRecipesFragment : Fragment() {
 
         Log.d(TAG, "initializeRecyclerAdapter: Starts")
 
-        val recipe = sampleData()
         val list = ArrayList<Recipe>()
         for(i in 0..15) {
+            val recipe = sampleData()
             list.add(i, recipe)
         }
+
+        list.sortByDescending { it.rating }
 
         Log.d(TAG, "List = $list")
 
@@ -55,9 +57,11 @@ class TopRecipesFragment : Fragment() {
     }
 
     private fun sampleData(): Recipe {
+
         val mutableList = mutableListOf<FoodItem>()
 
         for(i in 0..8) {
+
             mutableList.add(
                 FoodItem(
                     "protein",
@@ -71,8 +75,9 @@ class TopRecipesFragment : Fragment() {
         }
 
         val list: ArrayList<FoodItem> = mutableList as ArrayList
+        val rating: Double = Math.random()*5
 
-        return Recipe("Chicken with Chicken", 4.8, null, "Lunch", list)
+        return Recipe("Chicken with Chicken", rating, null, "Lunch", list)
     }
 
     private fun setToolbarTitle() {
