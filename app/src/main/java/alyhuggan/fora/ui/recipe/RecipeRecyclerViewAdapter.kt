@@ -1,7 +1,7 @@
 package alyhuggan.fora.ui.recipe
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.Recipe
+import alyhuggan.fora.repository.objects.recipe.Recipe
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "874652566671",
+    "firebase_url": "https://fora-7d741.firebaseio.com",
+    "project_id": "fora-7d741",
+    "storage_bucket": "fora-7d741.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874652566671:android:34fa313f7929314b9a1cfa",
+        "android_client_info": {
+          "package_name": "alyhuggan.fora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874652566671-2uj88uutf2306ttegi8sl72ndihcthcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "alyhuggan.fora",
+            "certificate_hash": "bafa68f371e2f424286f0ba3747e63f46fffae2b"
+          }
+        },
+        {
+          "client_id": "874652566671-gd9q4ecg6dr2p4vq4h0ei8pnes353feq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB23xqSXMMNIdZEwr1fjvvlaK5_0OZhXpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874652566671-gd9q4ecg6dr2p4vq4h0ei8pnes353feq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

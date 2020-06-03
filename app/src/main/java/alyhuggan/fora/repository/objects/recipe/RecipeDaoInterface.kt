@@ -1,10 +1,10 @@
-package alyhuggan.fora.repository.database.logic
+package alyhuggan.fora.repository.objects.recipe
 
-import alyhuggan.fora.repository.objects.FoodItem
-import alyhuggan.fora.repository.objects.Recipe
+import alyhuggan.fora.repository.objects.foods.FoodItem
+import alyhuggan.fora.repository.objects.recipe.Recipe
 import androidx.lifecycle.LiveData
 
-interface ForaDaoInterface {
+interface RecipeDaoInterface {
 
     fun getRecipes(): LiveData<List<Recipe>>
     fun getFoods(): LiveData<List<FoodItem>>

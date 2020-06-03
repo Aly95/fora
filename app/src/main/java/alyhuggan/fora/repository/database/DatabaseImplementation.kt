@@ -1,10 +1,11 @@
 package alyhuggan.fora.repository.database
 
-import alyhuggan.fora.repository.database.logic.ForaDaoImplementation
-import alyhuggan.fora.repository.database.logic.ForaDaoInterface
+import alyhuggan.fora.repository.objects.recipe.ForaDaoImplementation
+import alyhuggan.fora.repository.objects.recipe.RecipeDaoInterface
 
-class DatabaseImplementation: DatabaseInterface {
+class DatabaseImplementation:
+    DatabaseInterface {
 
-    override val foraDao: ForaDaoInterface =
+    override val foraDao: RecipeDaoInterface =
         ForaDaoImplementation()
 }
