@@ -75,29 +75,23 @@ class TopRecipesFragment : Fragment(), KodeinAware {
             }
             recipes_recycler_view.layoutManager = LinearLayoutManager(context)
             recipes_recycler_view.adapter =
-                RecipeRecyclerViewAdapter(recipeList)
+                HorizontalRecyclerViewAdapter(recipeList, context!!)
             recipes_recycler_view.setHasFixedSize(true)
         })
-//        Log.d(TAG, "Fragment recipe = $recipes")
-
-        Log.d(TAG, "List = $list")
-
-//        recipes_recycler_view.layoutManager = LinearLayoutManager(context)
-//        recipes_recycler_view.adapter =
-//            RecipeRecyclerViewAdapter(recipes)
-//        recipes_recycler_view.setHasFixedSize(true)
-
     }
 
     private fun sampleData(): Recipe {
 
         val mutableList = mutableListOf<FoodItem>()
+        val type = mutableListOf<String>()
+        type.add("Savoury")
+        type.add("Lunch")
 
         for(i in 0..8) {
 
             mutableList.add(
                 FoodItem(
-                    "carbohydrate",
+                    "Dessert",
                     "bread",
                     Quantity(
                         "grams",
@@ -110,10 +104,10 @@ class TopRecipesFragment : Fragment(), KodeinAware {
         val rating: Double = Math.random()*5
 
         return Recipe(
-            "Bread with Love",
+            "Chicken Stew",
             rating,
             null,
-            "Dinner",
+            type,
             list
         )
     }

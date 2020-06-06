@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.items_recipe.view.*
+import kotlinx.android.synthetic.main.items_recipe_new.view.*
 
 private const val TAG = "RecipeRecyclerVA"
 
@@ -23,7 +23,7 @@ class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 class RecipeRecyclerViewAdapter(private val recipeList: List<Recipe>): RecyclerView.Adapter<RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.items_recipe, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.items_recipe_new, parent, false)
         return RecipeViewHolder(view)
     }
 
