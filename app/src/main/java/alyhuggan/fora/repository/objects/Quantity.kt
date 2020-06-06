@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 
-data class Quantity(val quantityType: String = "", val quantity: Double = 0.0) : Parcelable {
+data class Quantity(val quantityType: String = "", val quantity: String = "") : Parcelable {
 }

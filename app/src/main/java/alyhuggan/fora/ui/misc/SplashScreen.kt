@@ -1,6 +1,8 @@
 package alyhuggan.fora.ui.misc
 
 import alyhuggan.fora.R
+import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
+import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,8 +11,19 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.auth.FirebaseAuth
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 
-class SplashScreen: AppCompatActivity() {
+private lateinit var auth: FirebaseAuth
+
+class SplashScreen: AppCompatActivity(), KodeinAware {
+
+    private val viewModelFactory by instance<RecipeViewModelFactory>()
+    override val kodein by closestKodein()
 
     private val SPLASH_TIME: Long = 3000
     private val TEXT_ANIM_DELAY: Long = 1200
@@ -18,6 +31,12 @@ class SplashScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        auth = FirebaseAuth.getInstance()
+
+        val viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
+        viewModel.getRecipes()
 
         val logo = findViewById<ImageView>(R.id.splash_logo)
         val text = findViewById<TextView>(R.id.splash_description)

@@ -24,9 +24,7 @@ class ForaDaoImplementation :
         foodList.value = mutableFoodList
     }
 
-
     override fun getRecipes() = recipeList
-
 
     override fun getFoods(): LiveData<List<FoodItem>> {
         Log.d(TAG, "getFoods: starts")
@@ -39,31 +37,28 @@ class ForaDaoImplementation :
 
         if(dataId != null) {
 
-            Log.d(TAG, "dataId does not equal null")
-
             database.child(dataId).setValue(recipe).addOnCompleteListener{
-                Log.d(TAG, "Database: Value added")
+//                Log.d(TAG, "Database: Value added")
             }
-
         } else {
-            Log.d(TAG, "DataId equals null")
+//            Log.d(TAG, "DataId equals null")
         }
 
     }
 
     override fun addFood(foodItem: FoodItem) {
-        Log.d(TAG, "addFood: starts")
+//        Log.d(TAG, "addFood: starts")
     }
 
     private fun updateRecyclerViewData() {
-        Log.d(TAG, "updateRecyclerViewData: starts")
+//        Log.d(TAG, "updateRecyclerViewData: starts")
 
         database = FirebaseDatabase.getInstance().getReference("recipe")
 
         database.addListenerForSingleValueEvent(object: ValueEventListener{
 
             override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "getRecipes listener: onCancelled")
+//                Log.d(TAG, "getRecipes listener: onCancelled")
             }
 
             override fun onDataChange(databaseRecipes: DataSnapshot) {

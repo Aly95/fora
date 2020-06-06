@@ -8,11 +8,14 @@
         android:id="@+id/recipe_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:fontFamily="@font/open_sans"
-        android:text="TopRated"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sans_bold"
         android:textColor="@color/accent"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipe_horizontal_recycler_view"

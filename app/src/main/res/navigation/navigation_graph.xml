@@ -30,7 +30,10 @@
         <action
             android:id="@+id/extendedView"
             app:destination="@id/fragment_extendedView"
-            app:enterAnim="@anim/scale_up" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/menu_foods"

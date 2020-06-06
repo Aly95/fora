@@ -104,6 +104,8 @@ class HorizontalRecyclerViewAdapter(
         }
         recyclerView.adapter = recipeRecyclerViewAdapter
         recipeRecyclerViewAdapter.notifyDataSetChanged()
+
+        title.visibility = View.VISIBLE
     }
 
     private fun getTopRated(): List<Recipe> {
@@ -122,7 +124,7 @@ class HorizontalRecyclerViewAdapter(
         if (typeList.isNotEmpty()) {
             return typeList.sortedByDescending { it.rating }
         } else {
-            Log.d(TAG, "Empty List")
+//            Log.d(TAG, "Empty List")
             return typeList
         }
     }

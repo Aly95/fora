@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/lobster_two</item>
+        <item>@font/old_standard_tt_bold</item>
+        <item>@font/pt_serif</item>
+        <item>@font/pt_serif_bold</item>
+    </array>
+</resources>

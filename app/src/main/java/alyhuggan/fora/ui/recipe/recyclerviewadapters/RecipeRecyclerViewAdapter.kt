@@ -48,9 +48,9 @@ class RecipeRecyclerViewAdapter(
         val image = holder.image
 
         if (recipeList.isEmpty()) {
-            Log.d(TAG, "onBindViewHolder - recipeList is")
+//            Log.d(TAG, "onBindViewHolder - recipeList is")
         } else {
-            Log.d(TAG, "onBindViewHolder - recipeList not empty")
+//            Log.d(TAG, "onBindViewHolder - recipeList not empty")
 
             val recipe = recipeList[position]
 
