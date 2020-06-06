@@ -18,6 +18,15 @@
             android:id="@+id/action_topRecipesFragment_to_createYourOwnFragment"
             app:destination="@id/menu_create_items"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/nextAction"
+            app:destination="@id/menu_add"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="hello"
+            app:argType="integer"
+            android:defaultValue="2" />
     </fragment>
     <fragment
         android:id="@+id/menu_foods"
@@ -45,4 +54,9 @@
             android:id="@+id/destination_create"
             app:destination="@id/menu_recipes" />
     </fragment>
+    <fragment
+        android:id="@+id/menu_add"
+        android:name="alyhuggan.fora.ui.recipe.AddRecipeFragment"
+        android:label="fragment_add_recipe"
+        tools:layout="@layout/fragment_add_recipe" />
 </navigation>

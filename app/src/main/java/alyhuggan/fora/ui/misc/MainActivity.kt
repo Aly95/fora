@@ -16,21 +16,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        inflateMenu()
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
         setUpBottomNav(navController)
+    }
 
+    private fun inflateMenu() {
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.main_toolbar)
+        toolbar.inflateMenu(R.menu.menu_add)
     }
 
     private fun setUpBottomNav(navController: NavController) {
         bottom_nav_bar?.let {
             NavigationUI.setupWithNavController(it, navController)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
