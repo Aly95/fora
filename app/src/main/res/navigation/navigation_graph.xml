@@ -27,6 +27,10 @@
             android:name="hello"
             app:argType="integer"
             android:defaultValue="2" />
+        <action
+            android:id="@+id/extendedView"
+            app:destination="@id/fragment_extendedView"
+            app:enterAnim="@anim/scale_up" />
     </fragment>
     <fragment
         android:id="@+id/menu_foods"
@@ -59,4 +63,12 @@
         android:name="alyhuggan.fora.ui.recipe.AddRecipeFragment"
         android:label="fragment_add_recipe"
         tools:layout="@layout/fragment_add_recipe" />
+    <fragment
+        android:id="@+id/fragment_extendedView"
+        android:name="alyhuggan.fora.ui.recipe.RecipeExtendedViewFragment"
+        android:label="RecipeExtendedViewFragment" >
+        <argument
+            android:name="Recipe"
+            app:argType="alyhuggan.fora.repository.objects.recipe.Recipe" />
+    </fragment>
 </navigation>

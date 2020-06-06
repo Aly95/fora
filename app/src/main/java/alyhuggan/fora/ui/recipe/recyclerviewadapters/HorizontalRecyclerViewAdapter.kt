@@ -1,22 +1,18 @@
-package alyhuggan.fora.ui.recipe
+package alyhuggan.fora.ui.recipe.recyclerviewadapters
 
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.recipe.Recipe
-import alyhuggan.fora.repository.objects.recipe.recipeList
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_top_recipes_new.view.*
-import kotlinx.android.synthetic.main.items_recipe.view.*
-import kotlin.reflect.typeOf
 
 private const val TAG = "HorizontalRVA"
 
@@ -27,21 +23,31 @@ class RecipeViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
 
 class HorizontalRecyclerViewAdapter(
     private val recipeList: List<Recipe>,
-    private val context: Context
+    private val context: Context,
+    private val fragment: FragmentManager,
+    private val activity: Activity
 ) : RecyclerView.Adapter<RecipeViewHolderNew>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolderNew {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_top_recipes_new, parent, false)
-        return RecipeViewHolderNew(view)
+        return RecipeViewHolderNew(
+            view
+        )
     }
 
     override fun getItemCount() = 4
 
     override fun onBindViewHolder(holder: RecipeViewHolderNew, position: Int) {
+
         val title = holder.title
         val recyclerView = holder.recyclerView
-        var recipeRecyclerViewAdapter = RecipeRecyclerViewAdapter(emptyList())
+        var recipeRecyclerViewAdapter =
+            RecipeRecyclerViewAdapter(
+                emptyList(),
+                fragment,
+                activity
+            )
 
         val recipeTypeList = mutableListOf<String>()
         recipeTypeList.add("Breakfast")
@@ -55,34 +61,50 @@ class HorizontalRecyclerViewAdapter(
         when (position) {
             0 -> {
                 title.text = "Top Rated"
-                recipeRecyclerViewAdapter = RecipeRecyclerViewAdapter(getTopRated())
+                recipeRecyclerViewAdapter =
+                    RecipeRecyclerViewAdapter(
+                        getTopRated(),
+                        fragment,
+                        activity
+                    )
             }
             1 -> {
                 title.text = recipeTypeList[position]
                 recipeRecyclerViewAdapter =
-                    RecipeRecyclerViewAdapter(getList(recipeTypeList[position]))
+                    RecipeRecyclerViewAdapter(
+                        getList(
+                            recipeTypeList[position]
+                        ),
+                        fragment,
+                        activity
+                    )
             }
             2 -> {
                 title.text = recipeTypeList[position]
                 recipeRecyclerViewAdapter =
-                    RecipeRecyclerViewAdapter(getList(recipeTypeList[position]))
+                    RecipeRecyclerViewAdapter(
+                        getList(
+                            recipeTypeList[position]
+                        ),
+                        fragment,
+                        activity
+                    )
             }
             3 -> {
                 title.text = recipeTypeList[position]
                 recipeRecyclerViewAdapter =
-                    RecipeRecyclerViewAdapter(getList(recipeTypeList[position]))
+                    RecipeRecyclerViewAdapter(
+                        getList(
+                            recipeTypeList[position]
+                        ),
+                        fragment,
+                        activity
+                    )
             }
         }
         recyclerView.adapter = recipeRecyclerViewAdapter
         recipeRecyclerViewAdapter.notifyDataSetChanged()
     }
-
-
-//        val recipeRecyclerViewAdapter = RecipeRecyclerViewAdapter(recipeList)
-//        title.text = recipeList[position].type
-//
-//        recyclerView.adapter = recipeRecyclerViewAdapter
-
 
     private fun getTopRated(): List<Recipe> {
         val topRated = recipeList

@@ -4,6 +4,8 @@ import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.Quantity
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.ui.misc.MainActivity
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.HorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.os.Bundle
@@ -14,11 +16,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_top_recipes.*
@@ -73,9 +73,18 @@ class TopRecipesFragment : Fragment(), KodeinAware {
                 Log.d(TAG, "It = $it")
                 recipeList.add(it)
             }
+
+
             recipes_recycler_view.layoutManager = LinearLayoutManager(context)
+            recipes_recycler_view
+
             recipes_recycler_view.adapter =
-                HorizontalRecyclerViewAdapter(recipeList, context!!)
+                HorizontalRecyclerViewAdapter(
+                    recipeList,
+                    context!!,
+                    fragmentManager!!,
+                    activity!!
+                )
             recipes_recycler_view.setHasFixedSize(true)
         })
     }
