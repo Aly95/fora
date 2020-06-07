@@ -2,8 +2,9 @@ package alyhuggan.fora.repository
 
 import alyhuggan.fora.repository.database.DatabaseImplementation
 import alyhuggan.fora.repository.database.DatabaseInterface
+import alyhuggan.fora.repository.objects.foods.FoodDaoInterface
 import alyhuggan.fora.repository.objects.recipe.RecipeDaoInterface
-import alyhuggan.fora.viewmodels.ViewModelFactory
+import alyhuggan.fora.viewmodels.food.FoodViewModelFactory
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.app.Application
 import org.kodein.di.Kodein
@@ -23,9 +24,11 @@ class KodeinApplication : Application(), KodeinAware {
         bind<DatabaseInterface>() with singleton { DatabaseImplementation() }
 
         //Binding Recipe
-        bind<RecipeDaoInterface>() with singleton { instance<DatabaseInterface>().foraDao }
-        bind() from provider {
-            RecipeViewModelFactory(instance())
-        }
+        bind<RecipeDaoInterface>() with singleton { instance<DatabaseInterface>().recipeDao }
+        bind() from provider { RecipeViewModelFactory(instance()) }
+
+        //Binding Foods
+        bind<FoodDaoInterface>() with singleton { instance<DatabaseInterface>().foodDao }
+        bind() from provider { FoodViewModelFactory(instance()) }
     }
 }

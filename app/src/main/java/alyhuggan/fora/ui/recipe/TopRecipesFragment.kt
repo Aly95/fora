@@ -4,18 +4,15 @@ import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.Quantity
 import alyhuggan.fora.repository.objects.recipe.Recipe
-import alyhuggan.fora.ui.misc.MainActivity
-import alyhuggan.fora.ui.recipe.recyclerviewadapters.HorizontalRecyclerViewAdapter
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.RecipeHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
@@ -55,7 +52,7 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("recyclerView", "created")
+//        outState.putString("recyclerView", "created")
     }
 
     private fun initializeRecyclerAdapter() {
@@ -96,7 +93,7 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
 
             recipes_recycler_view.adapter =
-                HorizontalRecyclerViewAdapter(
+                RecipeHorizontalRecyclerViewAdapter(
                     recipeList,
                     context!!,
                     fragmentManager!!,

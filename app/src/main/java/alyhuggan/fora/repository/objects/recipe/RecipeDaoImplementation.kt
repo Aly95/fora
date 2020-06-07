@@ -9,34 +9,23 @@ import com.google.firebase.database.*
 private const val TAG = "ForaDaoImplementation"
 private lateinit var database: DatabaseReference
 
-val recipeList = MutableLiveData<List<Recipe>>()
-val foodList = MutableLiveData<List<FoodItem>>()
+private val recipeList = MutableLiveData<List<Recipe>>()
+private val mutableRecipeList = mutableListOf<Recipe>()
 
-val mutableRecipeList = mutableListOf<Recipe>()
-val mutableFoodList = mutableListOf<FoodItem>()
-
-class ForaDaoImplementation :
+class RecipeDaoImplementation :
     RecipeDaoInterface {
 
     init {
         updateRecyclerViewData()
         recipeList.value = mutableRecipeList
-        foodList.value = mutableFoodList
     }
 
     override fun getRecipes() = recipeList
 
-    override fun getFoods(): LiveData<List<FoodItem>> {
-        Log.d(TAG, "getFoods: starts")
-        return foodList
-    }
-
     override fun addRecipe(recipe: Recipe) {
 
         val dataId = database.push().key
-
         if(dataId != null) {
-
             database.child(dataId).setValue(recipe).addOnCompleteListener{
 //                Log.d(TAG, "Database: Value added")
             }
@@ -44,10 +33,6 @@ class ForaDaoImplementation :
 //            Log.d(TAG, "DataId equals null")
         }
 
-    }
-
-    override fun addFood(foodItem: FoodItem) {
-//        Log.d(TAG, "addFood: starts")
     }
 
     private fun updateRecyclerViewData() {

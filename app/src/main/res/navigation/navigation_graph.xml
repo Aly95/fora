@@ -9,7 +9,7 @@
         android:id="@+id/menu_recipes"
         android:name="alyhuggan.fora.ui.recipe.TopRecipesFragment"
         android:label="fragment_top_recipes"
-        tools:layout="@layout/fragment_top_recipes" >
+        tools:layout="@layout/items_horizontal_list" >
         <action
             android:id="@+id/action_topRecipesFragment_to_topFoodsFragment"
             app:destination="@id/menu_foods"
@@ -29,11 +29,11 @@
             android:defaultValue="2" />
         <action
             android:id="@+id/extendedView"
-            app:destination="@id/fragment_extendedView"
+            app:destination="@id/recipe_extended"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/menu_foods"
@@ -48,6 +48,13 @@
             android:id="@+id/destination_foods"
             app:destination="@id/menu_recipes"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/extendedView"
+            app:destination="@id/food_extended"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/menu_create_items"
@@ -59,7 +66,11 @@
             app:destination="@id/menu_foods" />
         <action
             android:id="@+id/destination_create"
-            app:destination="@id/menu_recipes" />
+            app:destination="@id/menu_recipes"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/menu_add"
@@ -67,11 +78,23 @@
         android:label="fragment_add_recipe"
         tools:layout="@layout/fragment_add_recipe" />
     <fragment
-        android:id="@+id/fragment_extendedView"
+        android:id="@+id/recipe_extended"
         android:name="alyhuggan.fora.ui.recipe.RecipeExtendedViewFragment"
         android:label="RecipeExtendedViewFragment" >
         <argument
             android:name="Recipe"
             app:argType="alyhuggan.fora.repository.objects.recipe.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/food_extended"
+        android:name="alyhuggan.fora.ui.foods.FoodExtendedViewFragment"
+        android:label="FoodExtendedViewFragment" >
+        <action
+            android:id="@+id/extendedView"
+            app:destination="@id/recipe_extended"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>

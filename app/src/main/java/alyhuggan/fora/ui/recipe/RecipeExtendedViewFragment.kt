@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_extended_view.*
-import kotlinx.android.synthetic.main.fragment_top_recipes.*
+import kotlinx.android.synthetic.main.items_horizontal_list.*
 
 private const val TAG = "RecipeExtendedViewFrag"
 
