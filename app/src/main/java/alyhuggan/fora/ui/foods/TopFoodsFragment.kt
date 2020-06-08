@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
-import android.widget.TextView
+import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +45,7 @@ class TopFoodsFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbarTitle()
+        setSearchHint()
         initializeUi()
     }
 
@@ -89,8 +89,8 @@ class TopFoodsFragment : Fragment(), KodeinAware {
         foods_recycler_view.setHasFixedSize(true)
     }
 
-    private fun setToolbarTitle() {
-        val toolbar: TextView = activity!!.findViewById(R.id.maintoolbar_title)
-        toolbar.text = "Top Foods"
+    private fun setSearchHint() {
+        val searchbox: EditText = activity!!.findViewById(R.id.searchbox_text)
+        searchbox.hint = "Search Individual Foods"
     }
 }

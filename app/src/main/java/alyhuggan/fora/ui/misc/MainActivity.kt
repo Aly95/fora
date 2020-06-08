@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.core.view.MenuItemCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,15 +19,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        inflateMenu()
+//        inflateMenu()
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setUpBottomNav(navController)
     }
 
-    private fun inflateMenu() {
-        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.main_toolbar)
-        toolbar.inflateMenu(R.menu.menu_add)
+    override fun onResume() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        super.onResume()
     }
+
+//    private fun inflateMenu() {
+//        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.main_toolbar)
+//        toolbar.inflateMenu(R.menu.menu_add)
+//    }
 
     private fun setUpBottomNav(navController: NavController) {
         bottom_nav_bar?.let {

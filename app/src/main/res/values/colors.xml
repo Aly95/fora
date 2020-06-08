@@ -2,7 +2,8 @@
 <resources>
     <color name="primary">#4CAF50</color>
     <color name="primary_dark">#388E3C</color>
-    <color name="darker_background">#F2F2F2</color>
+<!--    <color name="darker_background">#F2F2F2</color>-->
+    <color name="darker_background">#F7F7F7</color>
     <color name="primary_light">#C8E6C9</color>
     <color name="accent">#9E9E9E</color>
     <color name="primary_text">#212121</color>
@@ -13,4 +14,5 @@
     <color name="colorBlue">#14329B</color>
     <color name="colorRed">#e80000</color>
     <color name="colorGrey">#9E9E9E</color>
+    <color name="ratingBar">#4CAF50</color>
 </resources>

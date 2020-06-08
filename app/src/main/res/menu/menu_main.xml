@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_foods"
         android:title="@string/menu_foods_text" />
     <item
-        android:id="@+id/menu_create_items"
+        android:id="@+id/menu_account"
         android:icon="@drawable/ic_add"
         android:title="@string/menu_create_text" />
 </menu>

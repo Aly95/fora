@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Fora</string>
-    <string name="menu_recipes_text">Recipes</string>
-    <string name="menu_foods_text">Individual Foods</string>
-    <string name="menu_create_text">Add Items</string>
+    <string name="menu_recipes_text">Top Recipes</string>
+    <string name="menu_foods_text">Tasty Foods</string>
+    <string name="menu_create_text">My Account</string>
     <string name="splash_description_text">The Number 1 Food Rating App</string>
     <string name="title_Text">Title</string>
     <string name="recipe_image_contentDescription">Recipe image</string>
@@ -11,4 +11,24 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_add">Add</string>
     <string name="extended_view_ingredients_Text">Ingredients:</string>
+    <string name="item_search_text">Search Recipes</string>
+    <string name="add_recipe_uri_Hint">Upload a landscape photo to minimize clipping</string>
+    <string name="add_recipe_btn_upload_Text">Upload Photo</string>
+    <string name="add_recipe_btn_submit">Submit</string>
+    <string name="add_recipe_btn_cancel">Cancel</string>
+
+    <string name="add_recipe_name_txt">Name Your Recipe</string>
+    <string name="add_recipe_name_Hint">Ultimate Chocolate Cake</string>
+
+    <string name="recipe_fooditem_brand_txt">Brand Name (Optional)</string>
+    <string name="recipe_fooditem_brand_food_txt">Food Name</string>
+    <string name="recipe_fooditem_quantity_type_txt">Quantity Type</string>
+    <string name="recipe_fooditem_quantity_amount_txt">Quantity Amount</string>
+
+    <string name="recipe_fooditem_brand_Hint">Rustlers, Kellogs</string>
+    <string name="recipe_fooditem_brand_food_Hint">Burger, Corn Flakes</string>
+    <string name="recipe_fooditem_quantity_type_Hint">cups, ml, grams</string>
+    <string name="recipe_fooditem_quantity_amount_Hint">1 1/4, 1/2, 568</string>
+
+
 </resources>
