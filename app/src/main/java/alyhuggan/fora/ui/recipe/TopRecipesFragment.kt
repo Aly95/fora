@@ -8,14 +8,13 @@ import alyhuggan.fora.ui.recipe.recyclerviewadapters.RecipeHorizontalRecyclerVie
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -187,6 +186,12 @@ class TopRecipesFragment : Fragment(), KodeinAware {
     private fun setToolbarTitle() {
         val toolbarTitle: TextView = activity!!.findViewById(R.id.maintoolbar_title)
         toolbarTitle.text = "Top Recipes"
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val search: MenuItem = menu.findItem(R.id.action_search)
+        search.expandActionView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
