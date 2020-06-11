@@ -66,6 +66,92 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         setUpTag(view)
         populateUserCardView(view)
         setUpNavigation()
+        setUpCollapsibleViews(view)
+
+    }
+    private fun setUpCollapsibleViews(view: View) {
+
+        val nameChildren = ArrayList<View>()
+        val ingredientChildren = ArrayList<View>()
+        val ingredientListChildren = ArrayList<View>()
+        val methodChildren = ArrayList<View>()
+        val methodListChildren = ArrayList<View>()
+        val tagsChildren = ArrayList<View>()
+        val tagsListChildren = ArrayList<View>()
+        val ratingChildren = ArrayList<View>()
+        val imageChildren = ArrayList < View >()
+
+        val name = view.findViewById<LinearLayout>(R.id.name_bar)
+        val nameET = view.findViewById<EditText>(R.id.add_recipe_name)
+        nameChildren.add(nameET)
+        setUpListeners(name, nameChildren)
+
+        val ingredient = view.findViewById<LinearLayout>(R.id.ingredient_bar)
+        val ingredientCard = view.findViewById<View>(R.id.addItem)
+        val ingredientButton = view.findViewById<View>(R.id.add_recipe_btn_add)
+        ingredientChildren.add(ingredientCard)
+        ingredientChildren.add(ingredientButton)
+        setUpListeners(ingredient, ingredientChildren)
+
+        val ingredientList = view.findViewById<LinearLayout>(R.id.ingredientList_bar)
+        val ingredientListRV = view.findViewById<View>(R.id.add_ingredient_recycler_view)
+        ingredientListChildren.add(ingredientListRV)
+        setUpListeners(ingredientList, ingredientListChildren)
+
+        val instruction = view.findViewById<LinearLayout>(R.id.instruction_bar)
+        val instructionET = view.findViewById<View>(R.id.add_recipe_instruction)
+        val instructionButton = view.findViewById<View>(R.id.add_recipe_add_instruction_btn)
+        methodChildren.add(instructionET)
+        methodChildren.add(instructionButton)
+        setUpListeners(instruction, methodChildren)
+
+        val instructionList = view.findViewById<LinearLayout>(R.id.instructionList_bar)
+        val instructionListRV = view.findViewById<View>(R.id.add_recipe_instruction_recyclerview)
+        methodListChildren.add(instructionListRV)
+        setUpListeners(instructionList, methodListChildren)
+
+        val tags = view.findViewById<LinearLayout>(R.id.tags_bar)
+        val tagsET = view.findViewById<View>(R.id.add_recipe_tags)
+        val tagsBtn = view.findViewById<View>(R.id.add_recipe_add_tags_btn)
+        tagsChildren.add(tagsET)
+        tagsChildren.add(tagsBtn)
+        setUpListeners(tags, tagsChildren)
+
+        val tagsList = view.findViewById<LinearLayout>(R.id.tagsList_bar)
+        val tagsRV = view.findViewById<View>(R.id.add_recipe_tags_recyclerview)
+        tagsListChildren.add(tagsRV)
+        setUpListeners(tagsList, tagsListChildren)
+
+        val rating = view.findViewById<LinearLayout>(R.id.rating_bar)
+        val ratingBar = view.findViewById<View>(R.id.add_recipe_ratingbar)
+        ratingChildren.add(ratingBar)
+        setUpListeners(rating, ratingChildren)
+
+        val image = view.findViewById<LinearLayout>(R.id.image_bar)
+        val imageCard = view.findViewById<View>(R.id.card_add)
+        val imageText = view.findViewById<View>(R.id.add_recipe_uri)
+        imageChildren.add(imageCard)
+        imageChildren.add(imageText)
+        setUpListeners(image, imageChildren)
+    }
+
+    private fun setUpListeners(parent: View, children: ArrayList<View>) {
+        parent.setOnClickListener {
+            cardViewAnimation(children)
+        }
+    }
+
+    /*
+    Expand/Collapse card view children
+     */
+    private fun cardViewAnimation(viewList: ArrayList<View>) {
+        viewList.forEach { view ->
+            if (view.visibility == View.VISIBLE) {
+                view.visibility = View.GONE
+            } else {
+                view.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setUpTag(view: View) {

@@ -30,22 +30,42 @@
                     android:id="@+id/name_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:background="#FFFFFF"
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/add_recipe_name_txt"
+                    <LinearLayout
+                        android:id="@+id/name_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_recipe_name_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_name_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_recipe_name_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/name_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
+
 
                     <EditText
                         android:id="@+id/add_recipe_name"
@@ -74,21 +94,40 @@
                     android:id="@+id/ingredients_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:background="#FFFFFF"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/add_recipe_ingredient_txt"
+                    <LinearLayout
+                        android:id="@+id/ingredient_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_recipe_ingredient_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_ingredient_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_recipe_ingredient_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/ingredient_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <include
                         android:id="@+id/addItem"
@@ -123,21 +162,41 @@
                     android:id="@+id/ingredientList_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:background="#FFFFFF"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/add_ingredient_txt"
+                    <LinearLayout
+                        android:id="@+id/ingredientList_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_ingredient_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_ingredient_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_ingredient_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/ingredientList_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/add_ingredient_recycler_view"
@@ -163,20 +222,40 @@
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:orientation="vertical"
+                    android:animateLayoutChanges="true"
                     android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/add_recipe_instruction_txt"
+                    <LinearLayout
+                        android:id="@+id/instruction_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_recipe_instruction_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_instruction_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_recipe_instruction_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/instruction_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/add_recipe_instruction"
@@ -217,21 +296,41 @@
                     android:id="@+id/instructionlist_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:background="#FFFFFF"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/add_recipe_instruction_list"
+                    <LinearLayout
+                        android:id="@+id/instructionList_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_recipe_instruction_list"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_instruction_list"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_recipe_instruction_list"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/instructionList_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/add_recipe_instruction_recyclerview"
@@ -257,21 +356,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
+                    android:animateLayoutChanges="true"
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/add_recipe_tags_txt"
+                    <LinearLayout
+                        android:id="@+id/tags_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_recipe_tags_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_tags_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_recipe_tags_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/tags_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/add_recipe_tags"
@@ -312,21 +431,41 @@
                     android:id="@+id/tagslist_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:background="#FFFFFF"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/add_recipe_tags_list"
+                    <LinearLayout
+                        android:id="@+id/tagsList_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="Tag List"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_tags_list"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="Tag List"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/tagsList_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/add_recipe_tags_recyclerview"
@@ -351,21 +490,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
+                    android:animateLayoutChanges="true"
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/add_recipe_rating_txt"
+                    <LinearLayout
+                        android:id="@+id/rating_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_recipe_rating_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_recipe_rating_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_recipe_rating_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/rating_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <RatingBar
                         android:id="@+id/add_recipe_ratingbar"
@@ -400,21 +559,41 @@
                     android:id="@+id/image_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:background="#FFFFFF"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/add_image_txt"
+                    <LinearLayout
+                        android:id="@+id/image_bar"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_margin="6dp"
                         android:background="@drawable/green_background"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|start"
-                        android:paddingLeft="4dp"
-                        android:text="@string/add_image_txt"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/add_image_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/green_background"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center|start"
+                            android:paddingLeft="4dp"
+                            android:text="@string/add_image_txt"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/image_arrow"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:contentDescription="Drop down arrow"
+                            android:scaleType="fitEnd"
+                            app:srcCompat="@drawable/ic_arrow" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -424,12 +603,12 @@
                         android:paddingRight="2dp"
                         android:weightSum="10">
 
-
                         <include
                             android:id="@+id/card_add"
                             layout="@layout/items_card"
                             android:layout_width="170dp"
-                            android:layout_height="220dp"></include>
+                            android:layout_height="220dp">
+                        </include>
 
                     </LinearLayout>
 
@@ -451,6 +630,8 @@
                 android:id="@+id/buttons_LL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <Button
