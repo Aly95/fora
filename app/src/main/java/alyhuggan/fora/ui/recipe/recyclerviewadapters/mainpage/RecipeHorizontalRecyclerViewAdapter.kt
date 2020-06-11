@@ -1,4 +1,4 @@
-package alyhuggan.fora.ui.recipe.recyclerviewadapters
+package alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage
 
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.recipe.Recipe
@@ -23,7 +23,6 @@ class RecipeViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
 class RecipeHorizontalRecyclerViewAdapter(
     private val recipeList: List<Recipe>,
     private val context: Context,
-    private val fragment: FragmentManager,
     private val activity: Activity
 ) : RecyclerView.Adapter<RecipeViewHolderNew>() {
 
@@ -41,11 +40,7 @@ class RecipeHorizontalRecyclerViewAdapter(
 
         val title = holder.title
         val recyclerView = holder.recyclerView
-        var recipeRecyclerViewAdapter =
-            RecipeRecyclerViewAdapter(
-                emptyList(),
-                activity
-            )
+        val recipeRecyclerViewAdapter: RecipeRecyclerViewAdapter
 
         val recipeTypeList = mutableListOf<String>()
         recipeTypeList.add("Breakfast")

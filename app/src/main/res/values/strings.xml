@@ -7,18 +7,26 @@
     <string name="title_Text">Title</string>
     <string name="recipe_image_contentDescription">Recipe image</string>
     <string name="recipe_rating_text">"Rating: "</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_add">Add</string>
     <string name="extended_view_ingredients_Text">Ingredients:</string>
     <string name="item_search_text">Search Recipes</string>
-    <string name="add_recipe_uri_Hint">Upload a landscape photo to minimize clipping</string>
+    <string name="add_recipe_uri_Hint">Try taking your photo in landscape to minimize clipping!</string>
     <string name="add_recipe_btn_upload_Text">Upload Photo</string>
+
+    <string name="add_recipe_btn_next">Next</string>
     <string name="add_recipe_btn_submit">Submit</string>
     <string name="add_recipe_btn_cancel">Cancel</string>
 
     <string name="add_recipe_name_txt">Name Your Recipe</string>
-    <string name="add_recipe_name_Hint">Ultimate Chocolate Cake</string>
+    <string name="add_recipe_name_Hint">e.g Ultimate Chocolate Cake</string>
+
+    <string name="add_recipe_instruction_txt">Add Methods</string>
+    <string name="add_recipe_instruction_Hint">e.g Mix ingredients in large bowl</string>
+    <string name="add_recipe_add_instruction_btn">Add Method To List</string>
+    <string name="add_recipe_instruction_list">Method List</string>
+
+    <string name="add_recipe_rating_txt">Rating</string>
+    <string name="add_image_txt">Image Preview</string>
 
     <string name="recipe_fooditem_brand_txt">Brand Name (Optional)</string>
     <string name="recipe_fooditem_brand_food_txt">Food Name</string>
@@ -29,6 +37,11 @@
     <string name="recipe_fooditem_brand_food_Hint">Burger, Corn Flakes</string>
     <string name="recipe_fooditem_quantity_type_Hint">cups, ml, grams</string>
     <string name="recipe_fooditem_quantity_amount_Hint">1 1/4, 1/2, 568</string>
+    <string name="add_recipe_btn_add">Add Ingredient To List</string>
+    <string name="add_ingredient_txt">Ingredient List</string>
+    <string name="item_card_title_default_txt">Click Me To Add A Recipe Photo!</string>
+    <string name="add_recipe_ingredient_txt">Add Ingredients</string>
+    <string name="add_recipe_tags_txt">Add Tags</string>
 
 
 </resources>

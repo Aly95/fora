@@ -76,9 +76,17 @@
     </fragment>
     <fragment
         android:id="@+id/add_recipe"
-        android:name="alyhuggan.fora.ui.recipe.AddRecipeFragment"
+        android:name="alyhuggan.fora.ui.recipe.addrecipe.AddRecipeFragment"
         android:label="fragment_add_recipe"
-        tools:layout="@layout/fragment_add_recipe" />
+        tools:layout="@layout/fragment_add_recipe" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/menu_account"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/recipe_extended"
         android:name="alyhuggan.fora.ui.recipe.RecipeExtendedViewFragment"

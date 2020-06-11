@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 
-data class FoodItem(val type: String = "", val name: String = "", val quantity: Quantity? = null) :
+data class FoodItem(val type: String = "", val name: String = "", val brand: String? = "", val quantity: Quantity? = null) :
     Parcelable {
 }

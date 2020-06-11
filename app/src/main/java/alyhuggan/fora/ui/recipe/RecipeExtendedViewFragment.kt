@@ -3,11 +3,14 @@ package alyhuggan.fora.ui.recipe
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.ExtendedRecyclerViewAdapter
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_extended_view.*
@@ -28,8 +31,12 @@ class RecipeExtendedViewFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(arguments != null) {
-            val recipe: Recipe = arguments!!.getParcelable<Recipe>("Hello")!!
-//            Log.d(TAG, "Recipe = $recipe")
+
+            val recipe: Recipe = arguments!!.getParcelable<Recipe>("RecipeList")!!
+            val byteArray: ByteArray = arguments!!.getByteArray("Image")!!
+
+            val imageView: ImageView = view.findViewById<ImageView>(R.id.extended_view_imageview)
+            imageView.setImageBitmap(convertBitmap(byteArray))
 
             extended_view_title.text = recipe.title
             extended_view_ratingbar.rating = recipe.rating!!.toFloat()
@@ -41,5 +48,7 @@ class RecipeExtendedViewFragment: Fragment() {
 //            Log.d(TAG, "Recipe = empty")
         }
     }
+
+    private fun convertBitmap(byteArray: ByteArray) = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
 }

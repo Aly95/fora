@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.items_extended_view.view.*
+
+private lateinit var storageRef: StorageReference
 
 class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val ingredients: TextView = view.extended_view_ingredients

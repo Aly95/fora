@@ -1,9 +1,8 @@
 package alyhuggan.fora.ui.foods.recyclerviewadapters
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
-import alyhuggan.fora.ui.recipe.recyclerviewadapters.RecipeRecyclerViewAdapter
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeRecyclerViewAdapter
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater

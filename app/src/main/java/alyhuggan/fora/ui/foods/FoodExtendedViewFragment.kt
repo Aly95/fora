@@ -4,8 +4,7 @@ import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
-import alyhuggan.fora.ui.foods.recyclerviewadapters.FoodExtendedRecyclerViewAdapter
-import alyhuggan.fora.ui.recipe.recyclerviewadapters.RecipeRecyclerViewAdapter
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeRecyclerViewAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_extended_view.*
 import kotlinx.android.synthetic.main.fragment_extended_view.extended_view_ingredients
-import kotlinx.android.synthetic.main.fragment_top_recipes.*
-import kotlinx.android.synthetic.main.items_extended_view.*
 
 private const val TAG = "FoodExtendedViewFrag"
 
@@ -46,6 +43,7 @@ class FoodExtendedViewFragment : Fragment() {
                     FoodItem(
                         "Sugar sugar",
                         "full fat sugar",
+                        null,
                         Quantity(
                             "cups",
                             "5.0"
@@ -56,6 +54,7 @@ class FoodExtendedViewFragment : Fragment() {
                     FoodItem(
                         "Could do",
                         "milk",
+                        null,
                         Quantity(
                             "ml",
                             "550"
@@ -76,10 +75,11 @@ class FoodExtendedViewFragment : Fragment() {
                 )
             }
 
-            val adapter = RecipeRecyclerViewAdapter(
-                recipeList,
-                activity!!
-            )
+            val adapter =
+                RecipeRecyclerViewAdapter(
+                    recipeList,
+                    activity!!
+                )
 
             extended_view_title.text = food.name
             extended_view_ratingbar.rating = 4.5.toFloat()

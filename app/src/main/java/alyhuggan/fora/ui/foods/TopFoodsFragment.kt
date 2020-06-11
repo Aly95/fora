@@ -57,6 +57,7 @@ class TopFoodsFragment : Fragment(), KodeinAware {
         val food: FoodItem = FoodItem(
             "Others",
             "Sushi",
+            null,
             Quantity(
                 "tray",
                 "2"

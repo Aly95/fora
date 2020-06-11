@@ -4,14 +4,12 @@ import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
-import alyhuggan.fora.ui.recipe.recyclerviewadapters.RecipeHorizontalRecyclerViewAdapter
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
-import android.media.Image
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -20,14 +18,12 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_top_recipes.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
-import java.io.File
 import kotlin.math.roundToInt
 
 private const val TAG = "TopRecipesFragment"
@@ -37,6 +33,7 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private val viewModelFactory by instance<RecipeViewModelFactory>()
+    private val adapterList = ArrayList<Recipe>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,45 +62,43 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
         val recipeList = ArrayList<Recipe>()
 
-//        Log.d(TAG, "initializeRecyclerAdapter: Starts")
+        val adapter = RecipeHorizontalRecyclerViewAdapter(
+            adapterList,
+            context!!,
+            activity!!
+        )
 
-        val list = ArrayList<Recipe>()
-        for (i in 0..15) {
-            val recipe = sampleData()
-            list.add(i, recipe)
-        }
+        recipes_recycler_view.adapter = adapter
+        recipes_recycler_view.setHasFixedSize(true)
 
-        list.sortByDescending { it.rating }
-//        Log.d(TAG, "Hello")
-
-        viewModel.addRecipe(list[1])
-
+        recipes_recycler_view.layoutManager = LinearLayoutManager(context)
 
         viewModel.getRecipes().observe(viewLifecycleOwner, Observer { recipe ->
-            recipeList.clear()
+            adapterList.clear()
+
             recipe.forEach {
-//                Log.d(TAG, "It = $it")
-                recipeList.add(it)
+                adapterList.add(it)
+                val title = it.title.toString()
+                Log.d(TAG, "Title = $title")
             }
-//            Log.d(TAG, "Hello")
-
-
-            recipes_recycler_view.layoutManager = LinearLayoutManager(context)
-                val resId = R.anim.example
-                val animation: LayoutAnimationController =
-                    AnimationUtils.loadLayoutAnimation(context, resId)
-                recipes_recycler_view.layoutAnimation = animation
-
-
-            recipes_recycler_view.adapter =
-                RecipeHorizontalRecyclerViewAdapter(
-                    recipeList,
-                    context!!,
-                    fragmentManager!!,
-                    activity!!
-                )
-            recipes_recycler_view.setHasFixedSize(true)
+            val resId = R.anim.example
+            val animation: LayoutAnimationController =
+                AnimationUtils.loadLayoutAnimation(context, resId)
+            recipes_recycler_view.layoutAnimation = animation
+            adapter.notifyDataSetChanged()
         })
+
+//        val list = ArrayList<Recipe>()
+//        for (i in 0..15) {
+//            val recipe = sampleData()
+//            list.add(i, recipe)
+//        }
+//
+//        list.sortByDescending { it.rating }
+//        Log.d(TAG, "Hello")
+
+//        viewModel.addRecipe(list[1])
+
     }
 
     private fun sampleData(): Recipe {
@@ -117,6 +112,7 @@ class TopRecipesFragment : Fragment(), KodeinAware {
                     FoodItem(
                         "Something",
                         "Flour",
+                        null,
                         Quantity(
                             "Cups of",
                             "1 1/2"
@@ -128,6 +124,7 @@ class TopRecipesFragment : Fragment(), KodeinAware {
                     FoodItem(
                         "Dessert",
                         "baking soda",
+                        null,
                         Quantity(
                             "teaspoon",
                             "1/4"
@@ -190,24 +187,5 @@ class TopRecipesFragment : Fragment(), KodeinAware {
     private fun setSearchHint() {
         val searchbox: EditText = activity!!.findViewById(R.id.searchbox_text)
         searchbox.hint = "Search Recipes"
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val navController = Navigation.findNavController(activity!!.parent, R.id.nav_host_fragment)
-
-//        return when (item.itemId) {
-//            R.id.menu_account -> {
-////                Log.d(TAG, "Hello")
-////                val action = TopRecipesFragmentDirections.nextAction()
-//                navController.navigate(R.id.nextAction)
-//                true
-//            }
-//            else -> {
-////                Log.d(TAG, "Goodbye")
-//                super.onOptionsItemSelected(item)
-//            }
-        return true
-//        }
     }
 }
