@@ -2,6 +2,7 @@ package alyhuggan.fora.repository.objects.recipe
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.*
@@ -16,6 +17,10 @@ private lateinit var storageRef: StorageReference
 
 private val recipeList = MutableLiveData<List<Recipe>>()
 private val mutableRecipeList = mutableListOf<Recipe>()
+private val key = MutableLiveData<String>()
+
+private val recipeKeyList = MutableLiveData<ArrayList<Recipe>>()
+private var snapshot: DataSnapshot? = null
 
 class RecipeDaoImplementation :
     RecipeDaoInterface {
@@ -27,7 +32,13 @@ class RecipeDaoImplementation :
 
     override fun getRecipes() = recipeList
 
-    override fun addRecipe(recipe: Recipe) {
+    override fun getSingleRecipe(key: String): LiveData<Recipe> {
+        val recipe = MutableLiveData<Recipe>()
+        recipe.value = snapshot!!.child(key).getValue(Recipe::class.java)
+        return recipe
+    }
+
+    override fun addRecipe(recipe: Recipe): LiveData<String>? {
 
         val dataId = database.push().key
         val userId = "User"
@@ -67,6 +78,8 @@ class RecipeDaoImplementation :
                 }
             }
         }
+        key.value = dataId
+        return key
     }
 
     private fun updateRecyclerViewData() {
@@ -83,6 +96,9 @@ class RecipeDaoImplementation :
             }
 
             override fun onDataChange(databaseRecipes: DataSnapshot) {
+
+                snapshot = databaseRecipes
+
                 if (databaseRecipes.exists()) {
                     mutableRecipeList.clear()
                     for (r in databaseRecipes.children) {

@@ -1,7 +1,7 @@
 package alyhuggan.fora.ui.recipe
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.Quantity
+import alyhuggan.fora.repository.objects.foods.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeHorizontalRecyclerViewAdapter
@@ -24,6 +24,9 @@ import kotlinx.android.synthetic.main.fragment_top_recipes.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 private const val TAG = "TopRecipesFragment"
@@ -61,6 +64,9 @@ class TopRecipesFragment : Fragment(), KodeinAware {
             ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
 
         val recipeList = ArrayList<Recipe>()
+        val typeCount = ArrayList<String>()
+        val list = listOf<String>("a", "b", "c")
+        val topTypeMap: MutableMap<String, Int> = HashMap()
 
         val adapter = RecipeHorizontalRecyclerViewAdapter(
             adapterList,
@@ -75,10 +81,34 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
         viewModel.getRecipes().observe(viewLifecycleOwner, Observer { recipe ->
             adapterList.clear()
+            typeCount.clear()
+
+            recipe.forEach { recipe ->
+                recipe.type.forEach {
+                    typeCount.add(it)
+                }
+            }
+
+            /*
+//            TODO Get sorting algorithm working
+             */
+            for (i in typeCount.distinct()) {
+                val iCheck = Collections.frequency(typeCount, i)
+                for (j in typeCount.distinct()) {
+                    val jCheck = Collections.frequency(typeCount, j)
+                    if(iCheck > jCheck) {
+                        Log.d(TAG, "Testing $iCheck, $jCheck")
+                    }
+                }
+            }
+
+
+
+
 
             recipe.forEach {
                 adapterList.add(it)
-                val title = it.title.toString()
+                val title = it.title
                 Log.d(TAG, "Title = $title")
             }
             val resId = R.anim.example
@@ -87,102 +117,8 @@ class TopRecipesFragment : Fragment(), KodeinAware {
             recipes_recycler_view.layoutAnimation = animation
             adapter.notifyDataSetChanged()
         })
-
-//        val list = ArrayList<Recipe>()
-//        for (i in 0..15) {
-//            val recipe = sampleData()
-//            list.add(i, recipe)
-//        }
-//
-//        list.sortByDescending { it.rating }
-//        Log.d(TAG, "Hello")
-
-//        viewModel.addRecipe(list[1])
-
     }
 
-    private fun sampleData(): Recipe {
-
-        val mutableList = mutableListOf<FoodItem>()
-
-        for (i in 0..8) {
-
-            if (i % 2 == 0) {
-                mutableList.add(
-                    FoodItem(
-                        "Something",
-                        "Flour",
-                        null,
-                        Quantity(
-                            "Cups of",
-                            "1 1/2"
-                        )
-                    )
-                )
-            } else {
-                mutableList.add(
-                    FoodItem(
-                        "Dessert",
-                        "baking soda",
-                        null,
-                        Quantity(
-                            "teaspoon",
-                            "1/4"
-                        )
-                    )
-                )
-            }
-        }
-        val list: ArrayList<FoodItem> = mutableList as ArrayList
-        val rating: Double = Math.random() * 5
-
-        val rnd: Double = Math.random() * 5
-        val name = rnd.roundToInt()
-//        Log.d(TAG, "name = $name")
-        var title = ""
-
-        val type = mutableListOf<String>()
-
-        when(name) {
-            1 -> {
-                title = "Rubbish Meal"
-                type.add("Lunch")
-                type.add("Savoury")
-            }
-            2 -> {
-                title = "Pork Pie"
-                type.add("Lunch")
-                type.add("Savoury")
-            }
-            3 -> {
-                title = "Nicks Powdered Protein"
-                type.add("Sweet")
-                type.add("Dessert")
-            }
-            4 -> {
-                title = "Sams Chocolate Sausage"
-                type.add("Breakfast")
-                type.add("Savoury")
-            }
-            5 -> {
-                title = "Seafood Delight"
-                type.add("Lunch")
-                type.add("Dessert")
-            } else -> {
-                title = "Captain Crunch"
-            type.add("Lunch")
-            type.add("Dessert")
-        }
-        }
-
-        return Recipe(
-            title,
-            rating,
-            null,
-            type,
-            list
-        )
-    }
 
     private fun setSearchHint() {
         val searchbox: EditText = activity!!.findViewById(R.id.searchbox_text)

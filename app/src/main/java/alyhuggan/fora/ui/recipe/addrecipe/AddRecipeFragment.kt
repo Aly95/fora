@@ -1,11 +1,12 @@
 package alyhuggan.fora.ui.recipe.addrecipe
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.Quantity
-import alyhuggan.fora.repository.objects.foods.FoodItem
+import alyhuggan.fora.repository.objects.foods.*
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.addrecipes.AddRecipeRecyclerViewAdapter
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.addrecipes.InstructionRecyclerViewAdapter
+import alyhuggan.fora.viewmodels.food.FoodViewModel
+import alyhuggan.fora.viewmodels.food.FoodViewModelFactory
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.app.Activity.RESULT_OK
@@ -18,7 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@ class AddRecipeFragment : Fragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private val viewModelFactory by instance<RecipeViewModelFactory>()
+    private val foodViewModelFactory by instance<FoodViewModelFactory>()
 
     private val ingredientList: MutableList<FoodItem> = mutableListOf()
     private val tagsList = ArrayList<String>()
@@ -69,6 +71,23 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         setUpCollapsibleViews(view)
 
     }
+
+    private fun couldDo() {
+
+        val nameChildren = ArrayList<View>()
+        nameChildren.add(getView(R.id.add_recipe_name))
+
+        /*
+        Change to this function later
+         */
+//        setUpListeners(ExpandableView(
+//            getView(R.id.name_bar),
+//            nameChildren
+//        ))
+    }
+
+    private fun getView(viewId: Int) = view!!.findViewById<View>(viewId)
+
     private fun setUpCollapsibleViews(view: View) {
 
         val nameChildren = ArrayList<View>()
@@ -79,7 +98,7 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         val tagsChildren = ArrayList<View>()
         val tagsListChildren = ArrayList<View>()
         val ratingChildren = ArrayList<View>()
-        val imageChildren = ArrayList < View >()
+        val imageChildren = ArrayList<View>()
 
         val name = view.findViewById<LinearLayout>(R.id.name_bar)
         val nameET = view.findViewById<EditText>(R.id.add_recipe_name)
@@ -235,7 +254,8 @@ class AddRecipeFragment : Fragment(), KodeinAware {
                 Quantity(
                     "",
                     ""
-                )
+                ),
+                ArrayList<String?>()
             )
         )
 
@@ -261,7 +281,8 @@ class AddRecipeFragment : Fragment(), KodeinAware {
                         Quantity(
                             quantityType,
                             quantityAmount
-                        )
+                        ),
+                        ArrayList<String?>()
                     )
                     ingredientList.add(foodItem)
                     setUpIngredientRecyclerView(ingredientList, recyclerView)
@@ -273,12 +294,21 @@ class AddRecipeFragment : Fragment(), KodeinAware {
                         Quantity(
                             quantityType,
                             quantityAmount
-                        )
+                        ),
+                        ArrayList<String?>()
                     )
 
                     Log.d(TAG, "Food Item = $foodItem")
-                    ingredientList.add(foodItem)
-                    setUpIngredientRecyclerView(ingredientList, recyclerView)
+                    var count = 0
+                    ingredientList.forEach {
+                        if (it.brand == foodItem.brand && it.name == foodItem.name) {
+                            count++
+                        }
+                        if (count < 1) {
+                            ingredientList.add(foodItem)
+                            setUpIngredientRecyclerView(ingredientList, recyclerView)
+                        }
+                    }
                 }
             } else {
                 Toast.makeText(context, "Please enter details", Toast.LENGTH_SHORT).show()
@@ -330,7 +360,53 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         val recipe = getRecipe()
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
-        viewModel.addRecipe(recipe)
+
+        val key = viewModel.addRecipe(recipe)?.value
+        val array = ArrayList<String>()
+        array.add(key!!)
+
+        ingredientList.forEach {
+            it.recipeKeyList.add(key)
+            Log.d(TAG, "it = $it")
+        }
+
+        Log.d(TAG, "Result = $key")
+
+        val foodModel =
+            ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
+
+        foodModel.checkBrand().observe(viewLifecycleOwner, Observer { brandList ->
+            val distinctList = ingredientList.distinct()
+            distinctList.forEach { ingredient ->
+                    if (brandList.contains(ingredient.brand)) {
+                        foodModel.checkFood().observe(viewLifecycleOwner, Observer { foodList ->
+                            if (foodList.contains(ingredient.name)) {
+                                Log.d(TAG, "Food Already Exists, update recipe list")
+                                foodModel.updateRecipe(ingredient)
+                            } else {
+                                Log.d(TAG, "Add food item")
+                                foodModel.addFoods(ingredient)
+                            }
+                        })
+                    } else {
+                        foodModel.addFoods(ingredient)
+                    }
+
+            }
+        })
+
+//        val foodList = foodModel.getFoods().observe(viewLifecycleOwner, Observer { foodItemList ->
+//            foodItemList.forEach {foodItem ->
+//                ingredientList.forEach {ingredient ->
+//                    if(ingredient.brand == foodItem.brand && ingredient.name == foodItem.name) {
+//                        Log.d(TAG, "Duplicate item found")
+//                    } else {
+//                        foodModel.addFoods(ingredient)
+//                        Log.d(TAG, "adding item $ingredient")
+//                    }
+//                }
+//            }
+//        })
     }
 
     private fun setUpIngredientRecyclerView(

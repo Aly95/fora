@@ -62,7 +62,7 @@ class RecipeRecyclerViewAdapter(
             storageRef = FirebaseStorage.getInstance().reference
 
             storageRef.child(recipe.photo).downloadUrl.addOnSuccessListener {
-                Log.d(TAG, "It = $it")
+//                Log.d(TAG, "It = $it")
                 Glide.with(activity).load(it).centerCrop().into(image)
             }
         } else {

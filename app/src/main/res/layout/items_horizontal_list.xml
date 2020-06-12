@@ -2,25 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/recipe_title"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/horizontal_list_CV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:textColor="@color/accent"
-        android:textSize="20sp"
-        android:visibility="invisible" />
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipes_horizontal_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+        <LinearLayout
+            android:id="@+id/horizontal_list_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:animateLayoutChanges="true"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/recipe_title"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/green_background"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="4dp"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:visibility="invisible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipes_horizontal_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

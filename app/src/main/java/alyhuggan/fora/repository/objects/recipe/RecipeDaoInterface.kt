@@ -6,5 +6,6 @@ import androidx.lifecycle.LiveData
 
 interface RecipeDaoInterface {
     fun getRecipes(): LiveData<List<Recipe>>
-    fun addRecipe(recipe: Recipe)
+    fun addRecipe(recipe: Recipe): LiveData<String>?
+    fun getSingleRecipe(key: String): LiveData<Recipe>
 }

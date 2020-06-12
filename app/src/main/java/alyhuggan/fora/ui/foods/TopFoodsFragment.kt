@@ -1,7 +1,7 @@
 package alyhuggan.fora.ui.foods
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.Quantity
+import alyhuggan.fora.repository.objects.foods.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.ui.foods.recyclerviewadapters.FoodHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.food.FoodViewModel
@@ -54,19 +54,8 @@ class TopFoodsFragment : Fragment(), KodeinAware {
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(FoodViewModel::class.java)
         val foodList = ArrayList<FoodItem>()
 
-        val food: FoodItem = FoodItem(
-            "Others",
-            "Sushi",
-            null,
-            Quantity(
-                "tray",
-                "2"
-            )
-        )
-
-        viewModel.addFoods(food)
-
-        viewModel.getFoods().observe(this, Observer { foods ->
+        viewModel.getFoods().observe(viewLifecycleOwner, Observer { foods ->
+            foodList.clear()
             if(foods.isNotEmpty()) {
                foods.forEach {
                    foodList.add(it)

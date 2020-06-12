@@ -51,7 +51,12 @@ class FoodRecyclerViewAdapter(
 
             val foodItem = foodList[position]
 
-            title.text = foodItem.name
+            if(foodItem.brand != "Generic") {
+                title.text = "${foodItem.brand} ${foodItem.name}"
+            } else {
+                title.text = "${foodItem.name}"
+
+            }
             rating.rating = 4.5.toFloat()
             image.setImageResource(R.drawable.chicken)
 

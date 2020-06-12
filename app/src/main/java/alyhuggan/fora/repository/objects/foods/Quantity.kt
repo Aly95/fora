@@ -1,4 +1,4 @@
-package alyhuggan.fora.repository.objects
+package alyhuggan.fora.repository.objects.foods
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

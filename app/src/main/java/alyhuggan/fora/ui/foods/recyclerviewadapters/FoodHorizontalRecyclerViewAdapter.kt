@@ -94,8 +94,10 @@ class FoodHorizontalRecyclerViewAdapter(
         val typeList = ArrayList<FoodItem>()
 
         foodList.forEach { food ->
-            if (food.type.contains(typeOfFood))
-                typeList.add(food)
+            if (food.type != null) {
+                if (food.type.contains(typeOfFood))
+                    typeList.add(food)
+            }
         }
         if (typeList.isNotEmpty()) {
 //            return typeList.sortedByDescending { it.rating }

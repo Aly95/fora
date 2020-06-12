@@ -1,59 +1,87 @@
 package alyhuggan.fora.repository.objects.foods
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 
-private const val TAG = "ForaDaoImplementation"
+private const val TAG = "FoodDaoImplementation"
 private lateinit var database: DatabaseReference
 
 private val foodList = MutableLiveData<List<FoodItem>>()
 private val mutableFoodList = mutableListOf<FoodItem>()
 
-class FoodDaoImplementation: FoodDaoInterface {
+private val databaseStructureBrands = MutableLiveData<List<String>>()
+private val mutableDatabaseStructureBrands = mutableListOf<String>()
+
+private val databaseStructureFoods = MutableLiveData<List<String>>()
+private val mutableDatabaseStructureFoods = mutableListOf<String>()
+
+class FoodDaoImplementation : FoodDaoInterface {
 
     init {
         updateRecyclerViewData()
         foodList.value = mutableFoodList
+        databaseStructureBrands.value = mutableDatabaseStructureBrands
+        databaseStructureFoods.value = mutableDatabaseStructureFoods
     }
 
     override fun getFoods() = foodList
 
-    override fun addFood(foodItem: FoodItem) {
+    override fun checkBrand() = databaseStructureBrands
 
-        val dataId = database.push().key
-        if(dataId != null) {
-            database.child(dataId).setValue(foodItem).addOnCompleteListener{
-//                Log.d(TAG, "Database: Value added")
-            }
-        } else {
-//            Log.d(TAG, "DataId equals null")
+    override fun checkFood() = databaseStructureFoods
+
+    override fun updateRecipe(foodItem: FoodItem) {
+
+        var recipeList = ArrayList<String?>()
+
+        val result = mutableFoodList.forEach {
+            if(it.brand == foodItem.brand && it.name == foodItem.name) {
+                    recipeList = it.recipeKeyList
+                    recipeList.add(foodItem.recipeKeyList[0])
+                }
+                database.child(foodItem.brand!!).child(foodItem.name).child("recipeKeyList").setValue(recipeList)
         }
     }
 
-    private fun updateRecyclerViewData() {
+    override fun addFood(foodItem: FoodItem) {
+
+        var brand = ""
+        brand = foodItem.brand ?: "Generic"
+        database.child(brand).child(foodItem.name).setValue(foodItem)
+    }
+}
+
+private fun updateRecyclerViewData() {
 //        Log.d(TAG, "updateRecyclerViewData: starts")
 
-        database = FirebaseDatabase.getInstance().getReference("food")
+    database = FirebaseDatabase.getInstance().getReference("food")
 
-        database.addListenerForSingleValueEvent(object:
-            ValueEventListener {
+    database.addValueEventListener(object :
+        ValueEventListener {
 
-            override fun onCancelled(p0: DatabaseError) {
+        override fun onCancelled(p0: DatabaseError) {
 //                Log.d(TAG, "getRecipes listener: onCancelled")
-            }
+        }
 
-            override fun onDataChange(databaseFoods: DataSnapshot) {
-                if(databaseFoods.exists()) {
-                    mutableFoodList.clear()
-                    for(f in databaseFoods.children) {
-                        val food = f.getValue(FoodItem::class.java)
-                        if(food != null) {
-                            mutableFoodList.add(food)
-                        }
+        override fun onDataChange(databaseFoods: DataSnapshot) {
+            if (databaseFoods.exists()) {
+                mutableFoodList.clear()
+                mutableDatabaseStructureBrands.clear()
+                mutableDatabaseStructureFoods.clear()
+
+                val brandList = databaseFoods.children
+                brandList.forEach { brand ->
+                    mutableDatabaseStructureBrands.add(brand.key!!)
+                    val dbFoodList = brand.children
+                    dbFoodList.forEach { food ->
+                        mutableFoodList.add(food.getValue(FoodItem::class.java)!!)
+                        mutableDatabaseStructureFoods.add(food.key!!)
                     }
+
                 }
-                foodList.postValue(mutableFoodList)
             }
-        })
-    }
+        }
+    })
 }

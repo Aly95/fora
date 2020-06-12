@@ -34,7 +34,7 @@ class ExtendedRecyclerViewAdapter(private val foodList: List<FoodItem>) :
         val foodListPosition = foodList[position]
         val quantity = foodListPosition.quantity
 
-        val name = foodListPosition.name
+        val name = "${foodListPosition.brand} ${foodListPosition.name}"
         val quantityAmount = quantity!!.quantity
         val quantityType = quantity.quantityType
 

@@ -7,8 +7,9 @@ import alyhuggan.fora.repository.objects.recipe.RecipeDaoInterface
 import androidx.lifecycle.ViewModel
 
 class FoodViewModel(private val foodDaoInterface: FoodDaoInterface) : ViewModel() {
-
     fun getFoods() = foodDaoInterface.getFoods()
     fun addFoods(food: FoodItem) = foodDaoInterface.addFood(food)
-
+    fun checkBrand() = foodDaoInterface.checkBrand()
+    fun checkFood() = foodDaoInterface.checkFood()
+    fun updateRecipe(food: FoodItem) = foodDaoInterface.updateRecipe(food)
 }

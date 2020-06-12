@@ -42,7 +42,9 @@ class RecipeExtendedViewFragment: Fragment() {
             extended_view_ratingbar.rating = recipe.rating!!.toFloat()
 
             extended_view_recyclerview.layoutManager = LinearLayoutManager(context)
-            extended_view_recyclerview.adapter = ExtendedRecyclerViewAdapter(recipe.foods!!)
+            if(recipe.foods != null) {
+                extended_view_recyclerview.adapter = ExtendedRecyclerViewAdapter(recipe.foods)
+            }
             extended_view_recyclerview.setHasFixedSize(true)
         } else {
 //            Log.d(TAG, "Recipe = empty")
