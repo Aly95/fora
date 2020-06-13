@@ -3,10 +3,8 @@ package alyhuggan.fora.ui.recipe
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.ExtendedRecyclerViewAdapter
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_extended_view.*
-import kotlinx.android.synthetic.main.items_horizontal_list.*
+import kotlinx.android.synthetic.main.item_list_card.*
 
 private const val TAG = "RecipeExtendedViewFrag"
 
@@ -40,12 +38,14 @@ class RecipeExtendedViewFragment: Fragment() {
 
             extended_view_title.text = recipe.title
             extended_view_ratingbar.rating = recipe.rating!!.toFloat()
+            item_card_title_first.text = "Ingredients"
+            item_card_title_second.text = "Method"
 
-            extended_view_recyclerview.layoutManager = LinearLayoutManager(context)
+            item_card_recyclerview.layoutManager = LinearLayoutManager(context)
             if(recipe.foods != null) {
-                extended_view_recyclerview.adapter = ExtendedRecyclerViewAdapter(recipe.foods)
+                item_card_recyclerview.adapter = ExtendedRecyclerViewAdapter(recipe.foods)
             }
-            extended_view_recyclerview.setHasFixedSize(true)
+            item_card_recyclerview.setHasFixedSize(true)
         } else {
 //            Log.d(TAG, "Recipe = empty")
         }

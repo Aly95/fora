@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
-import kotlinx.android.synthetic.main.items_card.view.*
 
 class MyAccountFragment : Fragment() {
 
@@ -37,7 +36,7 @@ class MyAccountFragment : Fragment() {
 
         val cardView = view!!.findViewById<View>(R.id.card_add)
         val imgView = cardView.findViewById<ImageView>(R.id.item_card_image)
-        val txtView = cardView.findViewById<TextView>(R.id.item_card_title)
+        val txtView = cardView.findViewById<TextView>(R.id.item_card_name)
 
         txtView.text = "Add Recipe"
 

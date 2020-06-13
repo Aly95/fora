@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="170dp"
-    android:layout_height="220dp"
+    android:layout_height="190dp"
     android:layout_marginLeft="2dp">
 
     <androidx.cardview.widget.CardView
@@ -40,32 +40,70 @@
                 android:weightSum="10">
 
                 <TextView
-                    android:id="@+id/item_card_title"
+                    android:id="@+id/item_card_name"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="8"
                     android:gravity="center|top"
                     android:textSize="14sp"
                     tools:text="@string/title_Text" />
 
-                <RatingBar
-                    android:id="@+id/item_card_ratingbar"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:layout_marginLeft="30dp"
-                    android:isIndicator="true"
-                    android:max="5"
-                    android:numStars="5"
-                    android:progressTint="@color/ratingBar"
-                    android:rating="5"
-                    android:scaleX="1.2"
-                    android:scaleY="1.2"
-                    android:stepSize="0.5"
-                    tools:rating="3" />
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp">
+
+                        <TextView
+                            android:id="@+id/item_card_user_ratings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="end"
+                            android:text="57 Ratings" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/item_card_ratings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="4.7" />
+
+                            <RatingBar
+                                android:id="@+id/item_card_ratingbar"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|end"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:numStars="1"
+                                android:progressTint="@color/ratingBar"
+                                android:rating="5"
+                                android:scaleX="1"
+                                android:scaleY="1"
+                                android:stepSize="0.5"
+                                tools:rating="3" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 

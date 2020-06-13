@@ -5,14 +5,12 @@ import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.RecipeExtendedViewFragment
 import android.app.Activity
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +24,9 @@ private const val TAG = "RecipeRecyclerVA"
 private lateinit var storageRef: StorageReference
 
 class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val title: TextView = view.item_card_title
-    val rating: RatingBar = view.item_card_ratingbar
+    val title: TextView = view.item_card_name
+//    val rating: RatingBar = view.item_card_ratingbar
+    val rating: TextView = view.item_card_ratings
     val image: ImageView = view.item_card_image
 }
 
@@ -54,7 +53,7 @@ class RecipeRecyclerViewAdapter(
         val recipe = recipeList[position]
 
         title.text = recipe.title
-        rating.rating = recipe.rating!!.toFloat()
+        rating.text = recipe.rating!!.toString()
 
         if(recipe.photo != null) {
             Log.d(TAG, "Hello")
@@ -66,7 +65,7 @@ class RecipeRecyclerViewAdapter(
                 Glide.with(activity).load(it).centerCrop().into(image)
             }
         } else {
-            image.setImageResource(R.drawable.chicken)
+            image.setImageResource(R.drawable.fora)
         }
 
         holder.itemView.setOnClickListener {

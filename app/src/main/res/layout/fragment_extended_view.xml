@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darker_background"
     android:orientation="vertical"
     android:weightSum="10">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4.5">
+        android:layout_weight="4">
 
         <ImageView
             android:id="@+id/extended_view_imageview"
@@ -34,46 +35,45 @@
             tools:text="Hello" />
     </FrameLayout>
 
-
-    <RatingBar
-        android:id="@+id/extended_view_ratingbar"
-        style="@style/Widget.AppCompat.RatingBar"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_card_CV"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_margin="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
-        android:isIndicator="true"
-        android:max="5"
-        android:numStars="5"
-        android:progressTint="@color/ratingBar"
-        android:rating="5"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:stepSize="0.5"
-        tools:rating="3" />
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:contentPadding="4dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray"/>
 
-    <TextView
-        android:id="@+id/extended_view_ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="12dp"
-        android:layout_weight="0.6"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center|start"
-        android:text="@string/extended_view_ingredients_Text"
-        android:textColor="@color/primary_text"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <RatingBar
+            android:id="@+id/extended_view_ratingbar"
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:progressTint="@color/ratingBar"
+            android:rating="5"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:stepSize="0.5"
+            tools:rating="3" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/extended_view_recyclerview"
+    </com.google.android.material.card.MaterialCardView>
+
+    <include
+        android:id="@+id/extended_view_card"
+        layout="@layout/item_list_card"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.9" />
+        android:layout_weight="5">
+    </include>
+
+
 </LinearLayout>

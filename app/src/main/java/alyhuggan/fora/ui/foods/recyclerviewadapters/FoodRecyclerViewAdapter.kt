@@ -13,13 +13,14 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.items_card.view.*
 
 
 private const val TAG = "FoodRecyclerVA"
 
 class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val title: TextView = view.item_card_title
+    val title: TextView = view.item_card_name
     val rating: RatingBar = view.item_card_ratingbar
     val image: ImageView = view.item_card_image
 }
@@ -58,7 +59,8 @@ class FoodRecyclerViewAdapter(
 
             }
             rating.rating = 4.5.toFloat()
-            image.setImageResource(R.drawable.chicken)
+//            image.setImageResource(R.drawable.fora)
+            Glide.with(activity).load(R.drawable.fora).centerInside().into(image)
 
             holder.itemView.setOnClickListener {
 

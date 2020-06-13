@@ -72,6 +72,297 @@ class AddRecipeFragment : Fragment(), KodeinAware {
 
     }
 
+    /*
+    Expand/Collapse card view children
+     */
+    private fun cardViewAnimation(viewList: ArrayList<View>) {
+        viewList.forEach { view ->
+            if (view.visibility == View.VISIBLE) {
+                view.visibility = View.GONE
+            } else {
+                view.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun setUpTag(view: View) {
+        val addButton: Button = view.findViewById(R.id.add_recipe_add_tags_btn)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.add_recipe_tags_recyclerview)
+        val tagsET: EditText = view.findViewById(R.id.add_recipe_tags)
+        tagsList.add("Try adding some tags!")
+
+        recyclerView(view, addButton, tagsList, recyclerView, tagsET)
+    }
+
+    private fun setUpInstruction(view: View) {
+        val addButton: Button = view.findViewById(R.id.add_recipe_add_instruction_btn)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.add_recipe_instruction_recyclerview)
+        val instructionET: EditText = view.findViewById(R.id.add_recipe_instruction)
+        instructionList.add("Try adding some instructions!")
+
+        recyclerView(view, addButton, instructionList, recyclerView, instructionET)
+    }
+
+    private fun recyclerView(
+        view: View, addButton: Button,
+        passedList: ArrayList<String>,
+        recyclerView: RecyclerView, editText: EditText
+    ) {
+
+        var itemAdded = false
+
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        setUpRecyclerView(passedList, recyclerView)
+
+        addButton.setOnClickListener {
+
+            if (itemAdded == false) {
+                passedList.clear()
+                itemAdded = true
+            }
+
+            val editTextString = editText.text.toString()
+            if (editTextString != "") {
+                if (addButton.id == R.id.add_recipe_add_tags_btn) {
+                    val parsedList = parseList(editTextString)
+                    parsedList.forEach { tag ->
+                        passedList.add(tag)
+                    }
+                } else {
+                    passedList.add(editTextString)
+                }
+                recyclerView.adapter!!.notifyDataSetChanged()
+            } else {
+                Toast.makeText(context, "Please enter some data", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun parseList(str: String): List<String> {
+        val splitStringsList = str.split(",")
+        val trimmed = ArrayList<String>()
+
+        splitStringsList.forEach {
+            if (it.trim() != "") {
+                trimmed.add(it.trim().capitalize())
+            }
+        }
+        return trimmed
+    }
+
+    private fun ingredientRecyclerView(view: View) {
+
+        val addIngredient: Button = view.findViewById(R.id.add_recipe_btn_add)
+        val addForm: View = view.findViewById(R.id.addItem)
+
+        val defaultText: MutableList<FoodItem> = mutableListOf()
+
+        defaultText.add(
+            FoodItem(
+                "Type",
+                "some ingredients!",
+                "Try adding",
+                Quantity(
+                    "",
+                    ""
+                ),
+                ArrayList<String?>()
+            )
+        )
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.add_ingredient_recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        setUpIngredientRecyclerView(defaultText, recyclerView)
+
+        addIngredient.setOnClickListener {
+            val brand = addForm.recipe_fooditem_brand.text.toString().trim()
+            val food = addForm.recipe_fooditem_brand_food.text.toString().trim()
+            val quantityType = addForm.recipe_fooditem_quantity_type.text.toString().trim().toLowerCase()
+            val quantityAmount = addForm.recipe_fooditem_quantity_amount.text.toString().trim()
+
+            /*
+            Check if works without if(brand != null)
+             */
+            if (food != "" && quantityType != "" && quantityAmount != "") {
+                if (brand != "") {
+                    val foodItem = FoodItem(
+                        "",
+                        food,
+                        brand,
+                        Quantity(
+                            quantityType,
+                            quantityAmount
+                        ),
+                        ArrayList<String?>()
+                    )
+                    ingredientList.add(foodItem)
+                    setUpIngredientRecyclerView(ingredientList, recyclerView)
+                } else {
+                    val foodItem = FoodItem(
+                        "",
+                        food,
+                        null,
+                        Quantity(
+                            quantityType,
+                            quantityAmount
+                        ),
+                        ArrayList<String?>()
+                    )
+
+                    Log.d(TAG, "Food Item = $foodItem")
+                    var count = 0
+                    ingredientList.forEach {
+                        if (it.brand == foodItem.brand && it.name == foodItem.name) {
+                            count++
+                        }
+                        if (count < 1) {
+                            ingredientList.add(foodItem)
+                            setUpIngredientRecyclerView(ingredientList, recyclerView)
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Please enter details", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun setUpNavigation() {
+
+        val navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
+        val submit: Button = view!!.findViewById(R.id.add_recipe_btn_submit)
+        val cancel: Button = view!!.findViewById(R.id.add_recipe_btn_cancel)
+
+        submit.setOnClickListener {
+            addEntry()
+            navController.navigate(R.id.next)
+        }
+
+        cancel.setOnClickListener {
+            navController.popBackStack()
+        }
+    }
+
+    private fun getRecipe(): Recipe {
+
+        val addView = view
+
+        val title = addView!!.findViewById<EditText>(R.id.add_recipe_name)
+        val rating = addView.findViewById<RatingBar>(R.id.add_recipe_ratingbar)
+        var photo: String? = ""
+
+        if (selectedImageURI != null) {
+            photo = selectedImageURI.toString()
+        } else {
+            photo = null
+        }
+
+        tagsList.forEach {
+            it.capitalize().trim()
+        }
+
+        return Recipe(
+            title.text.toString(),
+            rating.rating.toDouble(),
+            photo,
+            tagsList,
+            ingredientList
+        )
+    }
+
+    //add boolean return on successful add
+    private fun addEntry() {
+        val recipe = getRecipe()
+        val viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
+
+        val key = viewModel.addRecipe(recipe)?.value
+        val array = ArrayList<String>()
+        array.add(key!!)
+
+        ingredientList.forEach {
+            it.recipeKeyList.add(key)
+            Log.d(TAG, "it = $it")
+        }
+
+        Log.d(TAG, "Result = $key")
+
+        val foodModel =
+            ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
+
+        foodModel.checkBrand().observe(viewLifecycleOwner, Observer { brandList ->
+            val distinctList = ingredientList.distinct()
+            distinctList.forEach { ingredient ->
+                    if (brandList.contains(ingredient.brand)) {
+                        foodModel.checkFood().observe(viewLifecycleOwner, Observer { foodList ->
+                            if (foodList.contains(ingredient.name)) {
+                                Log.d(TAG, "Food Already Exists, update recipe list")
+                                foodModel.updateRecipe(ingredient)
+                            } else {
+                                Log.d(TAG, "Add food item")
+                                foodModel.addFoods(ingredient)
+                            }
+                        })
+                    } else {
+                        foodModel.addFoods(ingredient)
+                    }
+
+            }
+        })
+    }
+
+    private fun setUpIngredientRecyclerView(
+        ingredientList: List<FoodItem>,
+        recyclerView: RecyclerView
+    ) {
+        recyclerView.adapter =
+            AddRecipeRecyclerViewAdapter(
+                ingredientList
+            )
+        recyclerView.adapter!!.notifyDataSetChanged()
+    }
+
+    private fun setUpRecyclerView(instructionList: List<String>, recyclerView: RecyclerView) {
+        recyclerView.adapter = InstructionRecyclerViewAdapter(instructionList)
+        recyclerView.adapter!!.notifyDataSetChanged()
+    }
+
+    private fun populateUserCardView(view: View) {
+        val cardView = view.findViewById<View>(R.id.card_add)
+        val txtView = cardView.findViewById<TextView>(R.id.item_card_name)
+        val imgView = cardView.findViewById<ImageView>(R.id.item_card_image)
+
+        imgView.setImageResource(R.drawable.food)
+        txtView.text = getString(R.string.item_card_title_default_txt)
+
+        cardView.setOnClickListener {
+            launchGallery()
+        }
+    }
+
+    private fun launchGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(
+            intent,
+            SELECT_PICTURE
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val cardView = view!!.findViewById<View>(R.id.card_add)
+        val imgView = cardView.findViewById<ImageView>(R.id.item_card_image)
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                selectedImageURI = data!!.data!!
+                Glide.with(activity!!).load(selectedImageURI).centerCrop().into(imgView)
+            }
+        }
+    }
+
     private fun couldDo() {
 
         val nameChildren = ArrayList<View>()
@@ -157,322 +448,6 @@ class AddRecipeFragment : Fragment(), KodeinAware {
     private fun setUpListeners(parent: View, children: ArrayList<View>) {
         parent.setOnClickListener {
             cardViewAnimation(children)
-        }
-    }
-
-    /*
-    Expand/Collapse card view children
-     */
-    private fun cardViewAnimation(viewList: ArrayList<View>) {
-        viewList.forEach { view ->
-            if (view.visibility == View.VISIBLE) {
-                view.visibility = View.GONE
-            } else {
-                view.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun setUpTag(view: View) {
-        val addButton: Button = view.findViewById(R.id.add_recipe_add_tags_btn)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.add_recipe_tags_recyclerview)
-        val tagsET: EditText = view.findViewById(R.id.add_recipe_tags)
-        tagsList.add("Try adding some tags!")
-
-        recyclerView(view, addButton, tagsList, recyclerView, tagsET)
-    }
-
-    private fun setUpInstruction(view: View) {
-        val addButton: Button = view.findViewById(R.id.add_recipe_add_instruction_btn)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.add_recipe_instruction_recyclerview)
-        val instructionET: EditText = view.findViewById(R.id.add_recipe_instruction)
-        instructionList.add("Try adding some instructions!")
-
-        recyclerView(view, addButton, instructionList, recyclerView, instructionET)
-    }
-
-
-    private fun recyclerView(
-        view: View, addButton: Button,
-        passedList: ArrayList<String>,
-        recyclerView: RecyclerView, editText: EditText
-    ) {
-
-        var itemAdded = false
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        setUpRecyclerView(passedList, recyclerView)
-
-        addButton.setOnClickListener {
-
-            if (itemAdded == false) {
-                passedList.clear()
-                itemAdded = true
-            }
-
-            val editTextString = editText.text.toString()
-            if (editTextString != "") {
-                if (addButton.id == R.id.add_recipe_add_tags_btn) {
-                    val parsedList = parseList(editTextString)
-                    parsedList.forEach { tag ->
-                        passedList.add(tag)
-                    }
-                } else {
-                    passedList.add(editTextString)
-                }
-                recyclerView.adapter!!.notifyDataSetChanged()
-            } else {
-                Toast.makeText(context, "Please enter some data", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun parseList(str: String): List<String> {
-        val splitStringsList = str.split(",")
-        val trimmed = ArrayList<String>()
-
-        splitStringsList.forEach {
-            if (it.trim() != "") {
-                trimmed.add(it.trim())
-            }
-        }
-        return trimmed
-    }
-
-    private fun ingredientRecyclerView(view: View) {
-
-        val addIngredient: Button = view.findViewById(R.id.add_recipe_btn_add)
-        val addForm: View = view.findViewById(R.id.addItem)
-
-        val defaultText: MutableList<FoodItem> = mutableListOf()
-
-        defaultText.add(
-            FoodItem(
-                "Type",
-                "some ingredients!",
-                "Try adding",
-                Quantity(
-                    "",
-                    ""
-                ),
-                ArrayList<String?>()
-            )
-        )
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.add_ingredient_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        setUpIngredientRecyclerView(defaultText, recyclerView)
-
-        addIngredient.setOnClickListener {
-            val brand = addForm.recipe_fooditem_brand.text.toString()
-            val food = addForm.recipe_fooditem_brand_food.text.toString()
-            val quantityType = addForm.recipe_fooditem_quantity_type.text.toString()
-            val quantityAmount = addForm.recipe_fooditem_quantity_amount.text.toString()
-
-            /*
-            Check if works without if(brand != null)
-             */
-            if (food != "" && quantityType != "" && quantityAmount != "") {
-                if (brand != "") {
-                    val foodItem = FoodItem(
-                        "",
-                        food,
-                        brand,
-                        Quantity(
-                            quantityType,
-                            quantityAmount
-                        ),
-                        ArrayList<String?>()
-                    )
-                    ingredientList.add(foodItem)
-                    setUpIngredientRecyclerView(ingredientList, recyclerView)
-                } else {
-                    val foodItem = FoodItem(
-                        "",
-                        food,
-                        null,
-                        Quantity(
-                            quantityType,
-                            quantityAmount
-                        ),
-                        ArrayList<String?>()
-                    )
-
-                    Log.d(TAG, "Food Item = $foodItem")
-                    var count = 0
-                    ingredientList.forEach {
-                        if (it.brand == foodItem.brand && it.name == foodItem.name) {
-                            count++
-                        }
-                        if (count < 1) {
-                            ingredientList.add(foodItem)
-                            setUpIngredientRecyclerView(ingredientList, recyclerView)
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(context, "Please enter details", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun setUpNavigation() {
-
-        val navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
-        val submit: Button = view!!.findViewById(R.id.add_recipe_btn_submit)
-        val cancel: Button = view!!.findViewById(R.id.add_recipe_btn_cancel)
-
-        submit.setOnClickListener {
-            addEntry()
-            navController.navigate(R.id.next)
-        }
-
-        cancel.setOnClickListener {
-            navController.popBackStack()
-        }
-    }
-
-    private fun getRecipe(): Recipe {
-
-        val addView = view
-
-        val title = addView!!.findViewById<EditText>(R.id.add_recipe_name)
-        val rating = addView.findViewById<RatingBar>(R.id.add_recipe_ratingbar)
-        var photo: String? = ""
-
-        if (selectedImageURI != null) {
-            photo = selectedImageURI.toString()
-        } else {
-            photo = null
-        }
-
-        return Recipe(
-            title.text.toString(),
-            rating.rating.toDouble(),
-            photo,
-            tagsList,
-            ingredientList
-        )
-    }
-
-    //add boolean return on successful add
-    private fun addEntry() {
-        val recipe = getRecipe()
-        val viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
-
-        val key = viewModel.addRecipe(recipe)?.value
-        val array = ArrayList<String>()
-        array.add(key!!)
-
-        ingredientList.forEach {
-            it.recipeKeyList.add(key)
-            Log.d(TAG, "it = $it")
-        }
-
-        Log.d(TAG, "Result = $key")
-
-        val foodModel =
-            ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
-
-        foodModel.checkBrand().observe(viewLifecycleOwner, Observer { brandList ->
-            val distinctList = ingredientList.distinct()
-            distinctList.forEach { ingredient ->
-                    if (brandList.contains(ingredient.brand)) {
-                        foodModel.checkFood().observe(viewLifecycleOwner, Observer { foodList ->
-                            if (foodList.contains(ingredient.name)) {
-                                Log.d(TAG, "Food Already Exists, update recipe list")
-                                foodModel.updateRecipe(ingredient)
-                            } else {
-                                Log.d(TAG, "Add food item")
-                                foodModel.addFoods(ingredient)
-                            }
-                        })
-                    } else {
-                        foodModel.addFoods(ingredient)
-                    }
-
-            }
-        })
-
-//        val foodList = foodModel.getFoods().observe(viewLifecycleOwner, Observer { foodItemList ->
-//            foodItemList.forEach {foodItem ->
-//                ingredientList.forEach {ingredient ->
-//                    if(ingredient.brand == foodItem.brand && ingredient.name == foodItem.name) {
-//                        Log.d(TAG, "Duplicate item found")
-//                    } else {
-//                        foodModel.addFoods(ingredient)
-//                        Log.d(TAG, "adding item $ingredient")
-//                    }
-//                }
-//            }
-//        })
-    }
-
-    private fun setUpIngredientRecyclerView(
-        ingredientList: List<FoodItem>,
-        recyclerView: RecyclerView
-    ) {
-        recyclerView.adapter =
-            AddRecipeRecyclerViewAdapter(
-                ingredientList
-            )
-        recyclerView.adapter!!.notifyDataSetChanged()
-    }
-
-    private fun setUpRecyclerView(instructionList: List<String>, recyclerView: RecyclerView) {
-        recyclerView.adapter = InstructionRecyclerViewAdapter(instructionList)
-        recyclerView.adapter!!.notifyDataSetChanged()
-    }
-
-    private fun populateUserCardView(view: View) {
-        val cardView = view.findViewById<View>(R.id.card_add)
-        val txtView = cardView.findViewById<TextView>(R.id.item_card_title)
-        val imgView = cardView.findViewById<ImageView>(R.id.item_card_image)
-
-        imgView.setImageResource(R.drawable.food)
-        txtView.text = getString(R.string.item_card_title_default_txt)
-
-        cardView.setOnClickListener {
-            launchGallery()
-        }
-    }
-
-//    private fun populateUploadCardView(view: View) {
-//        val uploadCardView = view.findViewById<View>(R.id.card_upload)
-//        val uploadTxt = uploadCardView.findViewById<TextView>(R.id.item_card_title)
-//        val uploadImg = uploadCardView.findViewById<ImageView>(R.id.item_card_image)
-//
-//        //Change to use string
-//        uploadTxt.text = "Click Above To Select Image"
-//        uploadImg.setImageResource(R.drawable.upload)
-//        uploadImg.scaleType = ImageView.ScaleType.FIT_CENTER
-//
-//        uploadImg.setOnClickListener {
-//            launchGallery()
-//        }
-//    }
-
-    private fun launchGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(
-            intent,
-            SELECT_PICTURE
-        )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        val cardView = view!!.findViewById<View>(R.id.card_add)
-        val imgView = cardView.findViewById<ImageView>(R.id.item_card_image)
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                selectedImageURI = data!!.data!!
-                Glide.with(activity!!).load(selectedImageURI).centerCrop().into(imgView)
-            }
         }
     }
 }

@@ -1,7 +1,6 @@
 package alyhuggan.fora.ui.foods
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.foods.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeRecyclerViewAdapter
@@ -19,8 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_extended_view.*
-import kotlinx.android.synthetic.main.fragment_extended_view.extended_view_ingredients
-import org.kodein.di.Kodein
+import kotlinx.android.synthetic.main.item_list_card.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -55,7 +53,7 @@ class FoodExtendedViewFragment : Fragment(), KodeinAware {
             val foodList = mutableListOf<FoodItem>()
             val keyList = ArrayList<String>()
 
-            extended_view_ingredients.text = "Used in recipes:"
+            item_card_title_first.text = "Used in recipes:"
             extended_view_title.text = ("${food.brand} ${food.name}")
             extended_view_ratingbar.rating = 4.5.toFloat()
 
@@ -77,8 +75,9 @@ class FoodExtendedViewFragment : Fragment(), KodeinAware {
                             }
                         }
                     }
-                    setUpRecyclerView(recipeList)
+//                    setUpRecyclerView(recipeList)
                 }
+                setUpRecyclerView(recipeList)
             })
             Log.d(TAG, "Keylist = $keyList")
         }
@@ -90,9 +89,9 @@ class FoodExtendedViewFragment : Fragment(), KodeinAware {
                 recipeList,
                 activity!!
             )
-        extended_view_recyclerview.layoutManager =
+        item_card_recyclerview.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        extended_view_recyclerview.adapter = adapter
+        item_card_recyclerview.adapter = adapter
         adapter.notifyDataSetChanged()
     }
 

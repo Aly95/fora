@@ -11,9 +11,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_extended_view.view.*
+import kotlinx.android.synthetic.main.item_list_card.view.*
 
 class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val view: RecyclerView = view.extended_view_recyclerview
+    val view: RecyclerView = view.item_card_recyclerview
 }
 
 class FoodExtendedRecyclerViewAdapter(private val recipeList: List<Recipe>, private val context: Context, private val activity: Activity) :

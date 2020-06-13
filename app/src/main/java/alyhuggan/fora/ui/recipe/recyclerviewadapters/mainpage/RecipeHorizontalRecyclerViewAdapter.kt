@@ -22,6 +22,7 @@ class RecipeViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
 
 class RecipeHorizontalRecyclerViewAdapter(
     private val recipeList: List<Recipe>,
+    private val tagList: ArrayList<String>,
     private val context: Context,
     private val activity: Activity
 ) : RecyclerView.Adapter<RecipeViewHolderNew>() {
@@ -34,19 +35,13 @@ class RecipeHorizontalRecyclerViewAdapter(
         )
     }
 
-    override fun getItemCount() = 4
+    override fun getItemCount() = tagList.size
 
     override fun onBindViewHolder(holder: RecipeViewHolderNew, position: Int) {
 
         val title = holder.title
         val recyclerView = holder.recyclerView
         val recipeRecyclerViewAdapter: RecipeRecyclerViewAdapter
-
-        val recipeTypeList = mutableListOf<String>()
-        recipeTypeList.add("Breakfast")
-        recipeTypeList.add("Lunch")
-        recipeTypeList.add("Dessert")
-        recipeTypeList.add("Savoury")
 
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -61,11 +56,11 @@ class RecipeHorizontalRecyclerViewAdapter(
                     )
             }
             else -> {
-                title.text = recipeTypeList[position]
+                title.text = tagList[position]
                 recipeRecyclerViewAdapter =
                     RecipeRecyclerViewAdapter(
                         getList(
-                            recipeTypeList[position]
+                            tagList[position]
                         ),
                         activity
                     )

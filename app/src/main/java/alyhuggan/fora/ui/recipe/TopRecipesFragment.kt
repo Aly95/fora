@@ -63,13 +63,12 @@ class TopRecipesFragment : Fragment(), KodeinAware {
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
 
-        val recipeList = ArrayList<Recipe>()
         val typeCount = ArrayList<String>()
-        val list = listOf<String>("a", "b", "c")
-        val topTypeMap: MutableMap<String, Int> = HashMap()
+        val tagList = ArrayList<String>()
 
         val adapter = RecipeHorizontalRecyclerViewAdapter(
             adapterList,
+            tagList,
             context!!,
             activity!!
         )
@@ -82,6 +81,7 @@ class TopRecipesFragment : Fragment(), KodeinAware {
         viewModel.getRecipes().observe(viewLifecycleOwner, Observer { recipe ->
             adapterList.clear()
             typeCount.clear()
+            tagList.clear()
 
             recipe.forEach { recipe ->
                 recipe.type.forEach {
@@ -89,27 +89,14 @@ class TopRecipesFragment : Fragment(), KodeinAware {
                 }
             }
 
-            /*
-//            TODO Get sorting algorithm working
-             */
-            for (i in typeCount.distinct()) {
-                val iCheck = Collections.frequency(typeCount, i)
-                for (j in typeCount.distinct()) {
-                    val jCheck = Collections.frequency(typeCount, j)
-                    if(iCheck > jCheck) {
-                        Log.d(TAG, "Testing $iCheck, $jCheck")
-                    }
-                }
+            val tags = getFrequentTags(typeCount)
+            tagList.add("Top Rated")
+            tags.forEach {
+                tagList.add(it.first)
             }
-
-
-
-
 
             recipe.forEach {
                 adapterList.add(it)
-                val title = it.title
-                Log.d(TAG, "Title = $title")
             }
             val resId = R.anim.example
             val animation: LayoutAnimationController =
@@ -123,5 +110,22 @@ class TopRecipesFragment : Fragment(), KodeinAware {
     private fun setSearchHint() {
         val searchbox: EditText = activity!!.findViewById(R.id.searchbox_text)
         searchbox.hint = "Search Recipes"
+    }
+
+    private fun getFrequentTags(typeCount: ArrayList<String>): ArrayList<Pair<String, Int>> {
+
+        val tagChecker = ArrayList<Pair<String, Int>>()
+
+        typeCount.distinct().forEach {
+            var count = 0
+            for(i in typeCount.indices) {
+                if(typeCount[i] == it) {
+                    count++
+                }
+            }
+            tagChecker.add(Pair(it, count))
+        }
+        tagChecker.sortByDescending { it.second }
+        return tagChecker
     }
 }
