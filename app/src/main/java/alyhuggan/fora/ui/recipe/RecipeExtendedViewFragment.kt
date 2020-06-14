@@ -1,9 +1,12 @@
 package alyhuggan.fora.ui.recipe
 
 import alyhuggan.fora.R
+import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
-import alyhuggan.fora.ui.recipe.recyclerviewadapters.ExtendedRecyclerViewAdapter
-import android.content.res.Resources
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedRecyclerViewAdapter
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedStringsRecyclerViewAdapter
+import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
+import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
@@ -12,17 +15,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_extended_view.*
 import kotlinx.android.synthetic.main.item_list_card.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 
 private const val TAG = "RecipeExtendedViewFrag"
+private lateinit var auth: FirebaseAuth
 
-class RecipeExtendedViewFragment: Fragment() {
+class RecipeExtendedViewFragment : Fragment(), KodeinAware {
 
+    override val kodein by closestKodein()
+    private val viewModelFactory by instance<RecipeViewModelFactory>()
     private lateinit var currentlySelected: TextView
+
+//    private val ingredient = item_card_heading_ingredients
+    private lateinit var method : TextView
+    private lateinit var details: TextView
+    private lateinit var recyclerView: RecyclerView
+
+    private lateinit var ingredientList: List<FoodItem>
+    private lateinit var methodList: List<String>
+    private lateinit var detailsList: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +54,14 @@ class RecipeExtendedViewFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(arguments != null) {
+
+        if (arguments != null) {
+            var recipeHolder = Recipe()
 
             currentlySelected = item_card_heading_ingredients
+            auth = FirebaseAuth.getInstance()
+            val viewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
 
             val recipe: Recipe = arguments!!.getParcelable<Recipe>("RecipeList")!!
             val byteArray: ByteArray = arguments!!.getByteArray("Image")!!
@@ -44,25 +69,52 @@ class RecipeExtendedViewFragment: Fragment() {
             val imageView: ImageView = view.findViewById<ImageView>(R.id.extended_view_imageview)
             imageView.setImageBitmap(convertBitmap(byteArray))
 
+            val ingredient = item_card_heading_ingredients
+
+            recyclerView = item_card_recyclerview
+            method = item_card_heading_method
+            details = item_card_heading_details
+
+            ingredientList = recipe.foods!!
+            methodList = recipe.method!!
+            detailsList = recipe.method!!
+
             extended_view_title.text = recipe.title
 //            extended_view_ratingbar.rating = recipe.rating!!.toFloat()
-            item_card_heading_ingredients.text = "Ingredients"
+            ingredient.text = "Ingredients"
 
-            item_card_recyclerview.layoutManager = LinearLayoutManager(context)
-            if(recipe.foods != null) {
-                item_card_recyclerview.adapter = ExtendedRecyclerViewAdapter(recipe.foods)
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            if (recipe.foods != null) {
+                ingredientRecyclerView(recipe.foods)
             }
-            item_card_recyclerview.setHasFixedSize(true)
+            recyclerView.setHasFixedSize(true)
 
-            setHeadingsOnClickListeners(listOf<TextView>(
-                item_card_heading_ingredients,
-                item_card_heading_method,
-                item_card_heading_details))
+            setHeadingsOnClickListeners(
+                listOf<TextView>(
+                    ingredient,
+                    method,
+                    details
+                )
+            )
         }
     }
 
+    private fun ingredientRecyclerView(foodList: List<FoodItem>) {
+        recyclerView.adapter =
+            ExtendedRecyclerViewAdapter(
+                foodList
+            )
+    }
+
+    private fun changeRecyclerViewData(list: List<String>) {
+        recyclerView.adapter =
+            ExtendedStringsRecyclerViewAdapter(
+                list
+            )
+    }
+
     private fun setHeadingsOnClickListeners(viewList: List<TextView>) {
-        viewList.forEach {view ->
+        viewList.forEach { view ->
             view.setOnClickListener { heading ->
                 setHighlightedBackground(heading as TextView)
             }
@@ -70,16 +122,27 @@ class RecipeExtendedViewFragment: Fragment() {
     }
 
     private fun setHighlightedBackground(view: TextView) {
-        if(view != currentlySelected) {
+        if (view != currentlySelected) {
+            when (view) {
+                item_card_heading_ingredients -> {
+                    ingredientRecyclerView(ingredientList)
+                }
+                method -> {
+                    changeRecyclerViewData(methodList)
+                }
+                details -> {
+                    changeRecyclerViewData(methodList)
+                }
+            }
             view.setBackgroundResource(R.drawable.white_background)
             view.setTextColor(resources.getColor(R.color.primary_dark))
-//        currentlySelected.setBackgroundColor(R.drawable.green_background)
             currentlySelected.setBackgroundResource(R.drawable.green_menu_background)
             currentlySelected.setTextColor(Color.WHITE)
             currentlySelected = view
         }
     }
 
-    private fun convertBitmap(byteArray: ByteArray) = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    private fun convertBitmap(byteArray: ByteArray) =
+        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
 }

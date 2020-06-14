@@ -2,13 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/extended_view_ingredients"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:fontFamily="@font/open_sans"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/extended_view_bullet"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            tools:srcCompat="@drawable/bullet" />
+
+        <TextView
+            android:id="@+id/extended_view_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center|start"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/extended_view_textview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="8"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center|start"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
 </LinearLayout>

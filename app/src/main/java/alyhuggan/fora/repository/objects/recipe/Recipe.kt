@@ -9,8 +9,9 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 
-data class Recipe(val title: String = "", val rating: Double? = 0.0, val photo: String? = null,
-                  val type: List<String> = emptyList(), val foods: List<FoodItem>? = null) :
+data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(), val photo: String? = null,
+                  val type: List<String> = emptyList(), val foods: List<FoodItem>? = null,
+                  val method: List<String>? = emptyList()) :
     Parcelable {
 
     override fun toString(): String {

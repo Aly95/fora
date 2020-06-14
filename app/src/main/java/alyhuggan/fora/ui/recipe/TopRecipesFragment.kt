@@ -53,11 +53,6 @@ class TopRecipesFragment : Fragment(), KodeinAware {
         initializeRecyclerAdapter()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-//        outState.putString("recyclerView", "created")
-    }
-
     private fun initializeRecyclerAdapter() {
 
         val viewModel =

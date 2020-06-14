@@ -177,7 +177,8 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         addIngredient.setOnClickListener {
             val brand = addForm.recipe_fooditem_brand.text.toString().trim()
             val food = addForm.recipe_fooditem_brand_food.text.toString().trim()
-            val quantityType = addForm.recipe_fooditem_quantity_type.text.toString().trim().toLowerCase()
+            val quantityType =
+                addForm.recipe_fooditem_quantity_type.text.toString().trim().toLowerCase()
             val quantityAmount = addForm.recipe_fooditem_quantity_amount.text.toString().trim()
 
             /*
@@ -251,28 +252,34 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         val rating = addView.findViewById<RatingBar>(R.id.add_recipe_ratingbar)
         var photo: String? = ""
 
-        if (selectedImageURI != null) {
-            photo = selectedImageURI.toString()
+        val ratingList = listOf(rating.rating.toDouble())
+
+        photo = if (selectedImageURI != null) {
+            selectedImageURI.toString()
         } else {
-            photo = null
+            null
         }
 
         tagsList.forEach {
-            it.capitalize().trim()
+            format(it)
         }
 
         return Recipe(
             title.text.toString(),
-            rating.rating.toDouble(),
+            ratingList,
             photo,
             tagsList,
-            ingredientList
+            ingredientList,
+            instructionList
         )
     }
+
+    private fun format(string: String) = string.capitalize().trim()
 
     //add boolean return on successful add
     private fun addEntry() {
         val recipe = getRecipe()
+
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
 
@@ -282,10 +289,7 @@ class AddRecipeFragment : Fragment(), KodeinAware {
 
         ingredientList.forEach {
             it.recipeKeyList.add(key)
-            Log.d(TAG, "it = $it")
         }
-
-        Log.d(TAG, "Result = $key")
 
         val foodModel =
             ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
@@ -293,20 +297,19 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         foodModel.checkBrand().observe(viewLifecycleOwner, Observer { brandList ->
             val distinctList = ingredientList.distinct()
             distinctList.forEach { ingredient ->
-                    if (brandList.contains(ingredient.brand)) {
-                        foodModel.checkFood().observe(viewLifecycleOwner, Observer { foodList ->
-                            if (foodList.contains(ingredient.name)) {
-                                Log.d(TAG, "Food Already Exists, update recipe list")
-                                foodModel.updateRecipe(ingredient)
-                            } else {
-                                Log.d(TAG, "Add food item")
-                                foodModel.addFoods(ingredient)
-                            }
-                        })
-                    } else {
-                        foodModel.addFoods(ingredient)
-                    }
-
+                if (brandList.contains(ingredient.brand)) {
+                    foodModel.checkFood().observe(viewLifecycleOwner, Observer { foodList ->
+                        if (foodList.contains(ingredient.name)) {
+                            Log.d(TAG, "Food Already Exists, update recipe list")
+                            foodModel.updateRecipe(ingredient)
+                        } else {
+                            Log.d(TAG, "Add food item")
+                            foodModel.addFoods(ingredient)
+                        }
+                    })
+                } else {
+                    foodModel.addFoods(ingredient)
+                }
             }
         })
     }

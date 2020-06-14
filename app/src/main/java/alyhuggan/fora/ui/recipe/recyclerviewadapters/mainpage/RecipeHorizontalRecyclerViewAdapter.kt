@@ -75,7 +75,7 @@ class RecipeHorizontalRecyclerViewAdapter(
 
     private fun getTopRated(): List<Recipe> {
         val topRated = recipeList
-        return topRated.sortedByDescending { it.rating }
+        return topRated.sortedByDescending { getRating(it.rating!!)}
     }
 
     private fun getList(typeOfFood: String): List<Recipe> {
@@ -87,11 +87,12 @@ class RecipeHorizontalRecyclerViewAdapter(
                 typeList.add(recipe)
         }
         if (typeList.isNotEmpty()) {
-            return typeList.sortedByDescending { it.rating }
+            return typeList.sortedByDescending { getRating(it.rating!!) }
         } else {
-//            Log.d(TAG, "Empty List")
             return typeList
         }
     }
+
+    private fun getRating(ratings: List<Double>) = ratings.sum()/ratings.count()
 
 }

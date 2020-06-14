@@ -19,13 +19,16 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.items_card.view.*
 import java.io.ByteArrayOutputStream
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 private const val TAG = "RecipeRecyclerVA"
 private lateinit var storageRef: StorageReference
 
 class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val title: TextView = view.item_card_name
-//    val rating: RatingBar = view.item_card_ratingbar
+
+    //    val rating: RatingBar = view.item_card_ratingbar
     val rating: TextView = view.item_card_ratings
     val image: ImageView = view.item_card_image
 }
@@ -53,9 +56,11 @@ class RecipeRecyclerViewAdapter(
         val recipe = recipeList[position]
 
         title.text = recipe.title
-        rating.text = recipe.rating!!.toString()
+        rating.text = round(
+            getRating(recipe.rating!!)
+        ).toString()
 
-        if(recipe.photo != null) {
+        if (recipe.photo != null) {
             Log.d(TAG, "Hello")
 
             storageRef = FirebaseStorage.getInstance().reference
@@ -91,4 +96,8 @@ class RecipeRecyclerViewAdapter(
 //                fragmentManager.beginTransaction().show(extendedView).commit()
         }
     }
+
+    private fun round(rating: Double) = BigDecimal(rating).setScale(1, RoundingMode.HALF_EVEN)
+
+    private fun getRating(ratings: List<Double>) = ratings.sum() / ratings.count()
 }

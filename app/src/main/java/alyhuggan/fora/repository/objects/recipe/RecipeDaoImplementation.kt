@@ -63,7 +63,8 @@ class RecipeDaoImplementation :
                         recipe.rating,
                         url,
                         recipe.type,
-                        recipe.foods
+                        recipe.foods,
+                        recipe.method
                     )
                     database.child(dataId).setValue(recipeUpload).addOnCompleteListener {
                     }
