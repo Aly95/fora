@@ -53,9 +53,9 @@ class FoodExtendedViewFragment : Fragment(), KodeinAware {
             val foodList = mutableListOf<FoodItem>()
             val keyList = ArrayList<String>()
 
-            item_card_title_first.text = "Used in recipes:"
+            item_card_heading_ingredients.text = "Used in recipes:"
             extended_view_title.text = ("${food.brand} ${food.name}")
-            extended_view_ratingbar.rating = 4.5.toFloat()
+//            extended_view_ratingbar.rating = 4.5.toFloat()
 
             viewModel.getFoods().observe(viewLifecycleOwner, Observer { foodItemList ->
                 keyList.clear()
