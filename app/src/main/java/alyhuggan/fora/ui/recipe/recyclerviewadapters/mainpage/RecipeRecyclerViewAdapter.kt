@@ -6,7 +6,6 @@ import alyhuggan.fora.ui.recipe.RecipeExtendedViewFragment
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,8 +60,6 @@ class RecipeRecyclerViewAdapter(
         ).toString()
 
         if (recipe.photo != null) {
-            Log.d(TAG, "Hello")
-
             storageRef = FirebaseStorage.getInstance().reference
 
             storageRef.child(recipe.photo).downloadUrl.addOnSuccessListener {
@@ -93,7 +90,6 @@ class RecipeRecyclerViewAdapter(
 
             val navController = Navigation.findNavController(activity, R.id.nav_host_fragment)
             navController.navigate(R.id.extendedView, args)
-//                fragmentManager.beginTransaction().show(extendedView).commit()
         }
     }
 

@@ -1,6 +1,5 @@
 package alyhuggan.fora.repository.objects.foods
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
@@ -17,6 +16,8 @@ private val mutableDatabaseStructureBrands = mutableListOf<String>()
 private val databaseStructureFoods = MutableLiveData<List<String>>()
 private val mutableDatabaseStructureFoods = mutableListOf<String>()
 
+private var snapshot: DataSnapshot? = null
+
 class FoodDaoImplementation : FoodDaoInterface {
 
     init {
@@ -28,6 +29,15 @@ class FoodDaoImplementation : FoodDaoInterface {
 
     override fun getFoods() = foodList
 
+    override fun getSingleFood(key: String): LiveData<FoodItem> {
+        val splitString = key.split(" & ")
+        val brand = splitString[0]
+        val name = splitString[1]
+        val food = MutableLiveData<FoodItem>()
+        food.value = snapshot!!.child(brand).child(name).getValue(FoodItem::class.java)
+        return food
+    }
+
     override fun checkBrand() = databaseStructureBrands
 
     override fun checkFood() = databaseStructureFoods
@@ -37,11 +47,12 @@ class FoodDaoImplementation : FoodDaoInterface {
         var recipeList = ArrayList<String?>()
 
         val result = mutableFoodList.forEach {
-            if(it.brand == foodItem.brand && it.name == foodItem.name) {
-                    recipeList = it.recipeKeyList
-                    recipeList.add(foodItem.recipeKeyList[0])
-                }
-                database.child(foodItem.brand!!).child(foodItem.name).child("recipeKeyList").setValue(recipeList)
+            if (it.brand == foodItem.brand && it.name == foodItem.name) {
+                recipeList = it.recipeKeyList
+                recipeList.add(foodItem.recipeKeyList[0])
+            }
+            database.child(foodItem.brand!!).child(foodItem.name).child("recipeKeyList")
+                .setValue(recipeList)
         }
     }
 
@@ -51,37 +62,40 @@ class FoodDaoImplementation : FoodDaoInterface {
         brand = foodItem.brand ?: "Generic"
         database.child(brand).child(foodItem.name).setValue(foodItem)
     }
-}
 
-private fun updateRecyclerViewData() {
+
+    private fun updateRecyclerViewData() {
 //        Log.d(TAG, "updateRecyclerViewData: starts")
 
-    database = FirebaseDatabase.getInstance().getReference("food")
+        database = FirebaseDatabase.getInstance().getReference("food")
 
-    database.addValueEventListener(object :
-        ValueEventListener {
+        database.addValueEventListener(object :
+            ValueEventListener {
 
-        override fun onCancelled(p0: DatabaseError) {
+            override fun onCancelled(p0: DatabaseError) {
 //                Log.d(TAG, "getRecipes listener: onCancelled")
-        }
+            }
 
-        override fun onDataChange(databaseFoods: DataSnapshot) {
-            if (databaseFoods.exists()) {
-                mutableFoodList.clear()
-                mutableDatabaseStructureBrands.clear()
-                mutableDatabaseStructureFoods.clear()
+            override fun onDataChange(databaseFoods: DataSnapshot) {
+                if (databaseFoods.exists()) {
+                    mutableFoodList.clear()
+                    mutableDatabaseStructureBrands.clear()
+                    mutableDatabaseStructureFoods.clear()
 
-                val brandList = databaseFoods.children
-                brandList.forEach { brand ->
-                    mutableDatabaseStructureBrands.add(brand.key!!)
-                    val dbFoodList = brand.children
-                    dbFoodList.forEach { food ->
-                        mutableFoodList.add(food.getValue(FoodItem::class.java)!!)
-                        mutableDatabaseStructureFoods.add(food.key!!)
+                    snapshot = databaseFoods
+
+                    val brandList = databaseFoods.children
+                    brandList.forEach { brand ->
+                        mutableDatabaseStructureBrands.add(brand.key!!)
+                        val dbFoodList = brand.children
+                        dbFoodList.forEach { food ->
+                            mutableFoodList.add(food.getValue(FoodItem::class.java)!!)
+                            mutableDatabaseStructureFoods.add(food.key!!)
+                        }
+
                     }
-
                 }
             }
-        }
-    })
+        })
+    }
 }

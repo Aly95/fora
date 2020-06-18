@@ -5,30 +5,20 @@
     android:layout_height="match_parent"
     android:background="@color/darker_background"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:weightSum="20"
+    android:weightSum="10"
     tools:context=".ui.account.MyAccountFragment">
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/account_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_weight="9" />
+
+    <Button
+        android:id="@+id/account_logout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="My Saved Recipes" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:orientation="horizontal">
-
-        <include
-            android:id="@+id/card_add"
-            layout="@layout/items_card"></include>
-
-        <include layout="@layout/items_card"></include>
-
-    </LinearLayout>
+        android:text="Log Out" />
 
 </LinearLayout>

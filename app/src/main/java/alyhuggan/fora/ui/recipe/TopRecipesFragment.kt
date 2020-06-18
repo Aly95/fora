@@ -1,14 +1,11 @@
 package alyhuggan.fora.ui.recipe
 
 import alyhuggan.fora.R
-import alyhuggan.fora.repository.objects.foods.Quantity
-import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,10 +21,7 @@ import kotlinx.android.synthetic.main.fragment_top_recipes.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.math.roundToInt
 
 private const val TAG = "TopRecipesFragment"
 private lateinit var auth: FirebaseAuth

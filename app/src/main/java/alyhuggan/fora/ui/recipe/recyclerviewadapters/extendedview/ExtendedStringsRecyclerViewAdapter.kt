@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.items_extended_view.view.*
 
-private lateinit var storageRef: StorageReference
-
 class StringsRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val strings: TextView = view.extended_view_textview
     val image: ImageView = view.extended_view_bullet

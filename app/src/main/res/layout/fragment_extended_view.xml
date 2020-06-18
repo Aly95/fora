@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="3.5">
 
         <ImageView
             android:id="@+id/extended_view_imageview"
@@ -28,7 +28,7 @@
             android:background="@android:drawable/screen_background_dark_transparent"
             android:fontFamily="@font/pt_serif"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="4dp"
             android:textColor="@android:color/white"
             android:textSize="34sp"
             android:textStyle="bold"
@@ -72,8 +72,7 @@
         layout="@layout/item_list_card"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
-    </include>
+        android:layout_weight="6.5"></include>
 
 
 </LinearLayout>

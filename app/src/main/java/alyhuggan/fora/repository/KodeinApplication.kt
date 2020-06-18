@@ -4,8 +4,10 @@ import alyhuggan.fora.repository.database.DatabaseImplementation
 import alyhuggan.fora.repository.database.DatabaseInterface
 import alyhuggan.fora.repository.objects.foods.FoodDaoInterface
 import alyhuggan.fora.repository.objects.recipe.RecipeDaoInterface
+import alyhuggan.fora.repository.objects.user.UserDaoInterface
 import alyhuggan.fora.viewmodels.food.FoodViewModelFactory
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
+import alyhuggan.fora.viewmodels.user.UserViewModelFactory
 import android.app.Application
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -30,5 +32,9 @@ class KodeinApplication : Application(), KodeinAware {
         //Binding Foods
         bind<FoodDaoInterface>() with singleton { instance<DatabaseInterface>().foodDao }
         bind() from provider { FoodViewModelFactory(instance()) }
+
+        //Binding Users
+        bind<UserDaoInterface>() with singleton { instance<DatabaseInterface>().userDao }
+        bind() from provider { UserViewModelFactory(instance()) }
     }
 }

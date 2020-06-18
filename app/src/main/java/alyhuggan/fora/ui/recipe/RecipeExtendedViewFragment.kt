@@ -2,7 +2,10 @@ package alyhuggan.fora.ui.recipe
 
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.foods.FoodItem
+import alyhuggan.fora.repository.objects.recipe.Created
+import alyhuggan.fora.repository.objects.recipe.Details
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedDetailsRecyclerViewAdapter
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedRecyclerViewAdapter
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedStringsRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
@@ -42,7 +45,7 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
 
     private lateinit var ingredientList: List<FoodItem>
     private lateinit var methodList: List<String>
-    private lateinit var detailsList: List<String>
+    private lateinit var detailsList: Details
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,9 +78,22 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
             method = item_card_heading_method
             details = item_card_heading_details
 
-            ingredientList = recipe.foods!!
-            methodList = recipe.method!!
-            detailsList = recipe.method!!
+            if(recipe.foods != null && recipe.method != null) {
+                ingredientList = recipe.foods
+                methodList = recipe.method
+                detailsList = Details(
+                    getRating(recipe.rating!!),
+                    recipe.rating.size,
+                    3,
+                    Created(
+                        "Aly Huggan",
+                        "14/06/2020"
+                    )
+                )
+            } else {
+                methodList = emptyList()
+                ingredientList = emptyList()
+            }
 
             extended_view_title.text = recipe.title
 //            extended_view_ratingbar.rating = recipe.rating!!.toFloat()
@@ -99,6 +115,8 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
         }
     }
 
+    private fun getRating(ratings: List<Double>) = ratings.sum() / ratings.count()
+
     private fun ingredientRecyclerView(foodList: List<FoodItem>) {
         recyclerView.adapter =
             ExtendedRecyclerViewAdapter(
@@ -106,11 +124,17 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
             )
     }
 
-    private fun changeRecyclerViewData(list: List<String>) {
+    private fun stringsRecyclerViewData(list: List<String>) {
         recyclerView.adapter =
             ExtendedStringsRecyclerViewAdapter(
                 list
             )
+    }
+
+    private fun detailsRecyclerViewData(detailList: Details) {
+        recyclerView.adapter = ExtendedDetailsRecyclerViewAdapter(
+            detailList
+        )
     }
 
     private fun setHeadingsOnClickListeners(viewList: List<TextView>) {
@@ -128,10 +152,10 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
                     ingredientRecyclerView(ingredientList)
                 }
                 method -> {
-                    changeRecyclerViewData(methodList)
+                    stringsRecyclerViewData(methodList)
                 }
                 details -> {
-                    changeRecyclerViewData(methodList)
+                    detailsRecyclerViewData(detailsList)
                 }
             }
             view.setBackgroundResource(R.drawable.white_background)

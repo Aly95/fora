@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "874652566671-9tk8ncl93cifu0bke63s4jq4psns6ovl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "alyhuggan.fora",
+            "certificate_hash": "177b91cbe7aef91d919be55ae9024a81d0e583ae"
+          }
+        },
+        {
           "client_id": "874652566671-2uj88uutf2306ttegi8sl72ndihcthcp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -1,6 +1,7 @@
-package alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage
+package alyhuggan.fora.ui.account.recyclerviewadapters
 
 import alyhuggan.fora.R
+import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
 import android.app.Activity
 import android.content.Context
@@ -12,68 +13,76 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.items_horizontal_list.view.*
 
-private const val TAG = "HorizontalRVA"
+private const val TAG = "AccountHorizontalRVA"
 
-class RecipeViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
+class AccountHorizontalRecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val title: TextView = view.recipe_title
     val recyclerView: RecyclerView = view.recipes_horizontal_recycler_view
 }
 
-class RecipeHorizontalRecyclerViewAdapter(
+class AccountRecipeHorizontalRecyclerViewAdapter(
     private val recipeList: List<Recipe>,
-    private val tagList: ArrayList<String>,
+    private val foodList: List<FoodItem>,
     private val context: Context,
     private val activity: Activity
-) : RecyclerView.Adapter<RecipeViewHolderNew>() {
+) : RecyclerView.Adapter<AccountHorizontalRecipeViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolderNew {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountHorizontalRecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.items_horizontal_list, parent, false)
-        return RecipeViewHolderNew(
+        return AccountHorizontalRecipeViewHolder(
             view
         )
     }
 
-    override fun getItemCount() = tagList.size
+    override fun getItemCount() = 2
 
-    override fun onBindViewHolder(holder: RecipeViewHolderNew, position: Int) {
+    override fun onBindViewHolder(holder: AccountHorizontalRecipeViewHolder, position: Int) {
 
         val title = holder.title
         val recyclerView = holder.recyclerView
-        val recipeRecyclerViewAdapter: RecipeRecyclerViewAdapter
+        val recipeRecyclerViewAdapter: AccountRecipeRecyclerViewAdapter
+        val foodRecyclerViewAdapter: AccountFoodRecyclerViewAdapter
 
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         when (position) {
             0 -> {
-                title.text = "Top Rated"
+                title.text = "My Recipes"
                 recipeRecyclerViewAdapter =
-                    RecipeRecyclerViewAdapter(
+                    AccountRecipeRecyclerViewAdapter(
                         getTopRated(),
                         activity
                     )
+                recyclerView.adapter = recipeRecyclerViewAdapter
+                recipeRecyclerViewAdapter.notifyDataSetChanged()
             }
             else -> {
-                title.text = tagList[position]
-                recipeRecyclerViewAdapter =
-                    RecipeRecyclerViewAdapter(
-                        getList(
-                            tagList[position]
-                        ),
+                title.text = "My Foods"
+                foodRecyclerViewAdapter =
+                    AccountFoodRecyclerViewAdapter(
+                        getTopRatedFoods(),
                         activity
                     )
+                recyclerView.adapter = foodRecyclerViewAdapter
+                foodRecyclerViewAdapter.notifyDataSetChanged()
             }
         }
 
-        recyclerView.adapter = recipeRecyclerViewAdapter
-        recipeRecyclerViewAdapter.notifyDataSetChanged()
+//        recyclerView.adapter = recipeRecyclerViewAdapter
+//        recipeRecyclerViewAdapter.notifyDataSetChanged()
 
         title.visibility = View.VISIBLE
     }
 
     private fun getTopRated(): List<Recipe> {
         val topRated = recipeList
+        return topRated.sortedByDescending { getRating(it.rating!!)}
+    }
+
+    private fun getTopRatedFoods(): List<FoodItem> {
+        val topRated = foodList
         return topRated.sortedByDescending { getRating(it.rating!!)}
     }
 

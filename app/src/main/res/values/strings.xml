@@ -42,6 +42,8 @@
     <string name="item_card_title_default_txt">Click Me To Add A Recipe Photo!</string>
     <string name="add_recipe_ingredient_txt">Add Ingredients</string>
     <string name="add_recipe_tags_txt">Add Tags</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

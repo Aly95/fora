@@ -5,7 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 
-data class FoodItem(val type: String? = "", val name: String = "", val brand: String? = "",
-                    val quantity: Quantity? = null, val recipeKeyList: ArrayList<String?> = ArrayList<String?>()) :
+data class FoodItem(
+    val type: String? = "", val name: String = "", val brand: String? = "",
+    val quantity: Quantity? = null, val recipeKeyList: ArrayList<String?> = ArrayList<String?>(),
+    val rating: List<Double>? = emptyList()
+) :
     Parcelable {
 }

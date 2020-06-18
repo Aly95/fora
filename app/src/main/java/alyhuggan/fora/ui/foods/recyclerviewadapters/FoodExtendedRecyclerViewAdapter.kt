@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_extended_view.view.*
 import kotlinx.android.synthetic.main.item_list_card.view.*
 
 class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
