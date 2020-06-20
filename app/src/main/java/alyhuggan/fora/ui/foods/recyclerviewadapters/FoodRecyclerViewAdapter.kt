@@ -9,19 +9,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.items_card.view.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 
-
+private lateinit var storageRef: StorageReference
 private const val TAG = "FoodRecyclerVA"
 
 class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val title: TextView = view.item_card_name
-    val rating: RatingBar = view.item_card_ratingbar
+    val rating: TextView = view.item_card_ratings
     val image: ImageView = view.item_card_image
 }
 
@@ -41,6 +44,9 @@ class FoodRecyclerViewAdapter(
     override fun getItemCount() = foodList.size
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
+
+        storageRef = FirebaseStorage.getInstance().reference
+
         val title = holder.title
         val rating = holder.rating
         val image = holder.image
@@ -52,27 +58,47 @@ class FoodRecyclerViewAdapter(
 
             val foodItem = foodList[position]
 
-            if(foodItem.brand != "Generic") {
+            if (foodItem.brand != "Generic") {
                 title.text = "${foodItem.brand} ${foodItem.name}"
             } else {
                 title.text = "${foodItem.name}"
 
             }
-            rating.rating = 4.5.toFloat()
-//            image.setImageResource(R.drawable.fora)
-            Glide.with(activity).load(R.drawable.fora).centerInside().into(image)
 
-            holder.itemView.setOnClickListener {
+            if (foodItem.rating != emptyList<Double>()) {
+                rating.text = round(
+                    getRating(foodItem.rating!!)
+                ).toString()
+            } else {
+                rating.text = 3.0.toString()
+        }
 
-                val extendedView = FoodExtendedViewFragment()
-                val args = Bundle()
-                args.putParcelable("Hello", foodList[position])
-                extendedView.arguments = args
+            if (foodItem.url != null) {
+                storageRef = FirebaseStorage.getInstance().reference
 
-                val navController = Navigation.findNavController(activity, R.id.nav_host_fragment)
-                navController.navigate(R.id.extendedView, args)
-//                fragmentManager.beginTransaction().show(extendedView).commit()
+                storageRef.child(foodItem.url).downloadUrl.addOnSuccessListener {
+                    Glide.with(activity).load(it).centerCrop().into(image)
+                }
+            } else {
+                image.setImageResource(R.drawable.fora)
             }
+
+        holder.itemView.setOnClickListener {
+
+            val extendedView = FoodExtendedViewFragment()
+            val args = Bundle()
+            args.putParcelable("Hello", foodList[position])
+            extendedView.arguments = args
+
+            val navController = Navigation.findNavController(activity, R.id.nav_host_fragment)
+            navController.navigate(R.id.extendedView, args)
+//                fragmentManager.beginTransaction().show(extendedView).commit()
         }
     }
+}
+
+private fun round(rating: Double) = BigDecimal(rating).setScale(1, RoundingMode.HALF_EVEN)
+
+private fun getRating(ratings: List<Double>) = ratings.sum() / ratings.count()
+
 }

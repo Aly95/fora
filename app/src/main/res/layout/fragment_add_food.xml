@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darker_background"
+    android:orientation="vertical"
+    android:padding="4dp"
+    tools:context=".ui.foods.addfooditem.AddFoodFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fooditem_CV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:contentPadding="4dp">
+
+            <LinearLayout
+                android:id="@+id/fooditem_LL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/fooditem_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/green_background"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/add_food_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="8"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center|start"
+                        android:paddingLeft="4dp"
+                        android:text="@string/add_food_txt"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/addFood"
+                    layout="@layout/items_fooditem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:background="#FFFFFF">
+                </include>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/tags_CV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:visibility="visible"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:contentPadding="4dp">
+
+            <LinearLayout
+                android:id="@+id/tags_LL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/tags_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/green_background"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/add_tags_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="8"
+                        android:background="@drawable/green_background"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center|start"
+                        android:paddingLeft="4dp"
+                        android:text="@string/add_tags_txt"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <CheckBox
+                            android:id="@+id/checkbox_protein"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:minWidth="12dp"
+                            android:minHeight="12dp"
+                            android:text="@string/checkbox_Protein"
+                            app:buttonTint="@color/primary" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_starch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/checkbox_Starch"
+                            app:buttonTint="@color/primary" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_fruitAndVeg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/checkbox_FruitAndVeg"
+                            app:buttonTint="@color/primary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <CheckBox
+                            android:id="@+id/checkbox_condiments"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/checkbox_Condiments"
+                            app:buttonTint="@color/primary" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_other"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/checkbox_Other"
+                            app:buttonTint="@color/primary" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_unsure"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/checkbox_Unsure"
+                            app:buttonTint="@color/primary" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/rating_CV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:contentPadding="4dp">
+
+            <LinearLayout
+                android:id="@+id/rating_LL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/rating_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/green_background"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/add_food_rating_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="8"
+                        android:background="@drawable/green_background"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center|start"
+                        android:paddingLeft="4dp"
+                        android:text="@string/add_recipe_rating_txt"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/add_food_ratingbar"
+                    style="@style/Widget.AppCompat.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:isIndicator="false"
+                    android:max="5"
+                    android:numStars="5"
+                    android:progressTint="@color/ratingBar"
+                    android:rating="3"
+                    android:scaleX="1"
+                    android:scaleY="1"
+                    android:stepSize="0.5"
+                    tools:rating="3" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_CV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:contentPadding="4dp">
+
+            <LinearLayout
+                android:id="@+id/image_LL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/image_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/green_background"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/add_image_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="8"
+                        android:background="@drawable/green_background"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center|start"
+                        android:paddingLeft="4dp"
+                        android:text="@string/add_image_txt"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:weightSum="10">
+
+                    <include
+                        android:id="@+id/card_add"
+                        layout="@layout/items_card"
+                        android:layout_width="170dp"
+                        android:layout_height="220dp"></include>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/add_food_uri"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="2dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:hint="@string/add_recipe_uri_Hint"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/buttons_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/add_recipe_btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:text="@string/add_recipe_btn_cancel" />
+
+            <Button
+                android:id="@+id/add_recipe_btn_submit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:text="@string/add_recipe_btn_submit" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

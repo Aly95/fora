@@ -122,7 +122,7 @@ class RecipeDaoImplementation :
                 photoRef.putFile(uri).addOnSuccessListener { taskSnapshot ->
 
                     val url = taskSnapshot.metadata!!.path
-                    val getFile = Uri.parse(url)
+//                    val getFile = Uri.parse(url)
 
                     val test = storageRef.child("photos").getFile(uri)
 

@@ -45,13 +45,15 @@ class FoodHorizontalRecyclerViewAdapter(
                 activity
             )
 
-        val foodTypeList = mutableListOf<String>()
-        foodTypeList.add("")
-        foodTypeList.add("Proteins")
-        foodTypeList.add("Starches")
-        foodTypeList.add("Fruit and Veg")
-        foodTypeList.add("Condiments")
-        foodTypeList.add("Others")
+//        val foodTypeList = mutableListOf<String>()
+//        foodTypeList.add("")
+//        foodTypeList.add("Proteins")
+//        foodTypeList.add("Starches")
+//        foodTypeList.add("Fruit and Veg")
+//        foodTypeList.add("Condiments")
+//        foodTypeList.add("Others")
+
+        val foodTypeList = listOf<String>("", "Proteins", "Starches", "Fruit & Veg", "Condiments", "Others")
 
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

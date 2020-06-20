@@ -48,10 +48,6 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         private const val SELECT_PICTURE = 999
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,7 +65,6 @@ class AddRecipeFragment : Fragment(), KodeinAware {
         populateUserCardView(view)
         setUpNavigation()
         setUpCollapsibleViews(view)
-
     }
 
     /*
@@ -209,6 +204,10 @@ class AddRecipeFragment : Fragment(), KodeinAware {
                         ),
                         ArrayList<String?>()
                     )
+
+                    /*
+                    TODO() Test function, count needs reset to 0
+                     */
 
                     Log.d(TAG, "Food Item = $foodItem")
                     var count = 0

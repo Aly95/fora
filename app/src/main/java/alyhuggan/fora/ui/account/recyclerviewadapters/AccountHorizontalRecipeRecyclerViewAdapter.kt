@@ -69,10 +69,6 @@ class AccountRecipeHorizontalRecyclerViewAdapter(
                 foodRecyclerViewAdapter.notifyDataSetChanged()
             }
         }
-
-//        recyclerView.adapter = recipeRecyclerViewAdapter
-//        recipeRecyclerViewAdapter.notifyDataSetChanged()
-
         title.visibility = View.VISIBLE
     }
 

@@ -38,7 +38,10 @@
         <action
             android:id="@+id/action_topFoodsFragment_to_createYourOwnFragment"
             app:destination="@id/menu_account"
-            app:enterAnim="@anim/nav_default_enter_anim" />
+            app:enterAnim="@anim/slide"
+            app:exitAnim="@anim/slide"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/destination_foods"
             app:destination="@id/menu_recipes"
@@ -92,6 +95,13 @@
         <action
             android:id="@+id/extendedFood"
             app:destination="@id/food_extended" />
+        <action
+            android:id="@+id/addFood"
+            app:destination="@id/addFoodFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/add_recipe"
@@ -141,5 +151,18 @@
             app:popExitAnim="@android:anim/fade_out"
             app:popUpTo="@id/menu_recipes"
             app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFoodFragment"
+        android:name="alyhuggan.fora.ui.foods.addfooditem.AddFoodFragment"
+        android:label="fragment_add_food"
+        tools:layout="@layout/fragment_add_food" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/menu_account"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>

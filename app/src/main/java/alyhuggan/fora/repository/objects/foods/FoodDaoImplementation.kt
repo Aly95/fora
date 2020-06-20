@@ -1,8 +1,12 @@
 package alyhuggan.fora.repository.objects.foods
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 private const val TAG = "FoodDaoImplementation"
 private lateinit var database: DatabaseReference
@@ -17,6 +21,7 @@ private val databaseStructureFoods = MutableLiveData<List<String>>()
 private val mutableDatabaseStructureFoods = mutableListOf<String>()
 
 private var snapshot: DataSnapshot? = null
+private lateinit var storageRef: StorageReference
 
 class FoodDaoImplementation : FoodDaoInterface {
 
@@ -57,44 +62,79 @@ class FoodDaoImplementation : FoodDaoInterface {
     }
 
     override fun addFood(foodItem: FoodItem) {
-        var brand = ""
-        brand = foodItem.brand ?: "Generic"
-        database.child(brand).child(foodItem.name).setValue(foodItem)
-    }
 
+        val brand = foodItem.brand ?: "Generic"
 
-    private fun updateRecyclerViewData() {
-//        Log.d(TAG, "updateRecyclerViewData: starts")
+        mutableFoodList.forEach { savedFoodItem ->
+            if (brand == savedFoodItem.brand && foodItem.name == savedFoodItem.name) {
+                Log.d(TAG, "Food item already exists")
+            } else {
+                val key = "${foodItem.brand} ${foodItem.name}"
 
-        database = FirebaseDatabase.getInstance().getReference("food")
+                if (foodItem.url != null) {
+                    val photoRef = storageRef.child(key)
+                    val uri: Uri = Uri.parse(foodItem.url)
 
-        database.addValueEventListener(object :
-            ValueEventListener {
+                    photoRef.putFile(uri).addOnSuccessListener { taskSnapshot ->
 
-            override fun onCancelled(p0: DatabaseError) {
-//                Log.d(TAG, "getRecipes listener: onCancelled")
-            }
+                        val url = taskSnapshot.metadata!!.path
+//                        val getFile = Uri.parse(url)
 
-            override fun onDataChange(databaseFoods: DataSnapshot) {
-                if (databaseFoods.exists()) {
-                    mutableFoodList.clear()
-                    mutableDatabaseStructureBrands.clear()
-                    mutableDatabaseStructureFoods.clear()
+                        val test = storageRef.child("photos").getFile(uri)
+                        Log.d(TAG, "Url = $test")
 
-                    snapshot = databaseFoods
-
-                    val brandList = databaseFoods.children
-                    brandList.forEach { brand ->
-                        mutableDatabaseStructureBrands.add(brand.key!!)
-                        val dbFoodList = brand.children
-                        dbFoodList.forEach { food ->
-                            mutableFoodList.add(food.getValue(FoodItem::class.java)!!)
-                            mutableDatabaseStructureFoods.add(food.key!!)
-                        }
-
+                        val foodUpload = FoodItem(
+                            foodItem.type,
+                            brand,
+                            foodItem.name,
+                            null,
+                            foodItem.recipeKeyList,
+                            foodItem.rating,
+                            url
+                        )
+                        database.child(brand).child(foodItem.name).setValue(foodUpload)
                     }
+                } else {
+                    database.child(brand).child(foodItem.name).setValue(foodItem)
                 }
-            }
-        })
+        }
     }
 }
+}
+
+private fun updateRecyclerViewData() {
+//        Log.d(TAG, "updateRecyclerViewData: starts")
+
+    database = FirebaseDatabase.getInstance().getReference("food")
+    storageRef = FirebaseStorage.getInstance().getReference("photos")
+
+    database.addValueEventListener(object :
+        ValueEventListener {
+
+        override fun onCancelled(p0: DatabaseError) {
+//                Log.d(TAG, "getRecipes listener: onCancelled")
+        }
+
+        override fun onDataChange(databaseFoods: DataSnapshot) {
+            if (databaseFoods.exists()) {
+                mutableFoodList.clear()
+                mutableDatabaseStructureBrands.clear()
+                mutableDatabaseStructureFoods.clear()
+
+                snapshot = databaseFoods
+
+                val brandList = databaseFoods.children
+                brandList.forEach { brand ->
+                    mutableDatabaseStructureBrands.add(brand.key!!)
+                    val dbFoodList = brand.children
+                    dbFoodList.forEach { food ->
+                        mutableFoodList.add(food.getValue(FoodItem::class.java)!!)
+                        mutableDatabaseStructureFoods.add(food.key!!)
+                    }
+
+                }
+            }
+        }
+    })
+}
+

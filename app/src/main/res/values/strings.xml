@@ -37,13 +37,20 @@
     <string name="recipe_fooditem_brand_food_Hint">Burger, Corn Flakes</string>
     <string name="recipe_fooditem_quantity_type_Hint">cups, ml, grams</string>
     <string name="recipe_fooditem_quantity_amount_Hint">1 1/4, 1/2, 568</string>
+    <string name="food_brand_txt">Brand Name</string>
     <string name="add_recipe_btn_add">Add Ingredient To List</string>
     <string name="add_ingredient_txt">Ingredient List</string>
+    <string name="add_tags_txt">Tags</string>
     <string name="item_card_title_default_txt">Click Me To Add A Recipe Photo!</string>
     <string name="add_recipe_ingredient_txt">Add Ingredients</string>
+    <string name="add_food_txt">Food Details</string>
     <string name="add_recipe_tags_txt">Add Tags</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="checkbox_Protein">Protein</string>
+    <string name="checkbox_Starch">Starch</string>
+    <string name="checkbox_FruitAndVeg">Fruit &amp; Veg</string>
+    <string name="checkbox_Condiments">Condiments</string>
+    <string name="checkbox_Other">Other</string>
+    <string name="checkbox_Unsure">Unsure</string>
 
 
 </resources>

@@ -57,7 +57,7 @@ class AccountFoodRecyclerViewAdapter(
             Glide.with(activity).load(R.drawable.upload).centerInside().into(image)
 
             image.setOnClickListener {
-                navController.navigate(R.id.add_recipe)
+                navController.navigate(R.id.addFood)
             }
 
         } else {

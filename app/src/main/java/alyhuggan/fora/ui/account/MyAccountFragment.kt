@@ -116,6 +116,7 @@ class MyAccountFragment : Fragment(), KodeinAware {
                 getRecipes(it.key)
             }
             it.foodList.forEach {
+                Log.d(TAG, "It = $it")
                 getFood(it.key)
             }
             adapter.notifyDataSetChanged()
