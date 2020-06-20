@@ -57,7 +57,6 @@ class FoodDaoImplementation : FoodDaoInterface {
     }
 
     override fun addFood(foodItem: FoodItem) {
-
         var brand = ""
         brand = foodItem.brand ?: "Generic"
         database.child(brand).child(foodItem.name).setValue(foodItem)

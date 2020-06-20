@@ -54,7 +54,8 @@ class AccountRecipeRecyclerViewAdapter(
 
     override fun getItemCount() = recipeList.size+1
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
+
+//    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: AccountRecipeViewHolder, position: Int) {
 
         val navController = Navigation.findNavController(activity, R.id.nav_host_fragment)

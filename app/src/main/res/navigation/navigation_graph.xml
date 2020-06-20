@@ -89,6 +89,9 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/extendedFood"
+            app:destination="@id/food_extended" />
     </fragment>
     <fragment
         android:id="@+id/add_recipe"

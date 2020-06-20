@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.navigation.Navigation
@@ -24,6 +25,7 @@ class AccountFoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val title: TextView = view.item_card_name
     val rating: RatingBar = view.item_card_ratingbar
     val image: ImageView = view.item_card_image
+    val bottomLinearLayout: LinearLayout = view.card_bottom_LL
 }
 
 class AccountFoodRecyclerViewAdapter(
@@ -39,18 +41,26 @@ class AccountFoodRecyclerViewAdapter(
         )
     }
 
-    override fun getItemCount() = foodList.size
+    override fun getItemCount() = foodList.size+1
 
     override fun onBindViewHolder(holder: AccountFoodViewHolder, position: Int) {
+
+        val navController = Navigation.findNavController(activity, R.id.nav_host_fragment)
+
         val title = holder.title
         val rating = holder.rating
         val image = holder.image
 
-        if (foodList.isEmpty()) {
-//            Log.d(TAG, "onBindViewHolder - recipeList is")
-        } else {
-//            Log.d(TAG, "onBindViewHolder - recipeList not empty")
+        if(position ==0) {
+            holder.bottomLinearLayout.visibility = View.GONE
+            image.layoutParams = LinearLayout.LayoutParams(475, LinearLayout.LayoutParams.MATCH_PARENT)
+            Glide.with(activity).load(R.drawable.upload).centerInside().into(image)
 
+            image.setOnClickListener {
+                navController.navigate(R.id.add_recipe)
+            }
+
+        } else {
             val foodItem = foodList[position]
 
             if(foodItem.brand != "Generic") {
@@ -71,7 +81,7 @@ class AccountFoodRecyclerViewAdapter(
                 extendedView.arguments = args
 
                 val navController = Navigation.findNavController(activity, R.id.nav_host_fragment)
-                navController.navigate(R.id.extendedView, args)
+                navController.navigate(R.id.extendedFood, args)
 //                fragmentManager.beginTransaction().show(extendedView).commit()
             }
         }
