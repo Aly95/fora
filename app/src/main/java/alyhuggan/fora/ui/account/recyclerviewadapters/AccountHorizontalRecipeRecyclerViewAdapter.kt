@@ -74,12 +74,12 @@ class AccountRecipeHorizontalRecyclerViewAdapter(
 
     private fun getTopRated(): List<Recipe> {
         val topRated = recipeList
-        return topRated.sortedByDescending { getRating(it.rating!!)}
+        return topRated.sortedByDescending { it.recipeRating() }
     }
 
     private fun getTopRatedFoods(): List<FoodItem> {
         val topRated = foodList
-        return topRated.sortedByDescending { getRating(it.rating!!)}
+        return topRated.sortedByDescending { it.foodRating() }
     }
 
     private fun getList(typeOfFood: String): List<Recipe> {
@@ -91,12 +91,10 @@ class AccountRecipeHorizontalRecyclerViewAdapter(
                 typeList.add(recipe)
         }
         if (typeList.isNotEmpty()) {
-            return typeList.sortedByDescending { getRating(it.rating!!) }
+            return typeList.sortedByDescending { it.recipeRating() }
         } else {
             return typeList
         }
     }
-
-    private fun getRating(ratings: List<Double>) = ratings.sum()/ratings.count()
 
 }

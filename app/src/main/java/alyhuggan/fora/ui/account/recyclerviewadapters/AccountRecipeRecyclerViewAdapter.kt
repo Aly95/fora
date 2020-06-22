@@ -76,9 +76,7 @@ class AccountRecipeRecyclerViewAdapter(
         } else {
             val recipe = recipeList[position-1]
             title.text = recipe.title
-            rating.text = round(
-                getRating(recipe.rating!!)
-            ).toString()
+            rating.text = round(recipe.recipeRating()).toString()
 
             if (recipe.photo != null) {
                 storageRef = FirebaseStorage.getInstance().reference
@@ -115,6 +113,4 @@ class AccountRecipeRecyclerViewAdapter(
     }
 
     private fun round(rating: Double) = BigDecimal(rating).setScale(1, RoundingMode.HALF_EVEN)
-
-    private fun getRating(ratings: List<Double>) = ratings.sum() / ratings.count()
 }

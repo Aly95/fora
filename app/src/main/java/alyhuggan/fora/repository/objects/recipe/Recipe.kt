@@ -26,4 +26,19 @@ data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(
         }
         return false
     }
+
+    fun recipeRating(): Double {
+        if (rating != null) {
+            return rating.sum() / rating.count()
+        }
+        return 1.0
+    }
+
+    fun ratingsCount(): String{
+        if(rating!!.size == 1) {
+            return "1 Rating"
+        } else {
+            return "${rating.size} Ratings"
+        }
+    }
 }

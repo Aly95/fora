@@ -66,9 +66,7 @@ class FoodRecyclerViewAdapter(
             }
 
             if (foodItem.rating != emptyList<Double>()) {
-                rating.text = round(
-                    getRating(foodItem.rating!!)
-                ).toString()
+                rating.text = round(foodItem.foodRating()).toString()
             } else {
                 rating.text = 3.0.toString()
         }

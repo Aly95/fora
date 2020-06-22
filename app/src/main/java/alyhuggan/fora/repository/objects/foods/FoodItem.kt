@@ -25,10 +25,18 @@ data class FoodItem(
         return false
     }
 
-    fun getFoodRating(): Double {
+    fun foodRating(): Double {
         if (rating != null) {
             return rating.sum() / rating.count()
         }
         return 1.0
+    }
+
+    fun ratingsCount(): String{
+        if(rating!!.size == 1) {
+            return "1 Rating"
+        } else {
+            return "${rating.size} Ratings"
+        }
     }
 }

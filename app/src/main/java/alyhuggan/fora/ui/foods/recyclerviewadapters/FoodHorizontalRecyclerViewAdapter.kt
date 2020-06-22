@@ -77,8 +77,11 @@ class FoodHorizontalRecyclerViewAdapter(
     }
 
     private fun getTopRated(): List<FoodItem> {
-        val topRated = foodList
-        return topRated.sortedByDescending { it.getFoodRating() }
+        val topRated = ArrayList<FoodItem>()
+        foodList.forEach {
+                topRated.add(it)
+        }
+        return topRated.sortedByDescending { it.foodRating() }
     }
 
     private fun getList(typeOfFood: String): List<FoodItem> {
@@ -92,7 +95,7 @@ class FoodHorizontalRecyclerViewAdapter(
             }
         }
         if (typeList.isNotEmpty()) {
-            return typeList.sortedByDescending { it.getFoodRating() }
+            return typeList.sortedByDescending { it.foodRating() }
         } else {
 //            Log.d(TAG, "Empty List")
             return typeList
