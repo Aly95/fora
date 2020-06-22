@@ -10,12 +10,12 @@ import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import alyhuggan.fora.viewmodels.user.UserViewModel
 import alyhuggan.fora.viewmodels.user.UserViewModelFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -55,48 +55,53 @@ class MyAccountFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbarTitle()
         checkUser()
         initializeUi()
+        searchFunction()
     }
 
     private fun initializeUi() {
 
-        getUserRecipes()
+        getUserRecipes(null)
 
         account_logout.setOnClickListener {
             viewModel.logOut()
-    }
+        }
     }
 
-    private fun getRecipes(key: String) {
+    private fun getRecipes(key: String, query: String?) {
 
         val recipeViewModel =
             ViewModelProviders.of(this, recipeViewModelFactory).get(RecipeViewModel::class.java)
 
         Log.d(TAG, "it = $key")
-        recipeViewModel.getSingleRecipe(key).observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                Log.d(TAG, "SingleRecipe It = $it")
-                adapterList.add(it)
+        recipeViewModel.getSingleRecipe(key).observe(viewLifecycleOwner, Observer { recipe ->
+            if (recipe != null) {
+                if (query != null) {
+                    if (recipe.title.toLowerCase().contains(query.toLowerCase())) {
+                        adapterList.add(recipe)
+                    }
+                } else {
+                    adapterList.add(recipe)
+                }
             }
         })
     }
+
 
     private fun getFood(key: String) {
 
         val foodViewModel =
             ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
 
-        foodViewModel.getSingleFood(key).observe(viewLifecycleOwner, Observer {
-            if(it != null) {
-                Log.d(TAG, "SingleFood It = $it")
-                foodList.add(it)
+        foodViewModel.getSingleFood(key).observe(viewLifecycleOwner, Observer { foodItem ->
+            if (foodItem != null) {
+                foodList.add(foodItem)
             }
         })
     }
 
-    private fun getUserRecipes() {
+    private fun getUserRecipes(query: String?) {
 
         val adapter =
             AccountRecipeHorizontalRecyclerViewAdapter(
@@ -112,14 +117,19 @@ class MyAccountFragment : Fragment(), KodeinAware {
         val user = viewModel.getUser().observe(viewLifecycleOwner, Observer {
             adapterList.clear()
             foodList.clear()
-            Log.d(TAG, "User account = $it")
-            it.recipeList.forEach {
-                getRecipes(it.key)
-                adapter.notifyDataSetChanged()
+//            Log.d(TAG, "User account = $it")
+            it.recipeList.forEach { recipe ->
+                getRecipes(recipe.key, query)
             }
-            it.foodList.forEach {
-                Log.d(TAG, "It = $it")
-                getFood(it.key)
+            adapter.notifyDataSetChanged()
+            it.foodList.forEach { foodItem ->
+                if (query != null) {
+                    if (foodItem.key.toLowerCase().contains(query.toLowerCase())) {
+                        getFood(foodItem.key)
+                    }
+                } else {
+                    getFood(foodItem.key)
+                }
                 adapter.notifyDataSetChanged()
             }
 //            adapter.notifyDataSetChanged()
@@ -144,8 +154,27 @@ class MyAccountFragment : Fragment(), KodeinAware {
         })
     }
 
-    private fun setToolbarTitle() {
-//        val toolbar: TextView = activity!!.findViewById(R.id.maintoolbar_title)
-//        toolbar.text = "Add Foods"
+    private fun searchFunction() {
+        val search = activity!!.findViewById<SearchView>(R.id.searchView)
+        search.queryHint = "Search Your Saved Items"
+
+        if(search.query != null) {
+            getUserRecipes(search.query.toString())
+        }
+
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d(TAG, "Query text = $query")
+                getUserRecipes(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "Query text = $newText")
+                getUserRecipes(newText)
+                return true
+            }
+        })
     }
 }

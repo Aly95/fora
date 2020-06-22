@@ -299,14 +299,15 @@ class AddRecipeFragment : Fragment(), KodeinAware {
                 if (brandList.contains(ingredient.brand)) {
                     foodModel.checkFood().observe(viewLifecycleOwner, Observer { foodList ->
                         if (foodList.contains(ingredient.name)) {
-                            Log.d(TAG, "Food Already Exists, update recipe list")
+                            Log.d(TAG, "addEntry() already exists")
                             foodModel.updateRecipe(ingredient)
                         } else {
-                            Log.d(TAG, "Add food item")
+                            Log.d(TAG, "addEntry() brand exists, name doesn't, adding food")
                             foodModel.addFoods(ingredient)
                         }
                     })
                 } else {
+                    Log.d(TAG, "addEntry() neither exist, adding food")
                     foodModel.addFoods(ingredient)
                 }
             }

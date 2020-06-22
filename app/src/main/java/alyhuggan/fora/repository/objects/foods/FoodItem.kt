@@ -11,4 +11,24 @@ data class FoodItem(
     val rating: List<Double>? = emptyList(), val url: String? = null
 ) :
     Parcelable {
+
+    fun contains(query: String?): Boolean {
+        if (query != null) {
+            if (name.contains(query, ignoreCase = true) || brand!!.contains(
+                    query,
+                    ignoreCase = true
+                )
+            ) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun getFoodRating(): Double {
+        if (rating != null) {
+            return rating.sum() / rating.count()
+        }
+        return 1.0
+    }
 }

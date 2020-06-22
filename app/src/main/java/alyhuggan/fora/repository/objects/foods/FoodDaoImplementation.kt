@@ -109,6 +109,7 @@ class FoodDaoImplementation : FoodDaoInterface {
                     }
             }
         } else {
+            Log.d(TAG, "addFood() adding $foodItem")
             database.child(brand).child(foodItem.name).setValue(foodItem)
                 .addOnSuccessListener {
                     //TODO() Quick fix, update to accept nulls
@@ -121,7 +122,6 @@ class FoodDaoImplementation : FoodDaoInterface {
         }
     }
 }
-
 
 private fun getUser() {
 
@@ -138,7 +138,7 @@ private fun getUser() {
                 override fun onDataChange(usersSnapshot: DataSnapshot) {
                     if (usersSnapshot.value != null) {
                         user = usersSnapshot.getValue(UserAccount::class.java)!!
-                        Log.d(TAG, "user = $user")
+//                        Log.d(TAG, "user = $user")
                     }
                 }
             })
@@ -146,6 +146,8 @@ private fun getUser() {
 }
 
 private fun uploadToUser(key: String, rating: Double) {
+
+    Log.d(TAG, "uploadToUser() called")
 
     val uid: String
     var foodList = ArrayList<UserItems>()
@@ -178,7 +180,6 @@ private fun uploadToUser(key: String, rating: Double) {
     userDatabase.child(uid).setValue(userUpload).addOnCompleteListener {
         Log.d(TAG, "Item Uploaded")
     }
-
 }
 
 

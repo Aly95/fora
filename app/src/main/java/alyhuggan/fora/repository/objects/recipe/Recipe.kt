@@ -17,4 +17,13 @@ data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(
     override fun toString(): String {
         return "$title, $rating, $photo, $type, $foods"
     }
+
+    fun contains(query: String?): Boolean{
+        if(query != null) {
+            if (title.contains(query, ignoreCase = true)) {
+                return true
+            }
+        }
+        return false
+    }
 }

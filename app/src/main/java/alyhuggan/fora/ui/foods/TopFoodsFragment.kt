@@ -3,10 +3,12 @@ package alyhuggan.fora.ui.foods
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.foods.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
+import alyhuggan.fora.repository.objects.recipe.Recipe
 import alyhuggan.fora.ui.foods.recyclerviewadapters.FoodHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.food.FoodViewModel
 import alyhuggan.fora.viewmodels.food.FoodViewModelFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.EditText
+import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,42 +48,99 @@ class TopFoodsFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setSearchHint()
-        initializeUi()
+        initializeUi(null)
+        searchFunction()
     }
 
-    private fun initializeUi() {
+    private fun initializeUi(query: String?) {
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(FoodViewModel::class.java)
         val foodList = ArrayList<FoodItem>()
+        val tagList = ArrayList<String>()
+        val typeCount = ArrayList<String>()
 
         viewModel.getFoods().observe(viewLifecycleOwner, Observer { foods ->
             foodList.clear()
-            if(foods.isNotEmpty()) {
-               foods.forEach {
-                   foodList.add(it)
-               }
+            tagList.clear()
+            if (foods.isNotEmpty()) {
+                foods.forEach { foodItem ->
+                    if (foodItem.contains(query)) {
+                        foodList.add(foodItem)
+                        if(foodItem.type != "" && foodItem.type != null) {
+                            typeCount.add(foodItem.type)
+                        }
+                    }
+                }
+
+                if(foodList.isNotEmpty()) {
+                    val tags = getFrequentTags(typeCount)
+                    tagList.add("Top Rated")
+                    tags.forEach {
+                        tagList.add(it.first)
+                    }
+                }
             }
         })
 
+        animate()
         foods_recycler_view.layoutManager = LinearLayoutManager(context)
-        val resId = R.anim.example
-        val animation: LayoutAnimationController =
-            AnimationUtils.loadLayoutAnimation(context, resId)
-        foods_recycler_view.layoutAnimation = animation
-
+        foods_recycler_view.setHasFixedSize(true)
 
         foods_recycler_view.adapter =
             FoodHorizontalRecyclerViewAdapter(
                 foodList,
+                tagList,
                 context!!,
                 activity!!
             )
-        foods_recycler_view.setHasFixedSize(true)
     }
 
-    private fun setSearchHint() {
-        val searchbox: EditText = activity!!.findViewById(R.id.searchbox_text)
-        searchbox.hint = "Search Individual Foods"
+    private fun animate() {
+        val resId = R.anim.example
+        val animation: LayoutAnimationController =
+            AnimationUtils.loadLayoutAnimation(context, resId)
+        foods_recycler_view.layoutAnimation = animation
     }
+
+    private fun searchFunction() {
+        val search = activity!!.findViewById<SearchView>(R.id.searchView)
+        search.queryHint = "Search Foods"
+
+        if(search.query != null) {
+            initializeUi(search.query.toString())
+        }
+
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d(TAG, "Query text = $query")
+                initializeUi(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "Query text = $newText")
+                initializeUi(newText)
+                return true
+            }
+        })
+    }
+
+    private fun getFrequentTags(typeCount: ArrayList<String>): ArrayList<Pair<String, Int>> {
+
+        val tagChecker = ArrayList<Pair<String, Int>>()
+
+        typeCount.distinct().forEach {
+            var count = 0
+            for(i in typeCount.indices) {
+                if(typeCount[i] == it) {
+                    count++
+                }
+            }
+            tagChecker.add(Pair(it, count))
+        }
+        tagChecker.sortByDescending { it.second }
+        return tagChecker
+    }
+
 }

@@ -6,12 +6,14 @@ import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeHorizontalRe
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.EditText
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -42,12 +44,12 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setSearchHint()
         auth = FirebaseAuth.getInstance()
-        initializeRecyclerAdapter()
+        initializeRecyclerAdapter(null)
+        searchFunction()
     }
 
-    private fun initializeRecyclerAdapter() {
+    private fun initializeRecyclerAdapter(query: String?) {
 
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
@@ -67,38 +69,63 @@ class TopRecipesFragment : Fragment(), KodeinAware {
 
         recipes_recycler_view.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getRecipes().observe(viewLifecycleOwner, Observer { recipe ->
+        viewModel.getRecipes().observe(viewLifecycleOwner, Observer { recipeList ->
             adapterList.clear()
             typeCount.clear()
             tagList.clear()
 
-            recipe.forEach { recipe ->
-                recipe.type.forEach {
-                    typeCount.add(it)
+            recipeList.forEach { recipe ->
+                if (recipe.contains(query)) {
+                    recipe.type.forEach {
+                        typeCount.add(it)
+                    }
+                    adapterList.add(recipe)
                 }
             }
 
-            val tags = getFrequentTags(typeCount)
-            tagList.add("Top Rated")
-            tags.forEach {
-                tagList.add(it.first)
+            if(adapterList.isNotEmpty()) {
+                val tags = getFrequentTags(typeCount)
+                tagList.add("Top Rated")
+                tags.forEach {
+                    tagList.add(it.first)
+                }
             }
 
-            recipe.forEach {
-                adapterList.add(it)
-            }
-            val resId = R.anim.example
-            val animation: LayoutAnimationController =
-                AnimationUtils.loadLayoutAnimation(context, resId)
-            recipes_recycler_view.layoutAnimation = animation
+            animate()
             adapter.notifyDataSetChanged()
         })
     }
 
+    private fun animate() {
+        val resId = R.anim.example
+        val animation: LayoutAnimationController =
+            AnimationUtils.loadLayoutAnimation(context, resId)
+        recipes_recycler_view.layoutAnimation = animation
+    }
 
-    private fun setSearchHint() {
-        val searchbox: EditText = activity!!.findViewById(R.id.searchbox_text)
-        searchbox.hint = "Search Recipes"
+    private fun searchFunction() {
+
+        val search = activity!!.findViewById<SearchView>(R.id.searchView)
+        search.queryHint = "Search Recipes"
+
+        if(search.query != null) {
+            initializeRecyclerAdapter(search.query.toString())
+        }
+
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d(TAG, "Query text = $query")
+                initializeRecyclerAdapter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "Query text = $newText")
+                initializeRecyclerAdapter(newText)
+                return true
+            }
+        })
     }
 
     private fun getFrequentTags(typeCount: ArrayList<String>): ArrayList<Pair<String, Int>> {

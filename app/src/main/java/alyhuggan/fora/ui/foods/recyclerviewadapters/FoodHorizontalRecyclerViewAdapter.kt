@@ -21,6 +21,7 @@ class ExtendedFoodHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 class FoodHorizontalRecyclerViewAdapter(
     private val foodList: List<FoodItem>,
+    private val tagList: ArrayList<String>,
     private val context: Context,
     private val activity: Activity
 ) : RecyclerView.Adapter<ExtendedFoodHolder>() {
@@ -33,7 +34,7 @@ class FoodHorizontalRecyclerViewAdapter(
         )
     }
 
-    override fun getItemCount() = 6
+    override fun getItemCount() = tagList.size
 
     override fun onBindViewHolder(holder: ExtendedFoodHolder, position: Int) {
 
@@ -44,16 +45,6 @@ class FoodHorizontalRecyclerViewAdapter(
                 emptyList(),
                 activity
             )
-
-//        val foodTypeList = mutableListOf<String>()
-//        foodTypeList.add("")
-//        foodTypeList.add("Proteins")
-//        foodTypeList.add("Starches")
-//        foodTypeList.add("Fruit and Veg")
-//        foodTypeList.add("Condiments")
-//        foodTypeList.add("Others")
-
-        val foodTypeList = listOf<String>("", "Proteins", "Starches", "Fruit & Veg", "Condiments", "Others")
 
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -68,11 +59,11 @@ class FoodHorizontalRecyclerViewAdapter(
                     )
             }
             else -> {
-                title.text = foodTypeList[position]
+                title.text = tagList[position]
                 foodRecyclerViewAdapter =
                     FoodRecyclerViewAdapter(
                         getList(
-                            foodTypeList[position]
+                            tagList[position]
                         ),
                         activity
                     )
@@ -87,8 +78,7 @@ class FoodHorizontalRecyclerViewAdapter(
 
     private fun getTopRated(): List<FoodItem> {
         val topRated = foodList
-        return foodList //rating not yet implemented
-//        return topRated.sortedByDescending { it.rating }
+        return topRated.sortedByDescending { it.getFoodRating() }
     }
 
     private fun getList(typeOfFood: String): List<FoodItem> {
@@ -102,8 +92,7 @@ class FoodHorizontalRecyclerViewAdapter(
             }
         }
         if (typeList.isNotEmpty()) {
-//            return typeList.sortedByDescending { it.rating }
-            return typeList
+            return typeList.sortedByDescending { it.getFoodRating() }
         } else {
 //            Log.d(TAG, "Empty List")
             return typeList
