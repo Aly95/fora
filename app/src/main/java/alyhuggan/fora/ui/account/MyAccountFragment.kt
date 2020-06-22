@@ -111,15 +111,18 @@ class MyAccountFragment : Fragment(), KodeinAware {
 
         val user = viewModel.getUser().observe(viewLifecycleOwner, Observer {
             adapterList.clear()
+            foodList.clear()
             Log.d(TAG, "User account = $it")
             it.recipeList.forEach {
                 getRecipes(it.key)
+                adapter.notifyDataSetChanged()
             }
             it.foodList.forEach {
                 Log.d(TAG, "It = $it")
                 getFood(it.key)
+                adapter.notifyDataSetChanged()
             }
-            adapter.notifyDataSetChanged()
+//            adapter.notifyDataSetChanged()
         })
 
     }

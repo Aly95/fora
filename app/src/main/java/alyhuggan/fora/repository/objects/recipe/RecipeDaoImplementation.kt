@@ -7,12 +7,10 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 
 private const val TAG = "RecipeDaoImplementation"
 private lateinit var database: DatabaseReference
@@ -48,7 +46,7 @@ class RecipeDaoImplementation :
 
     private fun updateUser(recipe: Recipe, dataId: String) {
 
-        var userItems: ArrayList<UserItems> = ArrayList<UserItems>()
+        var recipeItems: ArrayList<UserItems> = ArrayList<UserItems>()
         var foodItems: ArrayList<UserItems> = ArrayList<UserItems>()
         var userAccount: UserAccount = UserAccount()
 
@@ -68,13 +66,13 @@ class RecipeDaoImplementation :
 
                 if (dataSnapshotAccount != null) {
                     if(dataSnapshotAccount.recipeList != emptyList<UserItems>()) {
-                        userItems = dataSnapshotAccount.recipeList as ArrayList<UserItems>
+                        recipeItems = dataSnapshotAccount.recipeList as ArrayList<UserItems>
                     }
                     if(dataSnapshotAccount.foodList != emptyList<UserItems>()) {
                         foodItems = dataSnapshotAccount.foodList as ArrayList<UserItems>
                     }
                 }
-                userItems.add(
+                recipeItems.add(
                     UserItems(
                         dataId,
                         recipe.rating!![0]
@@ -94,7 +92,7 @@ class RecipeDaoImplementation :
                 userAccount = UserAccount(
                     "Username",
                     email!!,
-                    userItems,
+                    recipeItems,
                     foodItems
                 )
 
@@ -144,6 +142,7 @@ class RecipeDaoImplementation :
             } else {
                 recipeUpload = recipe
                 database.child(dataId).setValue(recipeUpload).addOnCompleteListener {
+                    updateUser(recipeUpload, dataId)
                 }
 //                userDatabase.child(userId).setValue(dataId).addOnCompleteListener {
 //                }

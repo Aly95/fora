@@ -61,7 +61,7 @@ class AccountFoodRecyclerViewAdapter(
             }
 
         } else {
-            val foodItem = foodList[position]
+            val foodItem = foodList[position-1]
 
             if(foodItem.brand != "Generic") {
                 title.text = "${foodItem.brand} ${foodItem.name}"

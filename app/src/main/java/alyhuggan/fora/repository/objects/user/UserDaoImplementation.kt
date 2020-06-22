@@ -60,10 +60,10 @@ class UserDaoImplementation : UserDaoInterface {
 
                 override fun onDataChange(usersSnapshot: DataSnapshot) {
                     if(usersSnapshot.exists()) {
-                        Log.d(TAG, "snapshot exists")
+//                        Log.d(TAG, "Usersnapshot = $usersSnapshot")
                         val userClass = usersSnapshot.getValue(UserAccount::class.java)
 
-                        Log.d(TAG, "User = $userClass")
+//                        Log.d(TAG, "User = $userClass")
 
                         user = UserAccount(
                             userClass!!.userName,
@@ -77,8 +77,6 @@ class UserDaoImplementation : UserDaoInterface {
                             auth.currentUser!!.email!!
                         )
                     }
-
-
                 }
             })
 
