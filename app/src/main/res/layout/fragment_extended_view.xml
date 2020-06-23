@@ -33,6 +33,14 @@
             android:textSize="34sp"
             android:textStyle="bold"
             tools:text="Hello" />
+
+        <ImageView
+            android:id="@+id/extended_view_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="12dp"
+            app:srcCompat="@drawable/ic_heart" />
     </FrameLayout>
 
 <!--    <com.google.android.material.card.MaterialCardView-->

@@ -79,15 +79,16 @@ class FoodHorizontalRecyclerViewAdapter(
     private fun getTopRated(): List<FoodItem> {
         val topRated = ArrayList<FoodItem>()
         foodList.forEach {
-                topRated.add(it)
+            topRated.add(it)
         }
         return topRated.sortedByDescending { it.foodRating() }
     }
 
+
+
     private fun getList(typeOfFood: String): List<FoodItem> {
 
         val typeList = ArrayList<FoodItem>()
-
         foodList.forEach { food ->
             if (food.type != null) {
                 if (food.type.contains(typeOfFood))

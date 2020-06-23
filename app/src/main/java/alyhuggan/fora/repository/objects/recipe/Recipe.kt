@@ -11,7 +11,7 @@ import kotlinx.android.parcel.RawValue
 
 data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(), val photo: String? = null,
                   val type: List<String> = emptyList(), val foods: List<FoodItem>? = null,
-                  val method: List<String>? = emptyList()) :
+                  val method: List<String>? = emptyList(), val id: String = "") :
     Parcelable {
 
     override fun toString(): String {
@@ -41,4 +41,5 @@ data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(
             return "${rating.size} Ratings"
         }
     }
+
 }

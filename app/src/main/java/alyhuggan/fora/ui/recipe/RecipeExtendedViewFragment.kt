@@ -12,7 +12,9 @@ import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,8 +40,8 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
     private val viewModelFactory by instance<RecipeViewModelFactory>()
     private lateinit var currentlySelected: TextView
 
-//    private val ingredient = item_card_heading_ingredients
-    private lateinit var method : TextView
+    //    private val ingredient = item_card_heading_ingredients
+    private lateinit var method: TextView
     private lateinit var details: TextView
     private lateinit var recyclerView: RecyclerView
 
@@ -78,7 +80,7 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
             method = item_card_heading_method
             details = item_card_heading_details
 
-            if(recipe.foods != null && recipe.method != null) {
+            if (recipe.foods != null && recipe.method != null) {
                 ingredientList = recipe.foods
                 methodList = recipe.method
                 detailsList = Details(
@@ -112,6 +114,37 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
                     details
                 )
             )
+
+            val favourite: ImageView = view.findViewById(R.id.extended_view_favourite)
+
+            val user = viewModel.getUser()
+            var favourited = false
+
+            user.recipeList.forEach {
+                    if(it.key == recipe.id) {
+                        favourited = true
+                    }
+                }
+
+            if(favourited == true) {
+                favourite.setImageResource(R.drawable.ic_heart_filled)
+                favourite.tag = "Filled"
+            } else {
+                favourite.setImageResource(R.drawable.ic_heart)
+                favourite.tag = "Heart"
+            }
+
+            favourite.setOnClickListener {
+                if(favourite.tag == "Heart") {
+                    favourite.setImageResource(R.drawable.ic_heart_filled)
+                    favourite.tag = "Filled"
+                    viewModel.favouriteRecipe(recipe)
+                } else {
+                    favourite.setImageResource(R.drawable.ic_heart)
+                    favourite.tag = "Heart"
+                    viewModel.removeFavourite(recipe)
+                }
+            }
         }
     }
 

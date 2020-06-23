@@ -1,0 +1,596 @@
+{
+  "food" : {
+    "Aldi" : {
+      "Banana" : {
+        "brand" : "Aldi",
+        "name" : "Banana",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "banana"
+        },
+        "recipeKeyList" : [ "-M9eRJ27OSVsoy6KgF60", "-M9hCO-qscWGeky6oVlw" ],
+        "type" : ""
+      },
+      "Canned Salmon" : {
+        "brand" : "Aldi",
+        "name" : "Canned Salmon",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "tin"
+        },
+        "recipeKeyList" : [ "-M9eBhIM2fXnWKAoxB-k", "-M9iWXMjxAg4_h8tCKVy" ],
+        "type" : ""
+      },
+      "Cream Cheese" : {
+        "brand" : "Aldi",
+        "name" : "Cream Cheese",
+        "quantity" : {
+          "quantity" : "50",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9eBhIM2fXnWKAoxB-k" ],
+        "type" : ""
+      },
+      "Lemon" : {
+        "brand" : "Aldi",
+        "name" : "Lemon",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "lemon"
+        },
+        "recipeKeyList" : [ "-M9iWxXl6q2eg13bBKZo" ],
+        "type" : ""
+      },
+      "Salmon" : {
+        "brand" : "Aldi",
+        "name" : "Salmon",
+        "quantity" : {
+          "quantity" : "2",
+          "quantityType" : "fillets"
+        },
+        "recipeKeyList" : [ "-MAWnw0nfRHbXUSP5PYv" ],
+        "type" : ""
+      },
+      "Sweet Chilli Sauce" : {
+        "brand" : "Aldi",
+        "name" : "Sweet Chilli Sauce",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "bottle"
+        },
+        "recipeKeyList" : [ "-MAWnw0nfRHbXUSP5PYv" ],
+        "type" : ""
+      }
+    },
+    "Generic" : {
+      "Bread" : {
+        "name" : "Bread",
+        "quantity" : {
+          "quantity" : "3",
+          "quantityType" : "slices"
+        },
+        "recipeKeyList" : [ "-M9eBhIM2fXnWKAoxB-k" ],
+        "type" : ""
+      },
+      "Sushi" : {
+        "name" : "Sushi",
+        "quantity" : {
+          "quantity" : "2",
+          "quantityType" : "tray"
+        },
+        "type" : "Others"
+      },
+      "Tofu" : {
+        "name" : "Tofu",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-M9e4RX9Y7hBDkrOzOru" ],
+        "type" : ""
+      }
+    },
+    "Kellogs" : {
+      "Cookies" : {
+        "brand" : "Cookies",
+        "name" : "Kellogs",
+        "rating" : [ 4.5 ],
+        "type" : "Protein",
+        "url" : "photos/Kellogs Cookies"
+      },
+      "Corn" : {
+        "brand" : "Kellogs",
+        "name" : "Corn",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "cup"
+        },
+        "recipeKeyList" : [ "-MAQd-fXBoyEaItTjWTs" ],
+        "type" : ""
+      },
+      "Corn Flags" : {
+        "foodList" : {
+          "brand" : "Kellogs",
+          "name" : "Corn Flags",
+          "rating" : [ 3 ],
+          "type" : "Starch"
+        }
+      },
+      "Corn Flakes" : {
+        "brand" : "Kellogs",
+        "name" : "Corn Flakes",
+        "quantity" : {
+          "quantity" : "2",
+          "quantityType" : "boxes"
+        },
+        "recipeKeyList" : [ "-M9o7XvMUI36Zm8w-HUw", "-M9o8ubIO7zuSvw0AQfp", "-M9o9NBROveq3rPpOjIL" ],
+        "type" : ""
+      },
+      "Crunchy Nut" : {
+        "brand" : "Kellogs",
+        "name" : "Crunchy Nut",
+        "rating" : [ 3 ],
+        "type" : "Protein"
+      }
+    },
+    "Monster" : {
+      "Ultra Blue" : {
+        "brand" : "Monster",
+        "name" : "Ultra Blue",
+        "quantity" : {
+          "quantity" : "16",
+          "quantityType" : "cans"
+        },
+        "recipeKeyList" : [ "-M9o7XvMUI36Zm8w-HUw", "-M9o8ubIO7zuSvw0AQfp", "-M9o9NBROveq3rPpOjIL" ],
+        "type" : ""
+      }
+    },
+    "Morrisons" : {
+      "Pasta" : {
+        "brand" : "Morrisons",
+        "name" : "Pasta",
+        "quantity" : {
+          "quantity" : "200",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9iWXMjxAg4_h8tCKVy" ],
+        "type" : ""
+      },
+      "Pilau Rice" : {
+        "brand" : "Morrisons",
+        "name" : "Pilau Rice",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-M9eKydovc3aaIRF5PQl", null, "-M9eOVQSuRcIBRRIMpoM" ],
+        "type" : ""
+      },
+      "Tofu" : {
+        "brand" : "Morrisons",
+        "name" : "Tofu",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-M9eKydovc3aaIRF5PQl", "-MALqrl4I8AA5PEPEE-5" ],
+        "type" : ""
+      }
+    },
+    "Sainsburys" : {
+      "Sweet Chilli sauce" : {
+        "brand" : "Sainsburys",
+        "name" : "Sweet Chilli sauce",
+        "quantity" : {
+          "quantity" : "120",
+          "quantityType" : "ml"
+        },
+        "recipeKeyList" : [ "-MALqrl4I8AA5PEPEE-5" ],
+        "type" : ""
+      }
+    },
+    "Tesco" : {
+      "Mixed Fruit" : {
+        "brand" : "Tesco",
+        "name" : "Mixed Fruit",
+        "quantity" : {
+          "quantity" : "90",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9eRJ27OSVsoy6KgF60" ],
+        "type" : ""
+      }
+    },
+    "Uncle Bens" : {
+      "Korma Sauce" : {
+        "brand" : "Uncle Bens",
+        "name" : "Korma Sauce",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "jar"
+        },
+        "recipeKeyList" : [ "-M9eKydovc3aaIRF5PQl" ],
+        "type" : ""
+      },
+      "Tikka Masala Sauce" : {
+        "brand" : "Uncle Bens",
+        "name" : "Tikka Masala Sauce",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "jar"
+        },
+        "recipeKeyList" : [ "-M9eOMCxCftqso015rgo" ],
+        "type" : ""
+      },
+      "Wholegrain Rice" : {
+        "brand" : "Uncle Bens",
+        "name" : "Wholegrain Rice",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-MALqrl4I8AA5PEPEE-5" ],
+        "type" : ""
+      }
+    }
+  },
+  "recipe" : {
+    "-M9eBhIM2fXnWKAoxB-k" : {
+      "foods" : [ {
+        "brand" : "Aldi",
+        "name" : "Canned Salmon",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "tin"
+        },
+        "recipeKeyList" : [ "-M9eBhIM2fXnWKAoxB-k" ],
+        "type" : ""
+      }, {
+        "name" : "Bread",
+        "quantity" : {
+          "quantity" : "3",
+          "quantityType" : "slices"
+        },
+        "recipeKeyList" : [ "-M9eBhIM2fXnWKAoxB-k" ],
+        "type" : ""
+      }, {
+        "brand" : "Aldi",
+        "name" : "Cream Cheese",
+        "quantity" : {
+          "quantity" : "50",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9eBhIM2fXnWKAoxB-k" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9eBhIM2fXnWKAoxB-k",
+      "rating" : [ 5, 4 ],
+      "title" : "Salmon Sandwich",
+      "type" : [ "Lunch" ],
+	  "id" : "-M9eBhIM2fXnWKAoxB-k"
+    },
+    "-M9eIRGPNSU5SdXexYsl" : {
+      "photo" : "photos/-M9eIRGPNSU5SdXexYsl",
+      "rating" : [ 5, 4 ],
+      "title" : "Egg On Toast",
+      "type" : [ "Lunch", "Savoury" ],
+	  "id" : "-M9eIRGPNSU5SdXexYsl"
+    },
+    "-M9eIyRRMl5tgkIuFzPv" : {
+      "foods" : [ {
+        "brand" : "Something",
+        "name" : "Bakingpow",
+        "quantity" : {
+          "quantity" : "15",
+          "quantityType" : "gs"
+        },
+        "recipeKeyList" : [ "-M9eIyRRMl5tgkIuFzPv" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9eIyRRMl5tgkIuFzPv",
+      "rating" : [ 5, 4, 1 ],
+      "title" : "Chocolate Cake",
+      "type" : [ "Dessert", "Sweet" ],
+	  "id" : "-M9eIyRRMl5tgkIuFzPv"
+    },
+    "-M9eKydovc3aaIRF5PQl" : {
+      "foods" : [ {
+        "brand" : "Uncle Bens",
+        "name" : "Korma Sauce",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "jar"
+        },
+        "recipeKeyList" : [ "-M9eKydovc3aaIRF5PQl" ],
+        "type" : ""
+      }, {
+        "brand" : "Morrisons",
+        "name" : "Pilau Rice",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-M9eKydovc3aaIRF5PQl" ],
+        "type" : ""
+      }, {
+        "brand" : "Morrisons",
+        "name" : "Tofu",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-M9eKydovc3aaIRF5PQl" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9eKydovc3aaIRF5PQl",
+	  "id" : "-M9eKydovc3aaIRF5PQl",
+      "rating" : [ 5, 4 ],
+      "title" : "Tofu Korma",
+      "type" : [ "Savoury", "Indian", "Curry", "Dinner" ]
+    },
+    "-M9eRJ27OSVsoy6KgF60" : {
+      "foods" : [ {
+        "brand" : "Aldi",
+        "name" : "Banana",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "banana"
+        },
+        "recipeKeyList" : [ "-M9eRJ27OSVsoy6KgF60" ],
+        "type" : ""
+      }, {
+        "brand" : "Tesco",
+        "name" : "Mixed Fruit",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "banana"
+        },
+        "recipeKeyList" : [ "-M9eRJ27OSVsoy6KgF60" ],
+        "type" : ""
+      }, {
+        "brand" : "Tesco",
+        "name" : "Mixed Fruit",
+        "quantity" : {
+          "quantity" : "90",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9eRJ27OSVsoy6KgF60" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9eRJ27OSVsoy6KgF60",
+	  "id" : "-M9eRJ27OSVsoy6KgF60",
+      "rating" : [ 5, 4 ],
+      "title" : "Nicks Protein Shake",
+      "type" : [ "Try adding some tags!" ]
+    },
+    "-M9hCO-qscWGeky6oVlw" : {
+      "foods" : [ {
+        "brand" : "Aldi",
+        "name" : "Banana",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "banana"
+        },
+        "recipeKeyList" : [ "-M9hCO-qscWGeky6oVlw" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9hCO-qscWGeky6oVlw",
+      "rating" : [ 5, 4 ],
+      "title" : "Banana & Oat Smoothie",
+	  "id" : "-M9hCO-qscWGeky6oVlw",
+      "type" : [ "Sweet", "Breakfast" ]
+    },
+    "-M9hRSi3ccvgcsLXObth" : {
+      "photo" : "photos/-M9hRSi3ccvgcsLXObth",
+      "rating" : [ 5, 4 ],
+      "title" : "Alys Ultimate Big Boi Strawberry Gateau",
+	  "id" : "-M9hRSi3ccvgcsLXObth",
+      "type" : [ "Try adding some tags!" ]
+    },
+    "-M9iWXMjxAg4_h8tCKVy" : {
+      "foods" : [ {
+        "brand" : "Aldi",
+        "name" : "Canned Salmon",
+        "quantity" : {
+          "quantity" : "100",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9iWXMjxAg4_h8tCKVy" ],
+        "type" : ""
+      }, {
+        "brand" : "Morrisons",
+        "name" : "Pasta",
+        "quantity" : {
+          "quantity" : "200",
+          "quantityType" : "grams"
+        },
+        "recipeKeyList" : [ "-M9iWXMjxAg4_h8tCKVy" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9iWXMjxAg4_h8tCKVy",
+	  "id" : "-M9iWXMjxAg4_h8tCKVy",
+      "rating" : [ 5, 4 ],
+      "title" : "Salmon Carbonara",
+      "type" : [ "Lunch", "Savoury", "Pasta", "Lunch", "Savoury", "Pasta" ]
+    },
+    "-M9iWxXl6q2eg13bBKZo" : {
+      "foods" : [ {
+        "brand" : "Aldi",
+        "name" : "Lemon",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "lemon"
+        },
+        "recipeKeyList" : [ "-M9iWxXl6q2eg13bBKZo" ],
+        "type" : ""
+      } ],
+      "photo" : "photos/-M9iWxXl6q2eg13bBKZo",
+	  "id" : "-M9iWxXl6q2eg13bBKZo",
+      "rating" : [ 5, 4 ],
+      "title" : "Lemon Cheesecake",
+      "type" : [ "Dessert", "Sweet", "Cheesecake", "Thicc" ]
+    },
+    "-M9o9NBROveq3rPpOjIL" : {
+      "foods" : [ {
+        "brand" : "Kellogs",
+        "name" : "Corn Flakes",
+        "quantity" : {
+          "quantity" : "5",
+          "quantityType" : "boxes"
+        },
+        "recipeKeyList" : [ "-M9o9NBROveq3rPpOjIL" ],
+        "type" : ""
+      }, {
+        "brand" : "Monster",
+        "name" : "Ultra Blue",
+        "quantity" : {
+          "quantity" : "5",
+          "quantityType" : "cans"
+        },
+        "recipeKeyList" : [ "-M9o9NBROveq3rPpOjIL" ],
+        "type" : ""
+      } ],
+      "method" : [ "Mix into bowl", "Devour" ],
+      "photo" : "photos/-M9o9NBROveq3rPpOjIL",
+	  "id" : "-M9o9NBROveq3rPpOjIL",
+      "rating" : [ 1.5 ],
+      "title" : "Monster Cereal",
+      "type" : [ "Breakfast" ]
+    },
+    "-MALqrl4I8AA5PEPEE-5" : {
+      "foods" : [ {
+        "brand" : "Morrisons",
+        "name" : "Tofu",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-MALqrl4I8AA5PEPEE-5" ],
+        "type" : ""
+      }, {
+        "brand" : "Sainsburys",
+        "name" : "Sweet Chilli sauce",
+        "quantity" : {
+          "quantity" : "120",
+          "quantityType" : "ml"
+        },
+        "recipeKeyList" : [ "-MALqrl4I8AA5PEPEE-5" ],
+        "type" : ""
+      }, {
+        "brand" : "Uncle Bens",
+        "name" : "Wholegrain Rice",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "pack"
+        },
+        "recipeKeyList" : [ "-MALqrl4I8AA5PEPEE-5" ],
+        "type" : ""
+      } ],
+      "method" : [ "Chop tofu into small squares", "Add ingredients to hot pan", "Cook on medium heat until golden brown", "Add sauce", "Enjoy" ],
+      "photo" : "photos/-MALqrl4I8AA5PEPEE-5",
+	  "id" : "-MALqrl4I8AA5PEPEE-5",
+      "rating" : [ 5 ],
+      "title" : "Sweet Chilli Tofu",
+      "type" : [ "Tea", "Dinner", "Savoury" ]
+    },
+    "-MAWnw0nfRHbXUSP5PYv" : {
+      "foods" : [ {
+        "brand" : "Aldi",
+        "name" : "Salmon",
+        "quantity" : {
+          "quantity" : "2",
+          "quantityType" : "fillets"
+        },
+        "recipeKeyList" : [ "-MAWnw0nfRHbXUSP5PYv" ],
+        "type" : ""
+      }, {
+        "brand" : "Aldi",
+        "name" : "Sweet Chilli Sauce",
+        "quantity" : {
+          "quantity" : "1",
+          "quantityType" : "bottle"
+        },
+        "recipeKeyList" : [ "-MAWnw0nfRHbXUSP5PYv" ],
+        "type" : ""
+      } ],
+      "id" : "-MAWnw0nfRHbXUSP5PYv",
+      "method" : [ "Catch salmon in boat", "???? ", "Enjoy" ],
+      "photo" : "photos/-MAWnw0nfRHbXUSP5PYv",
+      "rating" : [ 5 ],
+      "title" : "Sizzling Salmon",
+	  "id" : "-MAWnw0nfRHbXUSP5PYv",
+      "type" : [ "Savoury", "Tea", "Dinner" ]
+    }
+  },
+  "user" : {
+    "MlH1F3hntaf0cSteQWCBrkDp4hy2" : {
+      "email" : "name@coulddo.com",
+      "foodList" : [ {
+        "key" : "Amazing & Amazon",
+        "rating" : 0
+      }, {
+        "key" : "Amazing & Amazoness",
+        "rating" : 0
+      }, {
+        "key" : "Amazing & Amazonqq",
+        "rating" : 0
+      }, {
+        "key" : "Amazing & Amazonqqahha",
+        "rating" : 0
+      }, {
+        "key" : "Jehw & Jaha",
+        "rating" : 0
+      }, {
+        "key" : "Jehw & Jahaajja",
+        "rating" : 0
+      }, {
+        "key" : "BranxName & Jahaajja",
+        "rating" : 0
+      }, {
+        "key" : "Jehw & Jaha",
+        "rating" : 3
+      }, {
+        "key" : "Jehw & Jahaajja",
+        "rating" : 3
+      }, {
+        "key" : "BranxName & Jahaajja",
+        "rating" : 3
+      }, {
+        "key" : "Kellogs & Corn Gno",
+        "rating" : 0
+      }, {
+        "key" : "Kellof & Jshwh",
+        "rating" : 0
+      }, {
+        "key" : "Kellof & Jshwhsi",
+        "rating" : 0
+      }, {
+        "key" : "Kellof & Jshwh",
+        "rating" : 3
+      }, {
+        "key" : "Kellof & Jshwhsi",
+        "rating" : 3
+      }, {
+        "key" : "Gno & Vig",
+        "rating" : 3
+      }, {
+        "key" : "Aldi & Salmon",
+        "rating" : 3
+      }, {
+        "key" : "Aldi & Sweet Chilli Sauce",
+        "rating" : 3
+      }, {
+        "key" : "Aldi & Salmon",
+        "rating" : 0
+      }, {
+        "key" : "Aldi & Sweet Chilli Sauce",
+        "rating" : 0
+      } ],
+      "recipeList" : [ {
+        "key" : "-MAWnw0nfRHbXUSP5PYv",
+        "rating" : 0
+      } ],
+      "userName" : "Username"
+    }
+  }
+}

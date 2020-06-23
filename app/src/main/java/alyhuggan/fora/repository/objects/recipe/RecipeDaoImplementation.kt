@@ -21,7 +21,7 @@ private val recipeList = MutableLiveData<List<Recipe>>()
 private val mutableRecipeList = mutableListOf<Recipe>()
 private val key = MutableLiveData<String>()
 
-private val user = UserAccount()
+private var user = UserAccount()
 
 private val recipeKeyList = MutableLiveData<ArrayList<Recipe>>()
 private var snapshot: DataSnapshot? = null
@@ -33,8 +33,31 @@ class RecipeDaoImplementation :
 
     init {
         updateRecyclerViewData()
+        getUserDetails()
         recipeList.value = mutableRecipeList
     }
+
+    private fun getUserDetails() {
+
+        auth = FirebaseAuth.getInstance()
+        if(auth.currentUser != null) {
+            userDatabase.child(auth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(userSnapshot: DataSnapshot) {
+                    if(userSnapshot.exists()) {
+                        user = userSnapshot.getValue(UserAccount::class.java)!!
+                    }
+                }
+            })
+
+        }
+
+    }
+
+    override fun getUser() = user
 
     override fun getRecipes() = recipeList
 
@@ -65,10 +88,10 @@ class RecipeDaoImplementation :
                 val dataSnapshotAccount = user.getValue(UserAccount::class.java)
 
                 if (dataSnapshotAccount != null) {
-                    if(dataSnapshotAccount.recipeList != emptyList<UserItems>()) {
+                    if (dataSnapshotAccount.recipeList != emptyList<UserItems>()) {
                         recipeItems = dataSnapshotAccount.recipeList as ArrayList<UserItems>
                     }
-                    if(dataSnapshotAccount.foodList != emptyList<UserItems>()) {
+                    if (dataSnapshotAccount.foodList != emptyList<UserItems>()) {
                         foodItems = dataSnapshotAccount.foodList as ArrayList<UserItems>
                     }
                 }
@@ -79,8 +102,9 @@ class RecipeDaoImplementation :
                     )
                 )
 
-                if(recipe.foods != emptyList<FoodItem>()) {
+                if (recipe.foods != emptyList<FoodItem>()) {
                     recipe.foods!!.forEach { foodItem ->
+                        Log.d(TAG, "onDataChange: adding foodItem")
                         foodItems.add(
                             UserItems(
                                 "${foodItem.brand} & ${foodItem.name}"
@@ -101,9 +125,48 @@ class RecipeDaoImplementation :
                 }.addOnFailureListener {
                     Log.d(TAG, "failure because $it")
                 }
-                userDatabase.child(userId).setValue(userAccount)
             }
         })
+    }
+
+    override fun favouriteRecipe(recipe: Recipe) {
+
+        auth = FirebaseAuth.getInstance()
+
+        var recipeList = ArrayList<UserItems>()
+
+        if (auth.currentUser != null) {
+            val uid = auth.currentUser!!.uid
+            if (user.recipeList != emptyList<UserItems>()) {
+                recipeList = user.recipeList as ArrayList<UserItems>
+            }
+            recipeList.add(
+                UserItems(
+                    recipe.id,
+                    null
+                )
+            )
+            userDatabase.child(uid).child("recipeList").setValue(recipeList)
+        }
+    }
+
+    override fun removeFavourite(recipe: Recipe) {
+
+        auth = FirebaseAuth.getInstance()
+
+        var recipeList = ArrayList<UserItems>()
+
+        if (auth.currentUser != null) {
+            val uid = auth.currentUser!!.uid
+            if (user.recipeList != emptyList<UserItems>()) {
+                recipeList = user.recipeList as ArrayList<UserItems>
+            }
+            recipeList.remove(UserItems(
+              recipe.id
+            ))
+
+            userDatabase.child(uid).child("recipeList").setValue(recipeList)
+        }
     }
 
     override fun addRecipe(recipe: Recipe): LiveData<String>? {
@@ -132,7 +195,8 @@ class RecipeDaoImplementation :
                         url,
                         recipe.type,
                         recipe.foods,
-                        recipe.method
+                        recipe.method,
+                        dataId
                     )
 
                     database.child(dataId).setValue(recipeUpload).addOnCompleteListener {
@@ -140,7 +204,15 @@ class RecipeDaoImplementation :
                     }
                 }
             } else {
-                recipeUpload = recipe
+                recipeUpload = Recipe(
+                    recipe.title,
+                    recipe.rating,
+                    null,
+                    recipe.type,
+                    recipe.foods,
+                    recipe.method,
+                    dataId
+                )
                 database.child(dataId).setValue(recipeUpload).addOnCompleteListener {
                     updateUser(recipeUpload, dataId)
                 }

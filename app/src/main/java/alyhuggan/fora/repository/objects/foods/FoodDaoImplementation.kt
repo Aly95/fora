@@ -3,7 +3,6 @@ package alyhuggan.fora.repository.objects.foods
 import alyhuggan.fora.repository.objects.user.UserAccount
 import alyhuggan.fora.repository.objects.user.UserItems
 import android.net.Uri
-import android.renderscript.Sampler
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
