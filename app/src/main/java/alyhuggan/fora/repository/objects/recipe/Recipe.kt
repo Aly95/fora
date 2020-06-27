@@ -1,11 +1,8 @@
 package alyhuggan.fora.repository.objects.recipe
 
 import alyhuggan.fora.repository.objects.foods.FoodItem
-import android.media.Image
-import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 
 @Parcelize
 

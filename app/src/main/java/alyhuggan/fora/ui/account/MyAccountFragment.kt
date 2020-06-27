@@ -10,7 +10,6 @@ import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
 import alyhuggan.fora.viewmodels.user.UserViewModel
 import alyhuggan.fora.viewmodels.user.UserViewModelFactory
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -21,7 +20,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_my_account.*
+import kotlinx.android.synthetic.main.fragment_main_page.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -50,7 +49,7 @@ class MyAccountFragment : Fragment(), KodeinAware {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_account, container, false)
+        return inflater.inflate(R.layout.fragment_main_page, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -147,7 +146,7 @@ class MyAccountFragment : Fragment(), KodeinAware {
         viewModel.getUser().observe(viewLifecycleOwner, Observer { user ->
             if (user.userName == "") {
                 Log.d(TAG, "User not signed in")
-                navController.navigate(R.id.action_register)
+                navController.navigate(R.id.action_account)
             } else {
                 Log.d(TAG, "user email = ${user.email}")
             }

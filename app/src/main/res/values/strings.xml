@@ -51,6 +51,11 @@
     <string name="checkbox_Condiments">Condiments</string>
     <string name="checkbox_Other">Other</string>
     <string name="checkbox_Unsure">Unsure</string>
+    <string name="email_Hint">Email Address</string>
+    <string name="username_Hint">Username</string>
+    <string name="password_Hint">Password</string>
+    <string name="register_switch_page_text">Already Registered? Sign In Here!</string>
+    <string name="login_switch_page_text">New User? Register Here!</string>
 
 
 </resources>

@@ -77,6 +77,7 @@ class UserDaoImplementation : UserDaoInterface {
                             auth.currentUser!!.email!!
                         )
                     }
+                    liveUser.postValue(user)
                 }
             })
 
@@ -97,11 +98,13 @@ class UserDaoImplementation : UserDaoInterface {
         return null
     }
 
-    override fun login(user: User) {
+    override fun login(userDetails: User) {
         auth = FirebaseAuth.getInstance()
-        auth.signInWithEmailAndPassword(user.email, user.password).addOnSuccessListener {
+        auth.signInWithEmailAndPassword(userDetails.email, userDetails.password).addOnSuccessListener {
             getUser()
             Log.d(TAG, "login() User signed in ")
+        }.addOnFailureListener {
+            Log.d(TAG, "login: Failed with details ${userDetails}")
         }
     }
 

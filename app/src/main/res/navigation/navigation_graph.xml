@@ -58,7 +58,7 @@
         android:id="@+id/menu_account"
         android:name="alyhuggan.fora.ui.account.MyAccountFragment"
         android:label="fragment_create_your_own"
-        tools:layout="@layout/fragment_my_account" >
+        tools:layout="@layout/fragment_main_page" >
         <action
             android:id="@+id/action_createYourOwnFragment_to_topFoodsFragment"
             app:destination="@id/menu_foods" />
@@ -77,8 +77,8 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/action_register"
-            app:destination="@id/registerFragment"
+            android:id="@+id/action_account"
+            app:destination="@id/mainAccountFragment"
             app:enterAnim="@anim/fragment_fade_enter"
             app:exitAnim="@anim/fragment_fade_exit"
             app:popEnterAnim="@anim/fragment_fade_enter"
@@ -138,11 +138,11 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="alyhuggan.fora.ui.account.RegisterFragment"
+        android:name="alyhuggan.fora.ui.account.signin.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_account"
+            android:id="@+id/login"
             app:destination="@id/menu_account"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
@@ -151,6 +151,13 @@
             app:popExitAnim="@android:anim/fade_out"
             app:popUpTo="@id/menu_recipes"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/account_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/addFoodFragment"
@@ -160,6 +167,45 @@
         <action
             android:id="@+id/next"
             app:destination="@id/menu_account"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="alyhuggan.fora.ui.account.signin.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/login"
+            app:destination="@id/menu_account"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/menu_recipes" />
+        <action
+            android:id="@+id/register"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainAccountFragment"
+        android:name="alyhuggan.fora.ui.account.signin.MainAccountFragment"
+        android:label="MainAccountFragment" >
+        <action
+            android:id="@+id/account_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/register"
+            app:destination="@id/registerFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/fade_in"
