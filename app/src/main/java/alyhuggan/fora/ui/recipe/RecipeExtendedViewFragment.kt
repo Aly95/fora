@@ -118,17 +118,9 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
 
             val favourite: ImageView = view.findViewById(R.id.extended_view_favourite)
 
-            val user = viewModel.getUser()
-            var favourited = false
-
-            user.recipeList.forEach {
-                    if(it.key == recipe.id) {
-                        favourited = true
-                    }
-                }
+            val userList = viewModel.getUser().recipeList
             
-            val test = recipe.isFavourited(recipe, user)
-            Log.d(TAG, "onViewCreated: test = $test")
+            val favourited = recipe.isFavourited(userList)
 
             if(favourited == true) {
                 favourite.setImageResource(R.drawable.ic_heart_filled)

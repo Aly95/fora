@@ -65,25 +65,16 @@
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp">
 
-                        <TextView
-                            android:id="@+id/item_card_user_ratings"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:gravity="end"
-                            android:text="57 Ratings" />
-
                         <LinearLayout
                             android:id="@+id/card_rating_LL"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="end"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/item_card_ratings"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:text="4.7" />
 
                             <RatingBar
@@ -101,6 +92,20 @@
                                 android:scaleY="1"
                                 android:stepSize="0.5"
                                 tools:rating="3" />
+
+                            <TextView
+                                android:id="@+id/item_card_user_ratings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="57 Ratings" />
+
+                            <ImageView
+                                android:id="@+id/item_card_favourited"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:visibility="gone"
+                                app:srcCompat="@drawable/ic_heart_filled" />
+
                         </LinearLayout>
 
                     </LinearLayout>

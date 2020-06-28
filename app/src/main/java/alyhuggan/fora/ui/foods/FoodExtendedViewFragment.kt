@@ -87,6 +87,7 @@ class FoodExtendedViewFragment : Fragment(), KodeinAware {
         val adapter =
             RecipeRecyclerViewAdapter(
                 recipeList,
+                null,
                 activity!!
             )
         item_card_recyclerview.layoutManager =

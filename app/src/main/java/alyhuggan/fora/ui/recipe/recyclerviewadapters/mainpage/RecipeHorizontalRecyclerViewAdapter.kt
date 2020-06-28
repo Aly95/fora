@@ -2,6 +2,7 @@ package alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage
 
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.repository.objects.user.UserItems
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ class RecipeViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
 class RecipeHorizontalRecyclerViewAdapter(
     private val recipeList: List<Recipe>,
     private val tagList: ArrayList<String>,
+    private val userRecipeList: List<UserItems>?,
     private val context: Context,
     private val activity: Activity
 ) : RecyclerView.Adapter<RecipeViewHolderNew>() {
@@ -51,6 +53,7 @@ class RecipeHorizontalRecyclerViewAdapter(
                 recipeRecyclerViewAdapter =
                     RecipeRecyclerViewAdapter(
                         getTopRated(),
+                        userRecipeList,
                         activity
                     )
             }
@@ -61,6 +64,7 @@ class RecipeHorizontalRecyclerViewAdapter(
                         getList(
                             tagList[position]
                         ),
+                        userRecipeList,
                         activity
                     )
             }

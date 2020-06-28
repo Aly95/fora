@@ -33,6 +33,7 @@ class FoodExtendedRecyclerViewAdapter(private val recipeList: List<Recipe>, priv
         var foodRecyclerViewAdapter =
             RecipeRecyclerViewAdapter(
                 emptyList(),
+                null,
                 activity
             )
 
@@ -42,6 +43,7 @@ class FoodExtendedRecyclerViewAdapter(private val recipeList: List<Recipe>, priv
                 foodRecyclerViewAdapter =
                     RecipeRecyclerViewAdapter(
                         recipeList,
+                        null,
                         activity
                     )
 

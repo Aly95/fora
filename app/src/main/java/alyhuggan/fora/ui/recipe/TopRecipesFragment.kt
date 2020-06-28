@@ -54,12 +54,14 @@ class TopRecipesFragment : MainFragment(), KodeinAware {
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(RecipeViewModel::class.java)
 
+        val userRecipeList = viewModel.getUser().recipeList
         val typeCount = ArrayList<String>()
         val tagList = ArrayList<String>()
 
         val adapter = RecipeHorizontalRecyclerViewAdapter(
             adapterList,
             tagList,
+            userRecipeList,
             context!!,
             activity!!
         )
