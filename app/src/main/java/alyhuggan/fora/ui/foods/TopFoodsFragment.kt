@@ -4,6 +4,7 @@ import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.foods.Quantity
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.ui.MainFragment
 import alyhuggan.fora.ui.foods.recyclerviewadapters.FoodHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.food.FoodViewModel
 import alyhuggan.fora.viewmodels.food.FoodViewModelFactory
@@ -29,7 +30,7 @@ import org.kodein.di.generic.instance
 private const val TAG = "TopFoodsFragment"
 private lateinit var auth: FirebaseAuth
 
-class TopFoodsFragment : Fragment(), KodeinAware {
+class TopFoodsFragment : MainFragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private val viewModelFactory by instance<FoodViewModelFactory>()

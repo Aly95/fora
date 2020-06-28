@@ -3,6 +3,7 @@ package alyhuggan.fora.ui.account
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.ui.MainFragment
 import alyhuggan.fora.ui.account.recyclerviewadapters.AccountRecipeHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.food.FoodViewModel
 import alyhuggan.fora.viewmodels.food.FoodViewModelFactory
@@ -27,7 +28,7 @@ import org.kodein.di.generic.instance
 
 private const val TAG = "MyAccountFragment"
 
-class MyAccountFragment : Fragment(), KodeinAware {
+class MyAccountFragment : MainFragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private lateinit var viewModel: UserViewModel

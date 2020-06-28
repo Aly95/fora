@@ -3,6 +3,7 @@ package alyhuggan.fora.ui.account.signin
 import alyhuggan.fora.R
 import alyhuggan.fora.viewmodels.user.UserViewModel
 import alyhuggan.fora.viewmodels.user.UserViewModelFactory
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,6 +15,8 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
+private const val TAG = "AccountParentFragment"
+
 open class AccountParentFragment : Fragment(), KodeinAware {
 
     override val kodein by closestKodein()
@@ -23,6 +26,7 @@ open class AccountParentFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+        Log.d(TAG, "onResume: called")
         activity!!.main_toolbar.visibility = View.GONE
     }
 
@@ -44,10 +48,4 @@ open class AccountParentFragment : Fragment(), KodeinAware {
         navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
         navController.navigate(R.id.login)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        activity!!.main_toolbar.visibility = View.VISIBLE
-    }
-
 }

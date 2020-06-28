@@ -2,6 +2,7 @@ package alyhuggan.fora.ui.recipe
 
 import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.ui.MainFragment
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.mainpage.RecipeHorizontalRecyclerViewAdapter
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModel
 import alyhuggan.fora.viewmodels.recipe.RecipeViewModelFactory
@@ -12,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
-import android.widget.EditText
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
 private const val TAG = "TopRecipesFragment"
 private lateinit var auth: FirebaseAuth
 
-class TopRecipesFragment : Fragment(), KodeinAware {
+class TopRecipesFragment : MainFragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private val viewModelFactory by instance<RecipeViewModelFactory>()
