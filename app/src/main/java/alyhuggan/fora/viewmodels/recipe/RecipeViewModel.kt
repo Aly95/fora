@@ -13,5 +13,6 @@ class RecipeViewModel(private val recipeDaoInterface: RecipeDaoInterface) : View
     fun favouriteRecipe(recipe: Recipe) = recipeDaoInterface.favouriteRecipe(recipe)
     fun removeFavourite(recipe: Recipe) = recipeDaoInterface.removeFavourite(recipe)
     fun getUser() = recipeDaoInterface.getUser()
+    fun updateUserAccount() = recipeDaoInterface.updateUserAccount()
 
 }

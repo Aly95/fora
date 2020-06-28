@@ -37,10 +37,23 @@ class UserDaoImplementation : UserDaoInterface {
 
         auth.createUserWithEmailAndPassword(user.email, user.password).addOnSuccessListener {
             Log.d(TAG, "addUser() Task Successful")
+            addUserToDb()
             getUser()
         }.addOnFailureListener {
             Log.d(TAG, "addUser() Task has failed - exception = $it")
         }
+    }
+
+    private fun addUserToDb() {
+        userDatabase = FirebaseDatabase.getInstance().getReference("user")
+        val uid = auth.currentUser!!.uid
+
+        val user = UserAccount(
+            "Username",
+            auth.currentUser!!.email!!
+        )
+
+        userDatabase.child(uid).setValue(user)
     }
 
     override fun getUser(): LiveData<UserAccount> {

@@ -31,6 +31,8 @@ class MyAccountFragment : Fragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private lateinit var viewModel: UserViewModel
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var foodViewModel: FoodViewModel
     private val viewModelFactory by instance<UserViewModelFactory>()
     private val recipeViewModelFactory by instance<RecipeViewModelFactory>()
     private val foodViewModelFactory by instance<FoodViewModelFactory>()
@@ -54,12 +56,23 @@ class MyAccountFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkUser()
         initializeUi()
+        checkUser()
         searchFunction()
     }
 
+    override fun onResume() {
+        super.onResume()
+        recipeViewModel.updateUserAccount()
+    }
+
     private fun initializeUi() {
+
+        recipeViewModel =
+            ViewModelProviders.of(this, recipeViewModelFactory).get(RecipeViewModel::class.java)
+        foodViewModel =
+            ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel::class.java)
 
         getUserRecipes(null)
 
@@ -69,9 +82,6 @@ class MyAccountFragment : Fragment(), KodeinAware {
     }
 
     private fun getRecipes(key: String, query: String?) {
-
-        val recipeViewModel =
-            ViewModelProviders.of(this, recipeViewModelFactory).get(RecipeViewModel::class.java)
 
         Log.d(TAG, "it = $key")
         recipeViewModel.getSingleRecipe(key).observe(viewLifecycleOwner, Observer { recipe ->
@@ -89,9 +99,6 @@ class MyAccountFragment : Fragment(), KodeinAware {
 
 
     private fun getFood(key: String) {
-
-        val foodViewModel =
-            ViewModelProviders.of(this, foodViewModelFactory).get(FoodViewModel::class.java)
 
         foodViewModel.getSingleFood(key).observe(viewLifecycleOwner, Observer { foodItem ->
             if (foodItem != null) {
@@ -140,9 +147,6 @@ class MyAccountFragment : Fragment(), KodeinAware {
 
         navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
-        viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(UserViewModel::class.java)
-
         viewModel.getUser().observe(viewLifecycleOwner, Observer { user ->
             if (user.userName == "") {
                 Log.d(TAG, "User not signed in")
@@ -157,7 +161,7 @@ class MyAccountFragment : Fragment(), KodeinAware {
         val search = activity!!.findViewById<SearchView>(R.id.searchView)
         search.queryHint = "Search Your Saved Items"
 
-        if(search.query != null) {
+        if (search.query != null) {
             getUserRecipes(search.query.toString())
         }
 

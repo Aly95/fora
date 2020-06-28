@@ -1,6 +1,7 @@
 package alyhuggan.fora.repository.objects.recipe
 
 import alyhuggan.fora.repository.objects.foods.FoodItem
+import alyhuggan.fora.repository.objects.user.UserAccount
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -37,6 +38,17 @@ data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(
         } else {
             return "${rating.size} Ratings"
         }
+    }
+
+    fun isFavourited(recipe: Recipe, userAccount: UserAccount): Boolean {
+
+        var favourited = false
+        userAccount.recipeList.forEach { userRecipe ->
+            if(recipe.id == userRecipe.key) {
+                favourited = true
+            }
+        }
+        return favourited
     }
 
 }

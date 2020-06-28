@@ -5,6 +5,7 @@ import alyhuggan.fora.repository.objects.foods.FoodItem
 import alyhuggan.fora.repository.objects.recipe.Created
 import alyhuggan.fora.repository.objects.recipe.Details
 import alyhuggan.fora.repository.objects.recipe.Recipe
+import alyhuggan.fora.repository.objects.user.UserAccount
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedDetailsRecyclerViewAdapter
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedRecyclerViewAdapter
 import alyhuggan.fora.ui.recipe.recyclerviewadapters.extendedview.ExtendedStringsRecyclerViewAdapter
@@ -125,6 +126,9 @@ class RecipeExtendedViewFragment : Fragment(), KodeinAware {
                         favourited = true
                     }
                 }
+            
+            val test = recipe.isFavourited(recipe, user)
+            Log.d(TAG, "onViewCreated: test = $test")
 
             if(favourited == true) {
                 favourite.setImageResource(R.drawable.ic_heart_filled)

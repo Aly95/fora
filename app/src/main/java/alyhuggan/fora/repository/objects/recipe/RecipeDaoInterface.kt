@@ -12,4 +12,5 @@ interface RecipeDaoInterface {
     fun favouriteRecipe(recipe: Recipe)
     fun removeFavourite(recipe: Recipe)
     fun getUser(): UserAccount
+    fun updateUserAccount()
 }

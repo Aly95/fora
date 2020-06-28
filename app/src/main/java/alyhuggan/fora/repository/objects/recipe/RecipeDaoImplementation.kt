@@ -39,8 +39,8 @@ class RecipeDaoImplementation :
 
     private fun getUserDetails() {
 
-        auth = FirebaseAuth.getInstance()
         if(auth.currentUser != null) {
+            Log.d(TAG, "getUserDetails: ${auth.currentUser}")
             userDatabase.child(auth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("Not yet implemented")
@@ -49,12 +49,17 @@ class RecipeDaoImplementation :
                 override fun onDataChange(userSnapshot: DataSnapshot) {
                     if(userSnapshot.exists()) {
                         user = userSnapshot.getValue(UserAccount::class.java)!!
+                        Log.d(TAG, "onDataChange: user = $user")
                     }
                 }
             })
-
+        } else {
+            Log.d(TAG, "getUserDetails: null")
         }
+    }
 
+    override fun updateUserAccount() {
+        getUserDetails()
     }
 
     override fun getUser() = user
@@ -230,6 +235,7 @@ class RecipeDaoImplementation :
         database = FirebaseDatabase.getInstance().getReference("recipe")
         userDatabase = FirebaseDatabase.getInstance().getReference("user")
         storageRef = FirebaseStorage.getInstance().getReference("photos")
+        auth = FirebaseAuth.getInstance()
 
         database.addValueEventListener(object : ValueEventListener {
 
