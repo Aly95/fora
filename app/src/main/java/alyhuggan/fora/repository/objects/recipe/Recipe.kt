@@ -5,6 +5,8 @@ import alyhuggan.fora.repository.objects.user.UserAccount
 import alyhuggan.fora.repository.objects.user.UserItems
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 @Parcelize
 
@@ -28,10 +30,12 @@ data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(
 
     fun recipeRating(): Double {
         if (rating != null) {
-            return rating.sum() / rating.count()
+            return round(rating.sum() / rating.count()).toDouble()
         }
         return 1.0
     }
+
+    private fun round(rating: Double) = BigDecimal(rating).setScale(1, RoundingMode.HALF_EVEN)
 
     fun ratingsCount(): String{
         if(rating!!.size == 1) {

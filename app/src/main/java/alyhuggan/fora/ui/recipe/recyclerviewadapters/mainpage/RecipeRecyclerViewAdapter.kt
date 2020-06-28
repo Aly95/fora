@@ -73,7 +73,7 @@ class RecipeRecyclerViewAdapter(
 
         if(userRecipeList != null) {
             if(!recipe.isFavourited(userRecipeList)) {
-                Log.d(TAG, "onBindViewHolder: favourited = false")
+                favourited.visibility = View.GONE
             } else {
                 favourited.visibility = View.VISIBLE
             }
@@ -101,8 +101,4 @@ class RecipeRecyclerViewAdapter(
             navController.navigate(R.id.extendedView, args)
         }
     }
-
-    private fun round(rating: Double) = BigDecimal(rating).setScale(1, RoundingMode.HALF_EVEN)
-
-    private fun getRating(ratings: List<Double>) = ratings.sum() / ratings.count()
 }
