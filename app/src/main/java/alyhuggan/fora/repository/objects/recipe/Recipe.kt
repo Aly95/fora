@@ -49,7 +49,7 @@ data class Recipe(val title: String = "", val rating: List<Double>? = emptyList(
 
         var favourited = false
         userList.forEach { item ->
-            if(this.id == item.key) {
+            if(this.id == item.key && item.favourited) {
                 favourited = true
             }
         }

@@ -105,7 +105,8 @@ class RecipeDaoImplementation :
                 recipeItems.add(
                     UserItems(
                         dataId,
-                        recipe.rating!![0]
+                        recipe.rating!![0],
+                        true
                     )
                 )
 
@@ -139,6 +140,8 @@ class RecipeDaoImplementation :
     override fun favouriteRecipe(recipe: Recipe) {
 
         auth = FirebaseAuth.getInstance()
+        var userItem: UserItems = UserItems()
+        var found: Boolean = false
 
         var recipeList = ArrayList<UserItems>()
 
@@ -147,12 +150,24 @@ class RecipeDaoImplementation :
             if (user.recipeList != emptyList<UserItems>()) {
                 recipeList = user.recipeList as ArrayList<UserItems>
             }
-            recipeList.add(
-                UserItems(
-                    recipe.id,
-                    null
+
+            recipeList.forEach { listUserItem ->
+                if(listUserItem.key == recipe.id) {
+                    listUserItem.favourited = true
+                    found = true
+                }
+            }
+
+            if(!found) {
+                recipeList.add(
+                    UserItems(
+                        recipe.id,
+                        null,
+                        true
+                    )
                 )
-            )
+            }
+
             userDatabase.child(uid).child("recipeList").setValue(recipeList)
         }
     }
@@ -168,9 +183,15 @@ class RecipeDaoImplementation :
             if (user.recipeList != emptyList<UserItems>()) {
                 recipeList = user.recipeList as ArrayList<UserItems>
             }
-            recipeList.remove(UserItems(
-              recipe.id
-            ))
+//            recipeList.remove(UserItems(
+//              recipe.id
+//            ))
+
+            recipeList.forEach {
+                if(it.key == recipe.id) {
+                    it.favourited = false
+                }
+            }
 
             userDatabase.child(uid).child("recipeList").setValue(recipeList)
         }
