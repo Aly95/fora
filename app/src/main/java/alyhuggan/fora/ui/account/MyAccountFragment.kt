@@ -79,6 +79,7 @@ class MyAccountFragment : MainFragment(), KodeinAware {
 
         account_logout.setOnClickListener {
             viewModel.logOut()
+            recipeViewModel.updateUserAccount()
         }
     }
 

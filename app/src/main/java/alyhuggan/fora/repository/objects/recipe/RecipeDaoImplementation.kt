@@ -36,7 +36,6 @@ class RecipeDaoImplementation :
         getUserDetails()
         recipeList.value = mutableRecipeList
     }
-
     private fun getUserDetails() {
 
         if(auth.currentUser != null) {
@@ -50,10 +49,13 @@ class RecipeDaoImplementation :
                     if(userSnapshot.exists()) {
                         user = userSnapshot.getValue(UserAccount::class.java)!!
                         Log.d(TAG, "onDataChange: user = $user")
+                    } else {
+                        Log.d(TAG, "onDataChange: null")
                     }
                 }
             })
         } else {
+            user = UserAccount()
             Log.d(TAG, "getUserDetails: null")
         }
     }
