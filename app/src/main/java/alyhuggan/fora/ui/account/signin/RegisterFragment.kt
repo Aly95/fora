@@ -9,6 +9,7 @@ import alyhuggan.fora.R
 import alyhuggan.fora.repository.objects.user.User
 import alyhuggan.fora.viewmodels.user.UserViewModel
 import alyhuggan.fora.viewmodels.user.UserViewModelFactory
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -42,11 +43,6 @@ class RegisterFragment : AccountParentFragment(), KodeinAware {
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        activity!!.main_toolbar.visibility = View.GONE
-//    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,17 +57,53 @@ class RegisterFragment : AccountParentFragment(), KodeinAware {
 
         register_button.setOnClickListener {
 
+            val username = register_username.text.toString().trim()
             val email = register_email.text.toString().trim()
             val password = register_password.text.toString().trim()
 
-            if (emptyFieldCheck(email) && emptyFieldCheck(password)) {
+            val listToCheck = listOf(username, email, password)
+
+            if (emptyFieldCheck(listToCheck)) {
                 val user = User(
                     email,
-                    password
+                    password,
+                    username
                 )
-                viewModel.addUser(user)
+                val check = user.checkUsername(username)
+                Log.d(TAG, "onViewCreated: $check")
+                
+                viewModel.addUser(user)!!.observe(viewLifecycleOwner, Observer { exception ->
+                    if (exception != "" && exception != null) {
+                        Log.d(TAG, "onViewCreated: exception = $exception")
+                        val message = errorMessage(exception)
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                        viewModel.addUser(user)!!.removeObservers(viewLifecycleOwner)
+                    }
+                })
+            } else {
+                Toast.makeText(
+                    context,
+                    "Please don't leave any fields empty",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
+    }
 
+    private fun errorMessage(error: String): String? {
+        return when (error) {
+            getString(R.string.email_format) -> {
+                getString(R.string.email_message)
+            }
+            getString(R.string.email_exists) -> {
+                getString(R.string.register_email_message)
+            }
+            getString(R.string.password_format) -> {
+                getString(R.string.register_password_message)
+            }
+            else -> {
+                getString(R.string.unexpected_error)
+            }
+        }
     }
 }

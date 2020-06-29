@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
 
 private const val TAG = "UserDaoImplementation"
@@ -20,6 +21,9 @@ private lateinit var userDatabase: DatabaseReference
 private val recipeList = MutableLiveData<List<Recipe>>()
 private val mutableRecipeList = mutableListOf<Recipe>()
 
+private val loginMessage = MutableLiveData<String>()
+private val registerMessage = MutableLiveData<String>()
+
 class UserDaoImplementation : UserDaoInterface {
 
     init {
@@ -32,16 +36,27 @@ class UserDaoImplementation : UserDaoInterface {
         getUser()
     }
 
-    override fun addUser(user: User) {
+    override fun addUser(user: User): LiveData<String>? {
         Log.d(TAG, "addUser: called")
+        Log.d(TAG, "addUser: user = $user")
 
         auth.createUserWithEmailAndPassword(user.email, user.password).addOnSuccessListener {
-            Log.d(TAG, "addUser() Task Successful")
-            addUserToDb()
-            getUser()
-        }.addOnFailureListener {
-            Log.d(TAG, "addUser() Task has failed - exception = $it")
+
+            val currentUser = auth.currentUser
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(user.username).build()
+            currentUser!!.updateProfile(profileUpdates).addOnSuccessListener {
+                Log.d(TAG, "addUser() Task Successful")
+                addUserToDb()
+                getUser()
+            }
+
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "addUser() Task has failed - exception = $exception")
+            registerMessage.value = "$exception"
+            registerMessage.postValue("")
         }
+        return registerMessage
     }
 
     private fun addUserToDb() {
@@ -49,7 +64,7 @@ class UserDaoImplementation : UserDaoInterface {
         val uid = auth.currentUser!!.uid
 
         val user = UserAccount(
-            "Username",
+            auth.currentUser!!.displayName!!,
             auth.currentUser!!.email!!
         )
 
@@ -66,13 +81,13 @@ class UserDaoImplementation : UserDaoInterface {
             Log.d(TAG, "getUser() != null")
 
             val userDb = userDatabase.child(auth.currentUser!!.uid)
-            userDb.addValueEventListener(object: ValueEventListener{
+            userDb.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("Not yet implemented")
                 }
 
                 override fun onDataChange(usersSnapshot: DataSnapshot) {
-                    if(usersSnapshot.exists()) {
+                    if (usersSnapshot.exists()) {
 //                        Log.d(TAG, "Usersnapshot = $usersSnapshot")
                         val userClass = usersSnapshot.getValue(UserAccount::class.java)
 
@@ -111,14 +126,18 @@ class UserDaoImplementation : UserDaoInterface {
         return null
     }
 
-    override fun login(userDetails: User) {
+    override fun login(userDetails: User): LiveData<String>? {
         auth = FirebaseAuth.getInstance()
-        auth.signInWithEmailAndPassword(userDetails.email, userDetails.password).addOnSuccessListener {
-            getUser()
-            Log.d(TAG, "login() User signed in ")
-        }.addOnFailureListener {
+        auth.signInWithEmailAndPassword(userDetails.email, userDetails.password)
+            .addOnSuccessListener {
+                getUser()
+                Log.d(TAG, "login() User signed in ")
+            }.addOnFailureListener { exception ->
             Log.d(TAG, "login: Failed with details ${userDetails}")
+            loginMessage.value = "$exception"
+            loginMessage.postValue("")
         }
+        return loginMessage
     }
 
     override fun logout() {

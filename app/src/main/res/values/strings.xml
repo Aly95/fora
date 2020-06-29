@@ -57,5 +57,18 @@
     <string name="register_switch_page_text">Already Registered? Sign In Here!</string>
     <string name="login_switch_page_text">New User? Register Here!</string>
 
+    <string name="invalid_username">com.google.firebase.auth.FirebaseAuthInvalidUserException: There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="username_message">No account with the provided email address exists.</string>
+    <string name="email_format">com.google.firebase.auth.FirebaseAuthInvalidCredentialsException: The email address is badly formatted.</string>
+    <string name="email_message">Error with email address formatting</string>
+    <string name="invalid_password">com.google.firebase.auth.FirebaseAuthInvalidCredentialsException: The password is invalid or the user does not have a password.</string>
+    <string name="password_message">Invalid Password</string>
+    <string name="unexpected_error">"There was an issue with the provided details."</string>
+    <string name="too_many_requests">com.google.firebase.FirebaseTooManyRequestsException: We have blocked all requests from this device due to unusual activity. Try again later. [ Too many unsuccessful login attempts. Please try again later. ]</string>
+    <string name="requests_message">Too many login attempts, please try again later.</string>
 
+    <string name="email_exists">com.google.firebase.auth.FirebaseAuthUserCollisionException: The email address is already in use by another account.</string>
+    <string name="register_email_message">An account with that email address already exists.</string>
+    <string name="password_format">com.google.firebase.auth.FirebaseAuthWeakPasswordException: The given password is invalid. [ Password should be at least 6 characters ]</string>
+    <string name="register_password_message">Password must be at least 6 characters</string>
 </resources>

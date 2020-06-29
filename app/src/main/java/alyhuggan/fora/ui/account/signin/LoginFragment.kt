@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -55,14 +56,24 @@ class LoginFragment : AccountParentFragment(), KodeinAware {
             val email = login_email.text.toString().trim()
             val password = login_password.text.toString().trim()
 
+            val list = listOf(email, password)
+
             Log.d(TAG, "onViewCreated: password = $password")
 
-            if (emptyFieldCheck(email) && emptyFieldCheck(password)) {
+            if (emptyFieldCheck(list)) {
                 val user = User(
                     email,
                     password
                 )
-                viewModel.login(user)
+                viewModel.login(user)?.observe(viewLifecycleOwner, Observer { string ->
+                    if (string != "") {
+                        val message = errorMessage(string)
+                        Log.d(TAG, "onViewCreated: message = $message")
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                        viewModel.login(user)!!.removeObservers(viewLifecycleOwner)
+
+                    }
+                })
             } else {
                 Toast.makeText(
                     context,
@@ -71,6 +82,26 @@ class LoginFragment : AccountParentFragment(), KodeinAware {
                 ).show()
             }
 
+        }
+    }
+
+    private fun errorMessage(error: String): String {
+        when (error) {
+            getString(R.string.email_format) -> {
+                return getString(R.string.email_message)
+            }
+            getString(R.string.invalid_password) -> {
+                return getString(R.string.password_message)
+            }
+            getString(R.string.invalid_username) -> {
+                return getString(R.string.username_message)
+            }
+            getString(R.string.too_many_requests) -> {
+                return getString(R.string.requests_message)
+            }
+            else -> {
+                return getString(R.string.unexpected_error)
+            }
         }
     }
 }

@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 
 interface UserDaoInterface {
 
-    fun addUser(user: User)
+    fun addUser(user: User): LiveData<String>?
     fun getUser(): LiveData<UserAccount>
     fun getUserRecipes(): LiveData<List<Recipe>>?
-    fun login(user: User)
+    fun login(user: User): LiveData<String>?
     fun logout()
 
 }

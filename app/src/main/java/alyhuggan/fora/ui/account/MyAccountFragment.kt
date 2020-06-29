@@ -150,7 +150,7 @@ class MyAccountFragment : MainFragment(), KodeinAware {
         navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
         viewModel.getUser().observe(viewLifecycleOwner, Observer { user ->
-            if (user.userName == "") {
+            if (user.email == "") {
                 Log.d(TAG, "User not signed in")
                 navController.navigate(R.id.action_account)
             } else {

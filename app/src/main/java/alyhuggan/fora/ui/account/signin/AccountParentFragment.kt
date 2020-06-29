@@ -30,7 +30,14 @@ open class AccountParentFragment : Fragment(), KodeinAware {
         activity!!.main_toolbar.visibility = View.GONE
     }
 
-    fun emptyFieldCheck(text: String) = text != ""
+    fun emptyFieldCheck(textList: List<String>): Boolean {
+        textList.forEach { text ->
+            if(text == "") {
+                return false
+            }
+        }
+        return true
+    }
 
     fun checkUser() {
 
