@@ -1,7 +1,6 @@
 package alyhuggan.fora.ui.account.signin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,11 @@ import alyhuggan.fora.repository.objects.user.User
 import alyhuggan.fora.viewmodels.user.UserViewModel
 import alyhuggan.fora.viewmodels.user.UserViewModelFactory
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -63,34 +60,52 @@ class RegisterFragment : AccountParentFragment(), KodeinAware {
 
             val listToCheck = listOf(username, email, password)
 
-            if (emptyFieldCheck(listToCheck)) {
+            if (!emptyFieldCheck(listToCheck)) {
                 val user = User(
                     email,
                     password,
                     username
                 )
-                val check = user.checkUsername(username)
-                Log.d(TAG, "onViewCreated: $check")
-                
-                viewModel.addUser(user)!!.observe(viewLifecycleOwner, Observer { exception ->
-                    if (exception != "" && exception != null) {
-                        Log.d(TAG, "onViewCreated: exception = $exception")
-                        val message = errorMessage(exception)
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                        viewModel.addUser(user)!!.removeObservers(viewLifecycleOwner)
-                    }
-                })
+                checkUsername(user, username)
             } else {
-                Toast.makeText(
-                    context,
-                    "Please don't leave any fields empty",
-                    Toast.LENGTH_SHORT
-                ).show()
+                exceptionHandle("emptyFields")
             }
         }
     }
 
-    private fun errorMessage(error: String): String? {
+    private fun checkUsername(user: User, username: String) {
+        user.checkUsername(user.username).observe(viewLifecycleOwner, Observer {
+            when(it) {
+                "true" -> {
+                    exceptionHandle("usernameTaken")
+                }
+                "false" -> {
+                    addUser(user)
+                }
+            }
+        })
+    }
+
+    private fun addUser(user: User) {
+        viewModel.addUser(user)!!.observe(viewLifecycleOwner, Observer { exception ->
+            if (exception != "" && exception != null) {
+                exceptionHandle(exception)
+                removeListener(user)
+            }
+        })
+    }
+
+    private fun removeListener(user: User) {
+        viewModel.addUser(user)!!.removeObservers(viewLifecycleOwner)
+    }
+
+    private fun exceptionHandle(exception: String) {
+            Log.d(TAG, "onViewCreated: exception = $exception")
+            val message = retrieveErrorMessage(exception)
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun retrieveErrorMessage(error: String): String? {
         return when (error) {
             getString(R.string.email_format) -> {
                 getString(R.string.email_message)
@@ -100,6 +115,12 @@ class RegisterFragment : AccountParentFragment(), KodeinAware {
             }
             getString(R.string.password_format) -> {
                 getString(R.string.register_password_message)
+            }
+            getString(R.string.usernameTaken) -> {
+                getString(R.string.usernameTakenMessage)
+            }
+            getString(R.string.emptyFields) -> {
+                getString(R.string.emptyFieldsMessage)
             }
             else -> {
                 getString(R.string.unexpected_error)

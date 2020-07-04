@@ -71,4 +71,10 @@
     <string name="register_email_message">An account with that email address already exists.</string>
     <string name="password_format">com.google.firebase.auth.FirebaseAuthWeakPasswordException: The given password is invalid. [ Password should be at least 6 characters ]</string>
     <string name="register_password_message">Password must be at least 6 characters</string>
+
+    <string name="usernameTaken">usernameTaken</string>
+    <string name="usernameTakenMessage">An account with that username already exists, please try another.</string>
+
+    <string name="emptyFields">emptyFields</string>
+    <string name="emptyFieldsMessage">"Please don't leave any fields empty"</string>
 </resources>

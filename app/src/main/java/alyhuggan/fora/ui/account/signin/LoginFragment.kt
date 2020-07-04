@@ -60,7 +60,7 @@ class LoginFragment : AccountParentFragment(), KodeinAware {
 
             Log.d(TAG, "onViewCreated: password = $password")
 
-            if (emptyFieldCheck(list)) {
+            if (!emptyFieldCheck(list)) {
                 val user = User(
                     email,
                     password

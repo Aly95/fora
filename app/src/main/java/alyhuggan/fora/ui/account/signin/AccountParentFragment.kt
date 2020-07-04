@@ -33,10 +33,10 @@ open class AccountParentFragment : Fragment(), KodeinAware {
     fun emptyFieldCheck(textList: List<String>): Boolean {
         textList.forEach { text ->
             if(text == "") {
-                return false
+                return true
             }
         }
-        return true
+        return false
     }
 
     fun checkUser() {
